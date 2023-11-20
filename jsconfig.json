@@ -1,10 +1,10 @@
 {
-	"compilerOptions": {
-		"paths": {
-			"@/*": ["./*"],
-			"@/components": ["./components"],
-			"@/styles": ["./styles"],
-			"@/data": ["./data"]
-		}
-	}
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./*"],
+      "@/components": ["./components"],
+      "@/styles": ["./styles"],
+      "@/data": ["./data"]
+    }
+  }
 }

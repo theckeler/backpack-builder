@@ -1,5 +1,4 @@
 "use client";
-import NextImage from "next/image";
 import { useEffect, useState } from "react";
 import Controls from "@/components/Controls";
 import ViewOutput from "@/components/ViewOutput";
@@ -16,7 +15,9 @@ export default function VanBuilder() {
   // frontPassenger: "image",
 
   const sprinterVan = {
+    price: { base: 80000.0, accessories: 0, total: 80000.0 },
     base: {
+      price: 80000.0,
       className: "object-cover z-0",
       images: {
         front: "",
@@ -95,24 +96,40 @@ export default function VanBuilder() {
 
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const matchMedia = window.matchMedia("(prefers-color-scheme: dark)");
-    document.querySelector("html").classList.remove("light", "dark");
-    if (matchMedia.matches) {
-      document.querySelector("html").classList.add("dark");
-      setVanBuild((prevVanBuild) => ({
-        ...prevVanBuild,
-        windowMode: { ...prevVanBuild.windowMode, dark: true, light: false },
-      }));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const matchMedia = window.matchMedia("(prefers-color-scheme: dark)");
+  //   document.querySelector("html").classList.remove("light", "dark");
+  //   if (matchMedia.matches) {
+  //     document.querySelector("html").classList.add("dark");
+  //     setVanBuild((prevVanBuild) => ({
+  //       ...prevVanBuild,
+  //       windowMode: { ...prevVanBuild.windowMode, dark: true, light: false },
+  //     }));
+  //   }
+  // }, []);
 
   useEffect(() => {
     console.log("vanBuild useEffect:", vanBuild);
-    document.querySelector("html").classList.remove("light", "dark");
-    document
-      .querySelector("html")
-      .classList.add(vanBuild.windowMode.dark ? "dark" : "light");
+    // document.querySelector("html").classList.remove("light", "dark");
+    // document
+    //   .querySelector("html")
+    //   .classList.add(vanBuild.windowMode.dark ? "dark" : "light");
+
+    // vanBuild[vanBuild.currVan].Accessories.map(function ({ active, price }, i) {
+    //   active && console.log(price);
+
+    //   setVanBuild((prevVanBuild) => ({
+    //     ...prevVanBuild,
+    //     sprinterVan: {
+    //       ...vanBuild[vanBuild.currVan],
+    //       Accessories: vanBuild[vanBuild.currVan].Accessories.map((accessory) =>
+    //         accessory.value === e.currentTarget.value
+    //           ? { ...accessory, active: e.currentTarget.checked }
+    //           : accessory
+    //       ),
+    //     },
+    //   }));
+    // });
   }, [vanBuild]);
 
   const radioChange = (e) => {
@@ -129,17 +146,37 @@ export default function VanBuilder() {
   };
 
   const checkboxChange = (e) => {
+    let accessoriesTotal = 0;
     const updatedVan = {
       ...vanBuild,
       sprinterVan: {
         ...vanBuild[vanBuild.currVan],
-        Accessories: vanBuild[vanBuild.currVan].Accessories.map((accessory) =>
-          accessory.value === e.currentTarget.value
-            ? { ...accessory, active: e.currentTarget.checked }
-            : accessory
-        ),
+        Accessories: vanBuild[vanBuild.currVan].Accessories.map((accessory) => {
+          console.log(accessory);
+          if (accessory.value === e.currentTarget.value) {
+            return { ...accessory, active: e.currentTarget.checked };
+          } else {
+            return accessory;
+          }
+        }),
       },
     };
+
+    // Calculate accessoriesTotal only for active accessories
+    accessoriesTotal = updatedVan.sprinterVan.Accessories.reduce(
+      (total, accessory) => {
+        return accessory.active ? total + accessory.price : total;
+      },
+      0
+    );
+
+    updatedVan.sprinterVan.price = {
+      base: 80000.0,
+      accessories: accessoriesTotal,
+    };
+
+    // Uncomment the line below if you want to log the accessoriesTotal
+    // console.log("accessoriesTotal", accessoriesTotal);
 
     setVanBuild(updatedVan);
   };

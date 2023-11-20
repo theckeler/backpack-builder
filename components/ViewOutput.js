@@ -23,8 +23,7 @@ export default function ViewOutput({ vanView, vanBase, accessories }) {
           fill
         />
 
-        {Object.keys(accessories).map((accessoryKey, i) => {
-          const accessory = accessories[accessoryKey];
+        {accessories.map((accessory, i) => {
           return (
             accessory.active && (
               <NextImage
@@ -37,15 +36,6 @@ export default function ViewOutput({ vanView, vanBase, accessories }) {
             )
           );
         })}
-
-        {accessories.active && (
-          <NextImage
-            className="z-10 object-cover"
-            src={accessories.images[whichView] + "&width=2000"}
-            alt=""
-            fill
-          />
-        )}
       </div>
     );
   }

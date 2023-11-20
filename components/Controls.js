@@ -11,6 +11,8 @@ export default function Controls({
   liClassName = "gap-1 items-center group",
   accessories,
 }) {
+  console.log(vanBuild[vanBuild.currVan]);
+
   return (
     <>
       <div className={className + " left-4 top-4"}>
@@ -51,6 +53,11 @@ export default function Controls({
             );
           })}
         </ul>
+      </div>
+
+      <div className={className + " right-4 bottom-4 text-white"}>
+        Total: {vanBuild[vanBuild.currVan].price.base} +{" "}
+        {vanBuild[vanBuild.currVan].price.accessories}
       </div>
     </>
   );
