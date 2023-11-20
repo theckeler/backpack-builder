@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import Controls from "@/components/Controls";
 import ViewOutput from "@/components/ViewOutput";
 
+import { priceFormatter } from "@/components/priceFormatter";
+
 export default function VanBuilder() {
   // IMAGES:
   // front: "image",
@@ -63,7 +65,7 @@ export default function VanBuilder() {
         active: false,
         title: "Rover Vans Tire Carrier & Ladder Combo for Sprinter",
         href: "https://rovervans.com/products/rover-vans-tire-carrier-ladder-combo",
-        price: 999.0,
+        price: 2999.0,
         images: {
           front: "",
           frontDriver: "",
@@ -163,20 +165,17 @@ export default function VanBuilder() {
     };
 
     // Calculate accessoriesTotal only for active accessories
-    accessoriesTotal = updatedVan.sprinterVan.Accessories.reduce(
-      (total, accessory) => {
-        return accessory.active ? total + accessory.price : total;
-      },
-      0
-    );
+    updatedVan[vanBuild.currVan].Accessories.forEach((accessory) => {
+      if (accessory.active) {
+        accessoriesTotal += accessory.price;
+      }
+    });
 
-    updatedVan.sprinterVan.price = {
-      base: 80000.0,
+    updatedVan[vanBuild.currVan].price = {
+      base: vanBuild[vanBuild.currVan].price.base,
       accessories: accessoriesTotal,
+      total: vanBuild[vanBuild.currVan].price.base + accessoriesTotal,
     };
-
-    // Uncomment the line below if you want to log the accessoriesTotal
-    // console.log("accessoriesTotal", accessoriesTotal);
 
     setVanBuild(updatedVan);
   };
@@ -197,6 +196,7 @@ export default function VanBuilder() {
       >
         <Controls
           accessories={vanBuild.sprinterVan.Accessories}
+          priceFormatter={priceFormatter}
           {...{ vanBuild, setVanBuild, radioChange, checkboxChange }}
         />
       </div>

@@ -10,6 +10,7 @@ export default function Controls({
   className = "absolute bg-neutral-800 shadow p-2",
   liClassName = "gap-1 items-center group",
   accessories,
+  priceFormatter,
 }) {
   console.log(vanBuild[vanBuild.currVan]);
 
@@ -56,8 +57,23 @@ export default function Controls({
       </div>
 
       <div className={className + " right-4 bottom-4 text-white"}>
-        Total: {vanBuild[vanBuild.currVan].price.base} +{" "}
-        {vanBuild[vanBuild.currVan].price.accessories}
+        <ul className="grid gap-2 grid-cols-2 w-full">
+          <li className="col-span-full">Total:</li>
+          <li>Base:</li>
+          <li className="text-left">
+            {priceFormatter.format(vanBuild[vanBuild.currVan].price.base)}
+          </li>
+          <li>Accessories:</li>
+          <li className="text-left">
+            {priceFormatter.format(
+              vanBuild[vanBuild.currVan].price.accessories
+            )}
+          </li>
+          <li>Total:</li>
+          <li className="text-left">
+            {priceFormatter.format(vanBuild[vanBuild.currVan].price.total)}
+          </li>
+        </ul>
       </div>
     </>
   );
