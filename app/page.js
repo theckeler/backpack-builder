@@ -1,145 +1,59 @@
 "use client";
 import { useEffect, useState } from "react";
+// import { useRouter } from "next/navigation";
+
+import sprinterVan from "@/data/sprinterVan";
+import transitVan from "@/data/transitVan";
+import { priceFormatter } from "@/components/Helpers/priceFormatter";
+
 import Controls from "@/components/Controls";
 import ViewOutput from "@/components/ViewOutput";
-
-import { priceFormatter } from "@/components/priceFormatter";
+import SelectVan from "@/components/Controls/SelectVan";
+import ImagesBackground from "@/images/Background";
 
 export default function VanBuilder() {
-  // IMAGES:
-  // front: "image",
-  // frontDriver: "image",
-  // driver: "image",
-  // rearDriver: "image",
-  // rear: "image",
-  // rearPassenger: "image",
-  // Passenger: "image",
-  // frontPassenger: "image",
-
-  const sprinterVan = {
-    price: { base: 80000.0, accessories: 0, total: 80000.0 },
-    base: {
-      price: 80000.0,
-      className: "object-cover z-0",
-      images: {
-        front: "",
-        frontDriver: "",
-        driver: "",
-        rearDriver:
-          "https://cdn.shopify.com/s/files/1/0616/3405/2352/files/sprinter-r-d.png?v=1700163309",
-        rear: "https://cdn.shopify.com/s/files/1/0616/3405/2352/files/sprinter-r.png?v=1700163309",
-        rearPassenger:
-          "https://cdn.shopify.com/s/files/1/0616/3405/2352/files/sprinter-r-p.png?v=1700163309",
-        Passenger: "",
-        frontPassenger:
-          "https://cdn.shopify.com/s/files/1/0616/3405/2352/files/sprinter-r-p.png?v=1700163309",
-      },
-    },
-    Accessories: [
-      {
-        name: "Accessory Rack",
-        value: "AccessoryRack",
-        id: "AccessoryRack",
-        active: false,
-        title: "Rover Vans Tire Carrier & Ladder Combo for Sprinter",
-        href: "https://rovervans.com/products/rover-vans-tire-carrier-ladder-combo",
-        price: 999.0,
-        images: {
-          front: "",
-          frontDriver: "",
-          driver: "",
-          rearDriver:
-            "https://cdn.shopify.com/s/files/1/0616/3405/2352/files/sprinter-r-d-AccessoryRack.png?v=1700163309",
-          rear: "https://cdn.shopify.com/s/files/1/0616/3405/2352/files/sprinter-r-AccessoryRack.png?v=1700163309",
-          rearPassenger:
-            "https://cdn.shopify.com/s/files/1/0616/3405/2352/files/sprinter-r-p-AccessoryRack.png?v=1700163309",
-          Passenger:
-            "https://cdn.shopify.com/s/files/1/0616/3405/2352/files/sprinter-r-p-AccessoryRack.png?v=1700163309",
-          frontPassenger: "",
-        },
-      },
-      {
-        name: "Accessory Rack2",
-        value: "AccessoryRack2",
-        id: "AccessoryRack2",
-        active: false,
-        title: "Rover Vans Tire Carrier & Ladder Combo for Sprinter",
-        href: "https://rovervans.com/products/rover-vans-tire-carrier-ladder-combo",
-        price: 2999.0,
-        images: {
-          front: "",
-          frontDriver: "",
-          driver: "",
-          rearDriver:
-            "https://cdn.shopify.com/s/files/1/0616/3405/2352/files/sprinter-r-d-AccessoryRack.png?v=1700163309",
-          rear: "https://cdn.shopify.com/s/files/1/0616/3405/2352/files/sprinter-r-AccessoryRack.png?v=1700163309",
-          rearPassenger:
-            "https://cdn.shopify.com/s/files/1/0616/3405/2352/files/sprinter-r-p-AccessoryRack.png?v=1700163309",
-          Passenger:
-            "https://cdn.shopify.com/s/files/1/0616/3405/2352/files/sprinter-r-p-AccessoryRack.png?v=1700163309",
-          frontPassenger: "",
-        },
-      },
-    ],
-  };
-
   const [vanBuild, setVanBuild] = useState({
     sprinterVan: { ...sprinterVan },
-    transitVan: { ...sprinterVan },
+    transitVan: { ...transitVan },
     promasterVan: { ...sprinterVan },
     vanView: {
-      rear: { active: true },
-      rearDriver: { active: false },
-      rearPassenger: { active: false },
+      rear: { active: true, title: "Rear" },
+      rearDriver: { active: false, title: "Rear Driver" },
+      rearPassenger: { active: false, title: "Rear Passenger" },
     },
     windowMode: { dark: false, light: true },
     currVan: "sprinterVan",
   });
 
-  const [loading, setLoading] = useState(false);
-
-  // useEffect(() => {
-  //   const matchMedia = window.matchMedia("(prefers-color-scheme: dark)");
-  //   document.querySelector("html").classList.remove("light", "dark");
-  //   if (matchMedia.matches) {
-  //     document.querySelector("html").classList.add("dark");
-  //     setVanBuild((prevVanBuild) => ({
-  //       ...prevVanBuild,
-  //       windowMode: { ...prevVanBuild.windowMode, dark: true, light: false },
-  //     }));
-  //   }
-  // }, []);
-
   useEffect(() => {
     console.log("vanBuild useEffect:", vanBuild);
-    // document.querySelector("html").classList.remove("light", "dark");
-    // document
-    //   .querySelector("html")
-    //   .classList.add(vanBuild.windowMode.dark ? "dark" : "light");
-
-    // vanBuild[vanBuild.currVan].Accessories.map(function ({ active, price }, i) {
-    //   active && console.log(price);
-
-    //   setVanBuild((prevVanBuild) => ({
-    //     ...prevVanBuild,
-    //     sprinterVan: {
-    //       ...vanBuild[vanBuild.currVan],
-    //       Accessories: vanBuild[vanBuild.currVan].Accessories.map((accessory) =>
-    //         accessory.value === e.currentTarget.value
-    //           ? { ...accessory, active: e.currentTarget.checked }
-    //           : accessory
-    //       ),
-    //     },
-    //   }));
-    // });
   }, [vanBuild]);
+
+  const [vanSelect, setVanSelect] = useState(false);
+  const vanChange = (e) => {
+    const val = e.currentTarget.value;
+
+    if (val) {
+      setVanBuild((prevVanBuild) => ({
+        ...prevVanBuild,
+        currVan: val,
+      }));
+      setVanSelect(false);
+    } else {
+      console.error("Invalid event or missing value property");
+    }
+  };
 
   const radioChange = (e) => {
     const eName = e.currentTarget.name;
     const currentRadio = e.currentTarget;
     let updatedVan = { ...vanBuild[eName] };
     Object.keys(vanBuild[eName]).forEach((key) => {
-      updatedVan[key] = { active: key === currentRadio.value ? true : false };
+      console.log(key);
+      updatedVan[key] = {
+        ...vanBuild[eName][key],
+        active: key === currentRadio.value ? true : false,
+      };
     });
     setVanBuild((prevVanBuild) => ({
       ...prevVanBuild,
@@ -151,10 +65,9 @@ export default function VanBuilder() {
     let accessoriesTotal = 0;
     const updatedVan = {
       ...vanBuild,
-      sprinterVan: {
+      [vanBuild.currVan]: {
         ...vanBuild[vanBuild.currVan],
         Accessories: vanBuild[vanBuild.currVan].Accessories.map((accessory) => {
-          console.log(accessory);
           if (accessory.value === e.currentTarget.value) {
             return { ...accessory, active: e.currentTarget.checked };
           } else {
@@ -164,7 +77,6 @@ export default function VanBuilder() {
       },
     };
 
-    // Calculate accessoriesTotal only for active accessories
     updatedVan[vanBuild.currVan].Accessories.forEach((accessory) => {
       if (accessory.active) {
         accessoriesTotal += accessory.price;
@@ -182,30 +94,72 @@ export default function VanBuilder() {
 
   return (
     <main
-      className={`flex min-h-screen flex-col items-center justify-between relative select-none`}
+      className={`relative flex min-h-screen select-none flex-col items-center justify-between`}
     >
-      {loading && (
-        <div className="fixed top-0 left-0 w-screen min-h-screen bg-white/80 z-50">
-          loading
+      {vanSelect && (
+        <div
+          className="fixed left-0 top-0 z-50 flex min-h-screen w-screen items-center justify-center bg-neutral-900/90 backdrop-blur-sm"
+          id="change-van"
+        >
+          <SelectVan vanChange={vanChange} />
         </div>
       )}
 
       <div
-        className="fixed z-30 left-0 top-0 w-screen min-h-screen"
+        className="fixed left-0 top-0 z-30 min-h-screen w-screen"
         id="controls"
       >
         <Controls
-          accessories={vanBuild.sprinterVan.Accessories}
+          accessories={vanBuild[vanBuild.currVan].Accessories}
           priceFormatter={priceFormatter}
+          setVanSelect={setVanSelect}
           {...{ vanBuild, setVanBuild, radioChange, checkboxChange }}
         />
       </div>
 
       <ViewOutput
-        accessories={vanBuild.sprinterVan.Accessories}
+        accessories={vanBuild[vanBuild.currVan].Accessories}
         vanView={vanBuild.vanView}
-        vanBase={vanBuild.sprinterVan.base}
+        vanBase={vanBuild[vanBuild.currVan].base}
       />
+      <ImagesBackground className="fill-neutral-950 opacity-10" />
     </main>
   );
 }
+
+// SHIT BELOW:
+
+// useEffect(() => {
+//   const matchMedia = window.matchMedia("(prefers-color-scheme: dark)");
+//   document.querySelector("html").classList.remove("light", "dark");
+//   if (matchMedia.matches) {
+//     document.querySelector("html").classList.add("dark");
+//     setVanBuild((prevVanBuild) => ({
+//       ...prevVanBuild,
+//       windowMode: { ...prevVanBuild.windowMode, dark: true, light: false },
+//     }));
+//   }
+// }, []);
+
+// useEffect(() => {
+//   // document.querySelector("html").classList.remove("light", "dark");
+//   // document
+//   //   .querySelector("html")
+//   //   .classList.add(vanBuild.windowMode.dark ? "dark" : "light");
+
+//   // vanBuild[vanBuild.currVan].Accessories.map(function ({ active, price }, i) {
+//   //   active && console.log(price);
+
+//   //   setVanBuild((prevVanBuild) => ({
+//   //     ...prevVanBuild,
+//   //     sprinterVan: {
+//   //       ...vanBuild[vanBuild.currVan],
+//   //       Accessories: vanBuild[vanBuild.currVan].Accessories.map((accessory) =>
+//   //         accessory.value === e.currentTarget.value
+//   //           ? { ...accessory, active: e.currentTarget.checked }
+//   //           : accessory
+//   //       ),
+//   //     },
+//   //   }));
+//   // });
+// }, [vanBuild]);
