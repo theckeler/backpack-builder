@@ -1,6 +1,9 @@
 export function Icons({ icon = "expandmore", className }) {
   if (!icon) return "";
   const IconMap = {
+    positionbottomright: PositionBottomRight,
+    positiontopright: PositionTopRight,
+    positionbottomleft: PositionBottomLeft,
     person: Person,
     search: Search,
     cart: Cart,
@@ -20,6 +23,42 @@ export function Icons({ icon = "expandmore", className }) {
   };
   const IconExport = IconMap[icon];
   return <IconExport className={className} />;
+}
+
+export function PositionBottomRight({ className }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      viewBox="0 -960 960 960"
+    >
+      <path d="M360-280h360v-120H360v120ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z" />
+    </svg>
+  );
+}
+
+export function PositionTopRight({ className }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      viewBox="0 -960 960 960"
+    >
+      <path d="M360-560h360v-120H360v120ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z" />
+    </svg>
+  );
+}
+
+export function PositionBottomLeft({ className }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      viewBox="0 -960 960 960"
+    >
+      <path d="M240-280h360v-120H240v120Zm-40 160q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z" />
+    </svg>
+  );
 }
 
 export function Person({ className }) {

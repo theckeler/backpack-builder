@@ -44,6 +44,15 @@ export default function VanBuilder() {
     }
   };
 
+  const [controlOptions, setControlOptions] = useState({
+    position: {
+      left: false,
+      top: false,
+      right: true,
+      bottom: true,
+    },
+  });
+
   const viewChange = (e) => {
     const eName = e.currentTarget.name;
     const currentRadio = e.currentTarget;
@@ -109,6 +118,16 @@ export default function VanBuilder() {
         id="controls"
       >
         <Controls
+          setControlOptions={setControlOptions}
+          className={`absolute ${
+            controlOptions.position.bottom ? "bottom-4" : ""
+          } ${controlOptions.position.right ? "right-4" : ""}
+
+          ${controlOptions.position.top ? "top-4" : ""}
+
+          ${controlOptions.position.left ? "left-4" : ""}
+          
+          grid gap-2 text-white`}
           accessories={vanBuild[vanBuild.currVan].Accessories}
           priceFormatter={priceFormatter}
           setVanSelect={setVanSelect}

@@ -12,16 +12,16 @@ export default function Controls({
   checkboxChange,
   viewChange,
   className = "absolute",
-
   liClassName = "gap-3 items-center group",
   accessories,
   priceFormatter,
   setVanSelect,
+  setControlOptions,
 }) {
   const iconCSS =
     "w-12 h-12 fill-neutral-100 group-hover:fill-neutral-800 p-2 rounded-xl";
   const buttonCSS =
-    "flex w-full justify-center rounded bg-neutral-700  hover:bg-amber-500  group";
+    "flex w-full justify-center rounded bg-neutral-700 hover:bg-amber-500  group";
   // const whichView = getWhichView(vanBuild.vanView);
   const whichViewID = getWhichViewIndex(vanBuild.vanView);
 
@@ -31,7 +31,7 @@ export default function Controls({
     whichViewID == vanBuild.vanView.length - 1 ? 0 : whichViewID + 1;
 
   return (
-    <ul className={className + " bottom-4 right-4 grid gap-2 text-white"}>
+    <ul className={className}>
       <li className="rounded bg-neutral-900 p-3 shadow-base shadow-neutral-950/100">
         <ul className="grid gap-2">
           {accessories.map(function ({ name, value, id, active }, i) {
@@ -67,6 +67,65 @@ export default function Controls({
             value={previousView}
           >
             <Icons className={iconCSS} icon="rotateright" />
+          </button>
+        </div>
+      </li>
+
+      <li className="rounded bg-neutral-900 p-3 shadow-base shadow-neutral-950/100">
+        <div className="grid grid-cols-3 gap-1">
+          <button
+            className={buttonCSS}
+            onClick={(e) =>
+              setControlOptions((prevControls) => ({
+                ...prevControls,
+                position: {
+                  left: false,
+                  top: true,
+                  right: true,
+                  bottom: false,
+                },
+              }))
+            }
+            name="vanView"
+            value={mextView}
+          >
+            <Icons className={iconCSS} icon="positiontopright" />
+          </button>
+          <button
+            className={buttonCSS}
+            onClick={(e) =>
+              setControlOptions((prevControls) => ({
+                ...prevControls,
+                position: {
+                  left: false,
+                  top: false,
+                  right: true,
+                  bottom: true,
+                },
+              }))
+            }
+            name="vanView"
+            value={mextView}
+          >
+            <Icons className={iconCSS} icon="positionbottomright" />
+          </button>
+          <button
+            className={buttonCSS}
+            onClick={(e) =>
+              setControlOptions((prevControls) => ({
+                ...prevControls,
+                position: {
+                  left: true,
+                  top: false,
+                  right: false,
+                  bottom: true,
+                },
+              }))
+            }
+            name="vanView"
+            value={mextView}
+          >
+            <Icons className={iconCSS} icon="positionbottomleft" />
           </button>
         </div>
       </li>
