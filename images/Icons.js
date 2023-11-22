@@ -19,7 +19,7 @@ export function Icons({ icon = "expandmore", className }) {
     rotateleft: RotateLeft,
   };
   const IconExport = IconMap[icon];
-  return <IconExport className={`h-full w-full ${className}`} />;
+  return <IconExport className={className} />;
 }
 
 export function Person({ className }) {
