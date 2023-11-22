@@ -2,24 +2,20 @@
 import NextImage from "next/image";
 
 import getWhichView from "@/components/Helpers/getWhichView";
+import getWhichViewIndex from "@/components/Helpers/getWhichViewIndex";
 
 export default function ViewOutput({
   vanView,
   vanBase,
   accessories,
-  imageLoading,
-  setImageLoading,
+  // imageLoading,
+  // setImageLoading,
 }) {
-  // console.log("vanView", vanView);
-  // console.log("vanBase", vanBase);
-  // console.log("accessories", accessories);
-
-  // const whichView =
-  //   Object.keys(vanView).find((view) => vanView[view].active) || null;
-
   const whichView = getWhichView(vanView);
+  const whichViewID = getWhichViewIndex(vanView);
+  // console.log(whichViewID);
 
-  if (vanView[whichView].active) {
+  if (vanBase.images[whichView]) {
     return (
       <div>
         {/* <link rel="preload" as="image" href={vanBase.images[whichView]} /> */}

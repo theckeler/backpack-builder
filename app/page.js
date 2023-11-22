@@ -16,11 +16,11 @@ export default function VanBuilder() {
     sprinterVan: { ...sprinterVan },
     transitVan: { ...transitVan },
     promasterVan: { ...sprinterVan },
-    vanView: {
-      rear: { active: true, title: "Rear" },
-      rearDriver: { active: false, title: "Rear Driver" },
-      rearPassenger: { active: false, title: "Rear Passenger" },
-    },
+    vanView: [
+      { key: "rear", title: "Rear", active: false },
+      { key: "rearDriver", title: "Rear Driver", active: true },
+      { key: "rearPassenger", title: "Rear Passenger", active: false },
+    ],
     windowMode: { dark: false, light: true },
     currVan: "sprinterVan",
   });
@@ -29,7 +29,7 @@ export default function VanBuilder() {
     console.log("vanBuild useEffect:", vanBuild);
   }, [vanBuild]);
 
-  const [vanSelect, setVanSelect] = useState(false);
+  const [vanSelect, setVanSelect] = useState(true);
   const vanChange = (e) => {
     const val = e.currentTarget.value;
 
@@ -44,15 +44,14 @@ export default function VanBuilder() {
     }
   };
 
-  const radioChange = (e) => {
+  const viewChange = (e) => {
     const eName = e.currentTarget.name;
     const currentRadio = e.currentTarget;
-    let updatedVan = { ...vanBuild[eName] };
-    Object.keys(vanBuild[eName]).forEach((key) => {
-      console.log(key);
-      updatedVan[key] = {
-        ...vanBuild[eName][key],
-        active: key === currentRadio.value ? true : false,
+    let updatedVan = [];
+    vanBuild[eName].forEach((block, i) => {
+      updatedVan[i] = {
+        ...block,
+        active: currentRadio.value == i ? true : false,
       };
     });
     setVanBuild((prevVanBuild) => ({
@@ -113,7 +112,7 @@ export default function VanBuilder() {
           accessories={vanBuild[vanBuild.currVan].Accessories}
           priceFormatter={priceFormatter}
           setVanSelect={setVanSelect}
-          {...{ vanBuild, setVanBuild, radioChange, checkboxChange }}
+          {...{ vanBuild, setVanBuild, viewChange, checkboxChange }}
         />
       </div>
 
