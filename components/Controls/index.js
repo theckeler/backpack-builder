@@ -31,7 +31,7 @@ export default function Controls({
   const mextView =
     whichViewID == vanBuild.vanView.length - 1 ? 0 : whichViewID + 1;
 
-  const menuOpen = menu ? "translate-x-[15rem] " : "translate-x-0 ";
+  const menuOpen = menu.open ? "translate-x-[15rem] " : "translate-x-0 ";
 
   return (
     <div
@@ -45,7 +45,7 @@ export default function Controls({
         <button
           className="h-12 w-12 bg-neutral-900 p-2"
           onClick={() => {
-            setMenu(!menu);
+            setMenu({ open: !menu.open });
           }}
         >
           <Icons icon="hamburger" className="h-full w-full fill-white" />
