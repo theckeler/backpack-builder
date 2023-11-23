@@ -23,7 +23,7 @@ export default function SelectVan({ vanChange }) {
   };
 
   return (
-    <ul className="group grid grid-cols-2 justify-items-center gap-3">
+    <ul className="group grid justify-items-center gap-3 md:grid-cols-2">
       <li className="col-span-full">
         <div className="fill-sky-400">
           <Logo />

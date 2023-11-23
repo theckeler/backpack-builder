@@ -1,29 +1,44 @@
 "use client";
 import NextImage from "next/image";
 
-import getWhichView from "@/components/Helpers/getWhichView";
-import getWhichViewIndex from "@/components/Helpers/getWhichViewIndex";
+import getActiveView from "@/components/Helpers/getActiveView";
+import getActiveViewIndex from "@/components/Helpers/getActiveViewIndex";
 
-export default function ViewOutput({
-  vanView,
-  vanBase,
-  accessories,
-  // imageLoading,
-  // setImageLoading,
-}) {
-  const whichView = getWhichView(vanView);
-  const whichViewID = getWhichViewIndex(vanView);
-  // console.log(whichViewID);
+export default function ViewOutput({ vanView, vanBase, accessories }) {
+  const activeView = getActiveView(vanView);
+  const activeViewID = getActiveViewIndex(vanView);
+  const previousView =
+    activeViewID == 0 ? vanView.length - 1 : activeViewID - 1;
+  const nextView = activeViewID == vanView.length - 1 ? 0 : activeViewID + 1;
 
-  if (vanBase.images[whichView]) {
+  const preloadImages = [
+    vanBase.images[vanView[previousView].key],
+    vanBase.images[vanView[nextView].key],
+  ];
+
+  if (vanBase.images[activeView]) {
     return (
-      <div>
-        {/* <link rel="preload" as="image" href={vanBase.images[whichView]} /> */}
+      <div className="fixed z-10 h-screen w-screen">
+        <link
+          rel="prefetch"
+          as="image"
+          href={vanBase.images[vanView[previousView].key]}
+        />
+        <link
+          rel="prefetch"
+          as="image"
+          href={vanBase.images[vanView[nextView].key]}
+        />
+
         <NextImage
           className={vanBase.className}
-          src={vanBase.images[whichView] + "&width=2000"}
+          src={vanBase.images[activeView] + "&width=2000"}
           alt=""
           fill
+          priority={true}
+          loading="eager"
+          // placeholder="blur"
+          // blurDataURL={vanBase.images[activeView] + "&width=400"}
         />
 
         {accessories.map((accessory, i) => {
@@ -32,7 +47,7 @@ export default function ViewOutput({
               <NextImage
                 key={i}
                 className="z-10 object-cover"
-                src={accessory.images[whichView] + "&width=2000"}
+                src={accessory.images[activeView] + "&width=2000"}
                 alt=""
                 fill
               />

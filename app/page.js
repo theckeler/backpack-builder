@@ -8,8 +8,9 @@ import { priceFormatter } from "@/components/Helpers/priceFormatter";
 
 import Controls from "@/components/Controls";
 import ViewOutput from "@/components/ViewOutput";
-import SelectVan from "@/components/Controls/SelectVan";
+import SelectVan from "@/components/Screens/SelectVan";
 import ImagesBackground from "@/images/Background";
+import Loading from "@/components/Screens/Loading";
 
 export default function VanBuilder() {
   const [vanBuild, setVanBuild] = useState({
@@ -100,6 +101,19 @@ export default function VanBuilder() {
     setVanBuild(updatedVan);
   };
 
+  // const divPosition = Object.entries(controlOptions.position)
+  //   .filter(([key, value]) => value)
+  //   .map(([key]) => key)
+  //   .map((position) => `${position}-4`)
+  //   .join(" ");
+
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setLoading(false);
+  }, []);
+
+  const [menu, setMenu] = useState({ open: true });
+
   return (
     <main
       className={`relative flex min-h-screen select-none flex-col items-center justify-between`}
@@ -109,7 +123,7 @@ export default function VanBuilder() {
           className="fixed left-0 top-0 z-50 flex min-h-screen w-screen items-center justify-center bg-neutral-900/90 backdrop-blur-sm"
           id="change-van"
         >
-          <SelectVan vanChange={vanChange} />
+          {loading ? <Loading /> : <SelectVan vanChange={vanChange} />}
         </div>
       )}
 
@@ -121,16 +135,15 @@ export default function VanBuilder() {
           setControlOptions={setControlOptions}
           className={`absolute ${
             controlOptions.position.bottom ? "bottom-4" : ""
-          } ${controlOptions.position.right ? "right-4" : ""}
-
-          ${controlOptions.position.top ? "top-4" : ""}
-
-          ${controlOptions.position.left ? "left-4" : ""}
-          
-          grid gap-2 text-white`}
+          } ${controlOptions.position.right ? "right-4" : ""} ${
+            controlOptions.position.top ? "top-4" : ""
+          } ${controlOptions.position.left ? "left-4" : ""} `}
+          // className={`absolute grid gap-2 text-white ${divPosition}`}
           accessories={vanBuild[vanBuild.currVan].Accessories}
           priceFormatter={priceFormatter}
           setVanSelect={setVanSelect}
+          menu={menu}
+          setMenu={setMenu}
           {...{ vanBuild, setVanBuild, viewChange, checkboxChange }}
         />
       </div>
@@ -144,40 +157,3 @@ export default function VanBuilder() {
     </main>
   );
 }
-
-// SHIT BELOW:
-
-// useEffect(() => {
-//   const matchMedia = window.matchMedia("(prefers-color-scheme: dark)");
-//   document.querySelector("html").classList.remove("light", "dark");
-//   if (matchMedia.matches) {
-//     document.querySelector("html").classList.add("dark");
-//     setVanBuild((prevVanBuild) => ({
-//       ...prevVanBuild,
-//       windowMode: { ...prevVanBuild.windowMode, dark: true, light: false },
-//     }));
-//   }
-// }, []);
-
-// useEffect(() => {
-//   // document.querySelector("html").classList.remove("light", "dark");
-//   // document
-//   //   .querySelector("html")
-//   //   .classList.add(vanBuild.windowMode.dark ? "dark" : "light");
-
-//   // vanBuild[vanBuild.currVan].Accessories.map(function ({ active, price }, i) {
-//   //   active && console.log(price);
-
-//   //   setVanBuild((prevVanBuild) => ({
-//   //     ...prevVanBuild,
-//   //     sprinterVan: {
-//   //       ...vanBuild[vanBuild.currVan],
-//   //       Accessories: vanBuild[vanBuild.currVan].Accessories.map((accessory) =>
-//   //         accessory.value === e.currentTarget.value
-//   //           ? { ...accessory, active: e.currentTarget.checked }
-//   //           : accessory
-//   //       ),
-//   //     },
-//   //   }));
-//   // });
-// }, [vanBuild]);
