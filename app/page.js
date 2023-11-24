@@ -11,6 +11,7 @@ import ViewOutput from "@/components/ViewOutput";
 import SelectVan from "@/components/Screens/SelectVan";
 import ImagesBackground from "@/images/Background";
 import Loading from "@/components/Screens/Loading";
+import { Icons } from "@/images/Icons";
 
 export default function VanBuilder() {
   const [vanBuild, setVanBuild] = useState({
@@ -131,17 +132,18 @@ export default function VanBuilder() {
       )}
 
       <div
-        className="fixed left-0 top-0 z-30 min-h-screen w-screen"
+        className="fixed left-0 top-0 z-30 min-h-screen w-screen  "
         id="controls"
       >
         <Controls
           setControlOptions={setControlOptions}
-          className={`absolute ${
-            controlOptions.position.bottom ? "bottom-4" : ""
-          } ${controlOptions.position.right ? "right-4" : ""} ${
-            controlOptions.position.top ? "top-4" : ""
-          } ${controlOptions.position.left ? "left-4" : ""} `}
-          // className={`absolute grid gap-2 text-white ${divPosition}`}
+          className={`absolute h-screen w-full bg-neutral-800/80 lg:h-max lg:w-max lg:bg-transparent ${
+            controlOptions.position.bottom ? "lg:bottom-4" : ""
+          } ${controlOptions.position.right ? "lg:right-4" : ""} ${
+            controlOptions.position.top ? "lg:top-4" : ""
+          } ${controlOptions.position.left ? "lg:left-4" : ""} ${
+            menu.open ? "" : "hidden lg:block "
+          }`}
           accessories={vanBuild[vanBuild.currVan].Accessories}
           priceFormatter={priceFormatter}
           setVanSelect={setVanSelect}
@@ -149,6 +151,15 @@ export default function VanBuilder() {
           setMenu={setMenu}
           {...{ vanBuild, setVanBuild, viewChange, checkboxChange }}
         />
+
+        <button
+          className="fixed bottom-4 right-4 h-12 w-12 rounded bg-amber-500 p-2 shadow lg:hidden"
+          onClick={() => {
+            setMenu({ open: !menu.open });
+          }}
+        >
+          <Icons icon="hamburger" className="h-full w-full fill-white" />
+        </button>
       </div>
 
       <ViewOutput

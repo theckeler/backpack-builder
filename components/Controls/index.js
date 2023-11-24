@@ -31,29 +31,11 @@ export default function Controls({
   const mextView =
     whichViewID == vanBuild.vanView.length - 1 ? 0 : whichViewID + 1;
 
-  const menuOpen = menu.open ? "translate-x-[15rem] " : "translate-x-0 ";
-
   return (
-    <div
-      className={
-        className +
-        menuOpen +
-        " grid translate-x-[15rem] auto-cols-max grid-flow-col items-start gap-1 text-white lg:translate-x-0"
-      }
-    >
-      <div className="lg:hidden">
-        <button
-          className="h-12 w-12 bg-neutral-900 p-2"
-          onClick={() => {
-            setMenu({ open: !menu.open });
-          }}
-        >
-          <Icons icon="hamburger" className="h-full w-full fill-white" />
-        </button>
-      </div>
+    <div className={className + "grid grid-flow-row auto-rows-fr text-white"}>
       <ul className="grid gap-2">
-        <li className="rounded bg-neutral-900 p-3 shadow-base shadow-neutral-950/100">
-          <ul className="grid gap-2">
+        <li className="overflow-y-auto rounded bg-neutral-900 p-3 shadow-base shadow-neutral-950/100">
+          <ul className="grid min-h-screen gap-2 lg:min-h-fit">
             {accessories.map(function ({ name, value, id, active }, i) {
               return (
                 <li className={liClassName} key={i}>
@@ -91,7 +73,7 @@ export default function Controls({
           </div>
         </li>
 
-        <li className="rounded bg-neutral-900 p-3 shadow-base shadow-neutral-950/100">
+        <li className="hidden rounded bg-neutral-900 p-3 shadow-base shadow-neutral-950/100 lg:block">
           <div className="grid grid-cols-3 gap-1">
             <button
               className={buttonCSS}
