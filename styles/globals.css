@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.overflow-y-auto::-webkit-scrollbar {
+  /* Customize the scrollbar width */
+  height: 6px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  /* Customize the scrollbar track */
+  background-color: #262626;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  /* Customize the scrollbar thumb */
+  background-color: #fbbf24;
+}

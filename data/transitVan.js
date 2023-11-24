@@ -50,7 +50,6 @@ const transitVan = {
           "https://cdn.shopify.com/s/files/1/0616/3405/2352/files/sprinter-r-p-AccessoryRack.png?v=1700163309",
         frontPassenger: "",
       },
-      //  conflicts: [2],
     },
   ],
 };

@@ -1,17 +1,21 @@
 "use client";
 import { useEffect, useState } from "react";
-// import { useRouter } from "next/navigation";
 
 import sprinterVan from "@/data/sprinterVan";
 import transitVan from "@/data/transitVan";
-import { priceFormatter } from "@/components/Helpers/priceFormatter";
+import getActiveViewIndex from "@/components/Helpers/getActiveViewIndex";
 
-import Controls from "@/components/Controls";
+import ControlsAccessories from "@/components/Controls/ControlsAccessories";
 import ViewOutput from "@/components/ViewOutput";
 import SelectVan from "@/components/Screens/SelectVan";
 import ImagesBackground from "@/images/Background";
 import Loading from "@/components/Screens/Loading";
-import { Icons } from "@/images/Icons";
+import MenuButton from "@/components/Controls/MenuButton";
+import ControlsRotate from "@/components/Controls/ControlsRotate";
+import ControlsPosition from "@/components/Controls/ControlsPosition";
+import VanDetails from "@/components/Screens/VanDetails";
+import ImagesVan from "@/images/van";
+import ControlsIndex from "@/components/Controls";
 
 export default function VanBuilder() {
   const [vanBuild, setVanBuild] = useState({
@@ -102,21 +106,64 @@ export default function VanBuilder() {
     setVanBuild(updatedVan);
   };
 
-  // const divPosition = Object.entries(controlOptions.position)
-  //   .filter(([key, value]) => value)
-  //   .map(([key]) => key)
-  //   .map((position) => `${position}-4`)
-  //   .join(" ");
-
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setLoading(false);
   }, []);
 
-  const [menu, setMenu] = useState({ open: true });
-  useEffect(() => {
-    // console.log("menu:", menu);
-  }, [menu]);
+  const menuChange = (e) => {
+    if (e.position) {
+      setMenu((prevMenu) => ({
+        ...prevMenu,
+        position: {
+          ...e.position,
+        },
+      }));
+    } else if (e.zoom) {
+      setMenu((prevMenu) => ({
+        ...prevMenu,
+        zoom: e.zoom,
+      }));
+    } else {
+      setMenu((prevMenu) => ({
+        ...prevMenu,
+        open: !menu.open,
+      }));
+    }
+  };
+
+  const changeZoom = (value) => {
+    setMenu((prevMenu) => ({
+      ...prevMenu,
+      zoomLevel: value,
+    }));
+  };
+
+  const [menu, setMenu] = useState({
+    open: false,
+    zoomLevel: 100,
+    position: {
+      left: false,
+      top: false,
+      right: true,
+      bottom: true,
+    },
+  });
+
+  const css = {
+    controlBoxCSS:
+      "rounded p-3 lg:shadow-base shadow-neutral-950/100 lg:bg-neutral-900",
+    buttonCSS:
+      "flex w-full justify-center rounded bg-neutral-700 hover:bg-amber-500 group shadow-base",
+    iconCSS:
+      "w-12 h-12 fill-neutral-100 group-hover:fill-neutral-800 p-2 rounded-xl",
+  };
+
+  const whichViewID = getActiveViewIndex(vanBuild.vanView);
+  const previousView =
+    whichViewID == 0 ? vanBuild.vanView.length - 1 : whichViewID - 1;
+  const nextView =
+    whichViewID == vanBuild.vanView.length - 1 ? 0 : whichViewID + 1;
 
   return (
     <main
@@ -132,41 +179,53 @@ export default function VanBuilder() {
       )}
 
       <div
-        className="fixed left-0 top-0 z-30 min-h-screen w-screen  "
+        className={`fixed left-0 top-0 z-30 grid min-h-screen w-screen auto-cols-max grid-flow-col gap-3 p-2 ${
+          menu.position.bottom && "items-end"
+        } ${menu.position.right && "justify-end"} ${
+          menu.position.top && "lg:items-start"
+        } ${menu.position.left && "lg:justify-start"}`}
         id="controls"
       >
-        <Controls
-          setControlOptions={setControlOptions}
-          className={`absolute h-screen w-full bg-neutral-800/80 lg:h-max lg:w-max lg:bg-transparent ${
-            controlOptions.position.bottom ? "lg:bottom-4" : ""
-          } ${controlOptions.position.right ? "lg:right-4" : ""} ${
-            controlOptions.position.top ? "lg:top-4" : ""
-          } ${controlOptions.position.left ? "lg:left-4" : ""} ${
-            menu.open ? "" : "hidden lg:block "
-          }`}
-          accessories={vanBuild[vanBuild.currVan].Accessories}
-          priceFormatter={priceFormatter}
-          setVanSelect={setVanSelect}
+        <ControlsIndex
           menu={menu}
-          setMenu={setMenu}
-          {...{ vanBuild, setVanBuild, viewChange, checkboxChange }}
+          css={css}
+          currVan={vanBuild[vanBuild.currVan]}
+          views={{
+            whichViewID: whichViewID,
+            previousView: previousView,
+            nextView: nextView,
+          }}
+          viewChange={viewChange}
+          menuChange={menuChange}
+          setVanSelect={setVanSelect}
+          changeZoom={changeZoom}
+          zoomLevel={menu.zoomLevel}
         />
 
-        <button
-          className="fixed bottom-4 right-4 h-12 w-12 rounded bg-amber-500 p-2 shadow lg:hidden"
-          onClick={() => {
-            setMenu({ open: !menu.open });
-          }}
+        <div
+          className={`fixed right-0 top-0 h-screen w-screen overflow-y-auto bg-neutral-200/80 shadow-inner lg:h-max lg:w-max ${
+            menu.open ? "" : " hidden lg:block "
+          }`}
         >
-          <Icons icon="hamburger" className="h-full w-full fill-white" />
-        </button>
+          <ControlsAccessories
+            setControlOptions={setControlOptions}
+            css={{ ...css, liClassName: "gap-3 items-center group" }}
+            accessories={vanBuild[vanBuild.currVan].Accessories}
+            menuChange={menuChange}
+            checkboxChange={checkboxChange}
+          />
+        </div>
       </div>
 
-      <ViewOutput
-        accessories={vanBuild[vanBuild.currVan].Accessories}
-        vanView={vanBuild.vanView}
-        vanBase={vanBuild[vanBuild.currVan].base}
-      />
+      <div className="fixed z-10 h-screen w-screen">
+        <ViewOutput
+          accessories={vanBuild[vanBuild.currVan].Accessories}
+          vanView={vanBuild.vanView}
+          vanBase={vanBuild[vanBuild.currVan].base}
+          zoomLevel={menu.zoomLevel}
+        />
+      </div>
+
       <ImagesBackground className="fill-neutral-950 opacity-10" />
     </main>
   );

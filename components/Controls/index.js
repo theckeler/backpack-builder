@@ -1,167 +1,78 @@
 "use client";
 
+import ControlsAccessories from "@/components/Controls/ControlsAccessories";
+import MenuButton from "@/components/Controls/MenuButton";
+import ControlsRotate from "@/components/Controls/ControlsRotate";
+import ControlsPosition from "@/components/Controls/ControlsPosition";
+import VanDetails from "@/components/Screens/VanDetails";
 import ImagesVan from "@/images/van";
-import ControlInputs from "./Inputs";
-import ControlLabel from "./Label";
-import { Icons } from "@/images/Icons";
-// import getWhichView from "@/components/Helpers/getWhichView";
-import getActiveViewIndex from "@/components/Helpers/getActiveViewIndex";
 
-export default function Controls({
-  vanBuild,
-  checkboxChange,
-  viewChange,
-  className = "absolute",
-  liClassName = "gap-3 items-center group",
-  accessories,
-  priceFormatter,
-  setVanSelect,
-  setControlOptions,
+export default function ControlsIndex({
   menu,
-  setMenu,
+  css,
+  views,
+  currVan,
+  viewChange,
+  menuChange,
+  setVanSelect,
+  changeZoom,
+  zoomLevel,
 }) {
-  const iconCSS =
-    "w-12 h-12 fill-neutral-100 group-hover:fill-neutral-800 p-2 rounded-xl";
-  const buttonCSS =
-    "flex w-full justify-center rounded bg-neutral-700 hover:bg-amber-500 group";
-
-  const whichViewID = getActiveViewIndex(vanBuild.vanView);
-  const previousView =
-    whichViewID == 0 ? vanBuild.vanView.length - 1 : whichViewID - 1;
-  const mextView =
-    whichViewID == vanBuild.vanView.length - 1 ? 0 : whichViewID + 1;
+  const { iconCSS, buttonCSS } = css;
 
   return (
-    <div className={className + "grid grid-flow-row auto-rows-fr text-white"}>
-      <ul className="grid gap-2">
-        <li className="overflow-y-auto rounded bg-neutral-900 p-3 shadow-base shadow-neutral-950/100">
-          <ul className="grid min-h-screen gap-2 lg:min-h-fit">
-            {accessories.map(function ({ name, value, id, active }, i) {
-              return (
-                <li className={liClassName} key={i}>
-                  <ControlInputs
-                    value={value}
-                    id={id}
-                    onChange={(e) => checkboxChange(e)}
-                    checked={active}
-                  />
-                  <ControlLabel htmlFor={id}>{name}</ControlLabel>
-                </li>
-              );
-            })}
-          </ul>
-        </li>
+    <>
+      <div className="max-w-fit">
+        <button
+          className={buttonCSS}
+          onClick={(e) => {
+            setVanSelect(true);
+          }}
+        >
+          <ImagesVan className={iconCSS} />
+        </button>
+      </div>
 
-        <li className="rounded bg-neutral-900 p-3 shadow-base shadow-neutral-950/100">
-          <div className="grid grid-cols-2 gap-1">
-            <button
-              className={buttonCSS}
-              onClick={viewChange}
-              name="vanView"
-              value={mextView}
-            >
-              <Icons className={iconCSS} icon="rotateleft" />
-            </button>
-            <button
-              className={buttonCSS}
-              onClick={viewChange}
-              name="vanView"
-              value={previousView}
-            >
-              <Icons className={iconCSS} icon="rotateright" />
-            </button>
-          </div>
-        </li>
+      <div className="max-w-fit">
+        <input
+          type="range"
+          id="zoom"
+          name="zoom"
+          min={0}
+          max={100}
+          step={5}
+          value={zoomLevel}
+          onChange={(e) => {
+            changeZoom(e.currentTarget.value);
+          }}
+        />
+      </div>
 
-        <li className="hidden rounded bg-neutral-900 p-3 shadow-base shadow-neutral-950/100 lg:block">
-          <div className="grid grid-cols-3 gap-1">
-            <button
-              className={buttonCSS}
-              onClick={(e) =>
-                setControlOptions((prevControls) => ({
-                  ...prevControls,
-                  position: {
-                    left: false,
-                    top: true,
-                    right: true,
-                    bottom: false,
-                  },
-                }))
-              }
-              name="vanView"
-              value={mextView}
-            >
-              <Icons className={iconCSS} icon="positiontopright" />
-            </button>
-            <button
-              className={buttonCSS}
-              onClick={(e) =>
-                setControlOptions((prevControls) => ({
-                  ...prevControls,
-                  position: {
-                    left: false,
-                    top: false,
-                    right: true,
-                    bottom: true,
-                  },
-                }))
-              }
-              name="vanView"
-              value={mextView}
-            >
-              <Icons className={iconCSS} icon="positionbottomright" />
-            </button>
-            <button
-              className={buttonCSS}
-              onClick={(e) =>
-                setControlOptions((prevControls) => ({
-                  ...prevControls,
-                  position: {
-                    left: true,
-                    top: false,
-                    right: false,
-                    bottom: true,
-                  },
-                }))
-              }
-              name="vanView"
-              value={mextView}
-            >
-              <Icons className={iconCSS} icon="positionbottomleft" />
-            </button>
-          </div>
-        </li>
+      <div className="max-w-fit">
+        <ControlsRotate views={views} {...{ viewChange, css }} />
+      </div>
 
-        <li className="rounded bg-neutral-900 p-3 shadow-base shadow-neutral-950/100">
-          <h2 className="mb-1 flex w-full items-center border-b pb-1">
-            {vanBuild[vanBuild.currVan].base.name}
-            <button
-              className="ml-auto h-[48px] w-[48px] rounded bg-neutral-700 p-2  text-xs hover:bg-amber-500 lg:h-auto"
-              onClick={(e) => {
-                setVanSelect(true);
-              }}
-            >
-              <ImagesVan />
-            </button>
-          </h2>
-          <ul className="grid w-full grid-cols-2 gap-2">
-            <li>Base:</li>
-            <li className="text-left">
-              {priceFormatter.format(vanBuild[vanBuild.currVan].price.base)}
-            </li>
-            <li>Accessories:</li>
-            <li className="text-left">
-              {priceFormatter.format(
-                vanBuild[vanBuild.currVan].price.accessories,
-              )}
-            </li>
-            <li>Total:</li>
-            <li className="text-left">
-              {priceFormatter.format(vanBuild[vanBuild.currVan].price.total)}
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </div>
+      <div className="max-w-fit ">
+        <ControlsPosition
+          css={css}
+          menuChange={menuChange}
+          menuPosition={menu.position}
+        />
+      </div>
+
+      <MenuButton
+        menuChange={menuChange}
+        menu={menu}
+        className={`relative z-10 h-12 w-12 rounded p-2 shadow-base lg:hidden ${
+          menu.open ? "bg-amber-500" : "bg-neutral-800"
+        }`}
+      />
+
+      <div
+        className={`${css.controlBoxCSS} hidden max-w-fit text-white lg:block`}
+      >
+        <VanDetails currVan={currVan} />
+      </div>
+    </>
   );
 }

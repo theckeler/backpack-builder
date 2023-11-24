@@ -4,7 +4,12 @@ import NextImage from "next/image";
 import getActiveView from "@/components/Helpers/getActiveView";
 import getActiveViewIndex from "@/components/Helpers/getActiveViewIndex";
 
-export default function ViewOutput({ vanView, vanBase, accessories }) {
+export default function ViewOutput({
+  vanView,
+  vanBase,
+  accessories,
+  zoomLevel,
+}) {
   const activeView = getActiveView(vanView);
   const activeViewID = getActiveViewIndex(vanView);
   const previousView =
@@ -18,7 +23,7 @@ export default function ViewOutput({ vanView, vanBase, accessories }) {
 
   if (vanBase.images[activeView]) {
     return (
-      <div className="fixed z-10 h-screen w-screen">
+      <>
         <link
           rel="prefetch"
           as="image"
@@ -32,13 +37,14 @@ export default function ViewOutput({ vanView, vanBase, accessories }) {
 
         <NextImage
           className={vanBase.className}
-          src={vanBase.images[activeView] + "&width=2000"}
+          src={vanBase.images[activeView]}
           alt=""
-          fill
+          // fill
+          width={3840}
+          height={2155}
           priority={true}
           loading="eager"
-          // placeholder="blur"
-          // blurDataURL={vanBase.images[activeView] + "&width=400"}
+          style={{ transform: `scale(${zoomLevel / 100})` }}
         />
 
         {accessories.map((accessory, i) => {
@@ -46,15 +52,18 @@ export default function ViewOutput({ vanView, vanBase, accessories }) {
             accessory.active && (
               <NextImage
                 key={i}
-                className="z-10 object-cover"
-                src={accessory.images[activeView] + "&width=2000"}
+                className={vanBase.className}
+                style={{ transform: `scale(${zoomLevel / 100})` }}
+                src={accessory.images[activeView]}
                 alt=""
-                fill
+                // fill
+                width={3840}
+                height={2155}
               />
             )
           );
         })}
-      </div>
+      </>
     );
   }
 

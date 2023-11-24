@@ -50,30 +50,6 @@ const sprinterVan = {
           "https://cdn.shopify.com/s/files/1/0616/3405/2352/files/sprinter-r-p-AccessoryRack.png?v=1700163309",
         frontPassenger: "",
       },
-      //  conflicts: [2],
-    },
-    {
-      name: "Accessory Rack2",
-      value: "AccessoryRack2",
-      id: "AccessoryRack2",
-      active: false,
-      title: "Rover Vans Tire Carrier & Ladder Combo for Sprinter",
-      href: "https://rovervans.com/products/rover-vans-tire-carrier-ladder-combo",
-      price: 2999.0,
-      images: {
-        front: "",
-        frontDriver: "",
-        driver: "",
-        rearDriver:
-          "https://cdn.shopify.com/s/files/1/0616/3405/2352/files/sprinter-r-d-AccessoryRack.png?v=1700163309",
-        rear: "https://cdn.shopify.com/s/files/1/0616/3405/2352/files/sprinter-r-AccessoryRack.png?v=1700163309",
-        rearPassenger:
-          "https://cdn.shopify.com/s/files/1/0616/3405/2352/files/sprinter-r-p-AccessoryRack.png?v=1700163309",
-        Passenger:
-          "https://cdn.shopify.com/s/files/1/0616/3405/2352/files/sprinter-r-p-AccessoryRack.png?v=1700163309",
-        frontPassenger: "",
-      },
-      // conflicts: [1],
     },
   ],
 };
