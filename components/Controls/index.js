@@ -1,15 +1,17 @@
 "use client";
+import { useState } from "react";
 
-import ControlsAccessories from "@/components/Controls/ControlsAccessories";
-import MenuButton from "@/components/Controls/MenuButton";
+// import ControlsAccessories from "@/components/Controls/ControlsAccessories";
+import ButtonMenu from "@/components/Buttons/Menu";
 import ControlsRotate from "@/components/Controls/ControlsRotate";
 import ControlsPosition from "@/components/Controls/ControlsPosition";
 import VanDetails from "@/components/Screens/VanDetails";
 import ImagesVan from "@/images/van";
+import { Icons } from "@/images/Icons";
+import ButtonWrapper from "@/components/Buttons";
 
 export default function ControlsIndex({
   menu,
-  css,
   views,
   currVan,
   viewChange,
@@ -18,58 +20,78 @@ export default function ControlsIndex({
   changeZoom,
   zoomLevel,
 }) {
-  const { iconCSS, buttonCSS } = css;
+  const [zoom, setZoom] = useState(false);
+  const handleZoomChange = () => {
+    setZoom(!zoom);
+  };
+
+  const handleVanChange = () => {
+    setVanSelect(true);
+  };
 
   return (
     <>
       <div className="max-w-fit">
-        <button
-          className={buttonCSS}
-          onClick={(e) => {
-            setVanSelect(true);
-          }}
+        <ButtonWrapper
+          className="bg-neutral-700 hover:bg-amber-500"
+          onClick={handleVanChange}
         >
-          <ImagesVan className={iconCSS} />
-        </button>
+          <ImagesVan />
+        </ButtonWrapper>
       </div>
 
       <div className="max-w-fit">
-        <input
-          type="range"
-          id="zoom"
-          name="zoom"
-          min={0}
-          max={100}
-          step={5}
-          value={zoomLevel}
-          onChange={(e) => {
-            changeZoom(e.currentTarget.value);
-          }}
-        />
+        {zoom && (
+          <div className="fixed bottom-0 left-0 z-50 w-full bg-neutral-200/50 p-2 pb-20 shadow-inner backdrop-blur-sm">
+            <span className="text-sm font-bold">Zoom:</span>
+            <input
+              className="w-full"
+              type="range"
+              id="zoom"
+              name="zoom"
+              min={0}
+              max={100}
+              step={5}
+              value={zoomLevel}
+              onChange={(e) => {
+                changeZoom(e.currentTarget.value);
+              }}
+            />
+          </div>
+        )}
+        <ButtonWrapper
+          className={
+            zoom
+              ? "relative z-50 bg-amber-500 shadow-inner"
+              : "bg-neutral-700 hover:bg-amber-500"
+          }
+          onClick={handleZoomChange}
+        >
+          <Icons icon="zoom" />
+        </ButtonWrapper>
       </div>
 
       <div className="max-w-fit">
-        <ControlsRotate views={views} {...{ viewChange, css }} />
+        <ControlsRotate views={views} {...{ viewChange }} zoom={zoom} />
       </div>
 
-      <div className="max-w-fit ">
+      <div className="hidden max-w-fit sm:block">
         <ControlsPosition
-          css={css}
           menuChange={menuChange}
           menuPosition={menu.position}
         />
       </div>
 
-      <MenuButton
+      <ButtonMenu
         menuChange={menuChange}
         menu={menu}
-        className={`relative z-10 h-12 w-12 rounded p-2 shadow-base lg:hidden ${
+        className={`relative z-10 lg:hidden ${
           menu.open ? "bg-amber-500" : "bg-neutral-800"
         }`}
       />
 
       <div
-        className={`${css.controlBoxCSS} hidden max-w-fit text-white lg:block`}
+        className={`hidden max-w-fit rounded p-3 text-white shadow-neutral-950/100 lg:block lg:bg-neutral-900 lg:shadow-base`}
       >
         <VanDetails currVan={currVan} />
       </div>

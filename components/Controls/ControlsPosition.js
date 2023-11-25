@@ -1,73 +1,71 @@
 "use client";
 
 import { Icons } from "@/images/Icons";
+import ButtonWrapper from "@/components/Buttons";
 
-export default function ControlsPosition({ menuChange, css, menuPosition }) {
-  const { iconCSS, buttonCSS } = css;
+export default function ControlsPosition({ menuChange, menuPosition }) {
+  const buttons = [
+    {
+      className:
+        menuPosition.top && menuPosition.right
+          ? " bg-amber-400 fill-black"
+          : " bg-neutral-700 fill-white",
+      onClick: () =>
+        menuChange({
+          position: {
+            left: false,
+            top: true,
+            right: true,
+            bottom: false,
+          },
+        }),
+      icon: "positiontopright",
+    },
+    {
+      className:
+        menuPosition.bottom && menuPosition.right
+          ? " bg-amber-400 fill-black"
+          : " bg-neutral-700 fill-white",
+      onClick: () =>
+        menuChange({
+          position: {
+            left: false,
+            top: false,
+            right: true,
+            bottom: true,
+          },
+        }),
+      icon: "positionbottomright",
+    },
+    {
+      className:
+        (menuPosition.bottom && menuPosition.left
+          ? " bg-amber-400 fill-black"
+          : " bg-neutral-700 fill-white") + " hidden lg:block",
+      onClick: () =>
+        menuChange({
+          position: {
+            left: true,
+            top: false,
+            right: false,
+            bottom: true,
+          },
+        }),
+      icon: "positionbottomleft",
+    },
+  ];
 
   return (
     <div className="grid auto-cols-max grid-flow-col gap-1">
-      <button
-        className={
-          buttonCSS +
-          (menuPosition.top && menuPosition.right
-            ? " bg-amber-400 fill-black"
-            : " bg-neutral-700 fill-white")
-        }
-        onClick={() =>
-          menuChange({
-            position: {
-              left: false,
-              top: true,
-              right: true,
-              bottom: false,
-            },
-          })
-        }
-      >
-        <Icons className={iconCSS} icon="positiontopright" />
-      </button>
-      <button
-        className={
-          buttonCSS +
-          (menuPosition.bottom && menuPosition.right
-            ? " bg-amber-400 fill-black"
-            : " bg-neutral-700 fill-white")
-        }
-        onClick={() =>
-          menuChange({
-            position: {
-              left: false,
-              top: false,
-              right: true,
-              bottom: true,
-            },
-          })
-        }
-      >
-        <Icons className={iconCSS} icon="positionbottomright" />
-      </button>
-      <button
-        className={
-          buttonCSS +
-          (menuPosition.bottom && menuPosition.left
-            ? " bg-amber-400 fill-black"
-            : " bg-neutral-700 fill-white") +
-          " hidden lg:block"
-        }
-        onClick={() =>
-          menuChange({
-            position: {
-              left: true,
-              top: false,
-              right: false,
-              bottom: true,
-            },
-          })
-        }
-      >
-        <Icons className={iconCSS} icon="positionbottomleft" />
-      </button>
+      {buttons.map((button, index) => (
+        <ButtonWrapper
+          key={index}
+          className={button.className}
+          onClick={button.onClick}
+        >
+          <Icons icon={button.icon} />
+        </ButtonWrapper>
+      ))}
     </div>
   );
 }

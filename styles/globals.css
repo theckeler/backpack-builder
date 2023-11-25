@@ -1,18 +1,28 @@
 @tailwind base;
 @tailwind components;
-@tailwind utilities;
 
 .overflow-y-auto::-webkit-scrollbar {
-  /* Customize the scrollbar width */
-  height: 6px;
+  @apply h-2;
+}
+
+input[type="range"] {
+  @apply w-full appearance-none rounded bg-neutral-900 shadow-inner outline-0;
+}
+
+::-webkit-slider-thumb {
+  @apply h-12 w-12 cursor-pointer appearance-none rounded bg-amber-400 shadow-base;
+}
+
+::-moz-range-thumb {
+  @apply h-12 w-12 cursor-pointer appearance-none rounded bg-amber-400 shadow-base;
 }
 
 .overflow-y-auto::-webkit-scrollbar-track {
-  /* Customize the scrollbar track */
-  background-color: #262626;
+  @apply bg-neutral-900;
 }
 
 .overflow-y-auto::-webkit-scrollbar-thumb {
-  /* Customize the scrollbar thumb */
-  background-color: #fbbf24;
+  @apply bg-amber-400;
 }
+
+@tailwind utilities;

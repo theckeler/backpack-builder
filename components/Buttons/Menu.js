@@ -1,16 +1,17 @@
 "use client";
 
 import { Icons } from "@/images/Icons";
+import ButtonWrapper from "./index";
 
-export default function MenuButton({ menu, menuChange, className }) {
+export default function ButtonMenu({ menu, menuChange, className }) {
   return (
-    <button
+    <ButtonWrapper
       className={className}
       onClick={() => {
         menuChange({ open: !menu.open });
       }}
     >
-      <Icons icon="hamburger" className="h-full w-full fill-white" />
-    </button>
+      <Icons icon="hamburger" />
+    </ButtonWrapper>
   );
 }

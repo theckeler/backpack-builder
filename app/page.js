@@ -10,11 +10,11 @@ import ViewOutput from "@/components/ViewOutput";
 import SelectVan from "@/components/Screens/SelectVan";
 import ImagesBackground from "@/images/Background";
 import Loading from "@/components/Screens/Loading";
-import MenuButton from "@/components/Controls/MenuButton";
-import ControlsRotate from "@/components/Controls/ControlsRotate";
-import ControlsPosition from "@/components/Controls/ControlsPosition";
-import VanDetails from "@/components/Screens/VanDetails";
-import ImagesVan from "@/images/van";
+// import MenuButton from "@/components/Controls/MenuButton";
+// import ControlsRotate from "@/components/Controls/ControlsRotate";
+// import ControlsPosition from "@/components/Controls/ControlsPosition";
+// import VanDetails from "@/components/Screens/VanDetails";
+// import ImagesVan from "@/images/van";
 import ControlsIndex from "@/components/Controls";
 
 export default function VanBuilder() {
@@ -141,7 +141,7 @@ export default function VanBuilder() {
 
   const [menu, setMenu] = useState({
     open: false,
-    zoomLevel: 100,
+    zoomLevel: 50,
     position: {
       left: false,
       top: false,
@@ -150,14 +150,7 @@ export default function VanBuilder() {
     },
   });
 
-  const css = {
-    controlBoxCSS:
-      "rounded p-3 lg:shadow-base shadow-neutral-950/100 lg:bg-neutral-900",
-    buttonCSS:
-      "flex w-full justify-center rounded bg-neutral-700 hover:bg-amber-500 group shadow-base",
-    iconCSS:
-      "w-12 h-12 fill-neutral-100 group-hover:fill-neutral-800 p-2 rounded-xl",
-  };
+  
 
   const whichViewID = getActiveViewIndex(vanBuild.vanView);
   const previousView =
@@ -179,7 +172,7 @@ export default function VanBuilder() {
       )}
 
       <div
-        className={`fixed left-0 top-0 z-30 grid min-h-screen w-screen auto-cols-max grid-flow-col gap-3 p-2 ${
+        className={`fixed left-0 top-0 z-20  grid h-[calc(100vh-114px)] max-h-screen min-h-[100dvh] w-full auto-cols-max grid-flow-col flex-col gap-3 p-2 ${
           menu.position.bottom && "items-end"
         } ${menu.position.right && "justify-end"} ${
           menu.position.top && "lg:items-start"
@@ -188,7 +181,6 @@ export default function VanBuilder() {
       >
         <ControlsIndex
           menu={menu}
-          css={css}
           currVan={vanBuild[vanBuild.currVan]}
           views={{
             whichViewID: whichViewID,
@@ -209,7 +201,7 @@ export default function VanBuilder() {
         >
           <ControlsAccessories
             setControlOptions={setControlOptions}
-            css={{ ...css, liClassName: "gap-3 items-center group" }}
+            // css={{ ...css, liClassName: "gap-3 items-center group" }}
             accessories={vanBuild[vanBuild.currVan].Accessories}
             menuChange={menuChange}
             checkboxChange={checkboxChange}
@@ -217,7 +209,7 @@ export default function VanBuilder() {
         </div>
       </div>
 
-      <div className="fixed z-10 h-screen w-screen">
+      <div className="fixed z-10 flex h-[calc(100vh-114px)] max-h-screen min-h-[100dvh] w-full flex-col">
         <ViewOutput
           accessories={vanBuild[vanBuild.currVan].Accessories}
           vanView={vanBuild.vanView}
