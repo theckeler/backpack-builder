@@ -6,7 +6,6 @@ export default function VanDetails({ currVan }) {
     <>
       <h2 className="mb-1 flex w-full items-center border-b pb-1">
         {currVan.base.name}
-       
       </h2>
       <ul className="grid w-full grid-cols-2 gap-2 text-sm">
         <li>Base:</li>

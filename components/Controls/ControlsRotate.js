@@ -1,7 +1,7 @@
 "use client";
 
-import { Icons } from "@/images/Icons";
 import ButtonWrapper from "@/components/Buttons";
+import { Icons } from "@/images/Icons";
 
 export default function ControlsRotate({
   viewChange,

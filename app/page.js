@@ -1,21 +1,17 @@
 "use client";
 import { useEffect, useState } from "react";
 
+import getActiveViewIndex from "@/components/Helpers/getActiveViewIndex";
 import sprinterVan from "@/data/sprinterVan";
 import transitVan from "@/data/transitVan";
-import getActiveViewIndex from "@/components/Helpers/getActiveViewIndex";
 
-import ControlsAccessories from "@/components/Controls/ControlsAccessories";
-import ViewOutput from "@/components/ViewOutput";
-import SelectVan from "@/components/Screens/SelectVan";
-import ImagesBackground from "@/images/Background";
-import Loading from "@/components/Screens/Loading";
-// import MenuButton from "@/components/Controls/MenuButton";
-// import ControlsRotate from "@/components/Controls/ControlsRotate";
-// import ControlsPosition from "@/components/Controls/ControlsPosition";
-// import VanDetails from "@/components/Screens/VanDetails";
-// import ImagesVan from "@/images/van";
 import ControlsIndex from "@/components/Controls";
+import ControlsAccessories from "@/components/Controls/ControlsAccessories";
+import Loading from "@/components/Screens/Loading";
+import SelectVan from "@/components/Screens/SelectVan";
+import VanDetails from "@/components/Screens/VanDetails";
+import ViewOutput from "@/components/ViewOutput";
+import ImagesBackground from "@/images/Background";
 
 export default function VanBuilder() {
   const [vanBuild, setVanBuild] = useState({
@@ -150,8 +146,6 @@ export default function VanBuilder() {
     },
   });
 
-  
-
   const whichViewID = getActiveViewIndex(vanBuild.vanView);
   const previousView =
     whichViewID == 0 ? vanBuild.vanView.length - 1 : whichViewID - 1;
@@ -172,13 +166,19 @@ export default function VanBuilder() {
       )}
 
       <div
-        className={`fixed left-0 top-0 z-20  grid h-[calc(100vh-114px)] max-h-screen min-h-[100dvh] w-full auto-cols-max grid-flow-col flex-col gap-3 p-2 ${
+        className={`fixed left-0 top-0 z-20 grid h-[calc(100vh-114px)] max-h-screen min-h-[100dvh] w-full auto-cols-max grid-flow-col flex-col gap-3 p-2 lg:pr-52 ${
           menu.position.bottom && "items-end"
         } ${menu.position.right && "justify-end"} ${
           menu.position.top && "lg:items-start"
         } ${menu.position.left && "lg:justify-start"}`}
         id="controls"
       >
+        <div
+          className={`absolute left-3 top-3 hidden max-w-fit rounded p-3 text-white shadow-neutral-950/100 lg:block lg:bg-neutral-900 lg:shadow-base`}
+        >
+          <VanDetails currVan={vanBuild[vanBuild.currVan]} />
+        </div>
+
         <ControlsIndex
           menu={menu}
           currVan={vanBuild[vanBuild.currVan]}
@@ -195,13 +195,12 @@ export default function VanBuilder() {
         />
 
         <div
-          className={`fixed right-0 top-0 h-screen w-screen overflow-y-auto bg-neutral-200/80 shadow-inner lg:h-max lg:w-max ${
+          className={`fixed right-0 top-0 h-screen w-screen overflow-y-auto bg-neutral-200/75 shadow-inner  lg:w-max ${
             menu.open ? "" : " hidden lg:block "
           }`}
         >
           <ControlsAccessories
             setControlOptions={setControlOptions}
-            // css={{ ...css, liClassName: "gap-3 items-center group" }}
             accessories={vanBuild[vanBuild.currVan].Accessories}
             menuChange={menuChange}
             checkboxChange={checkboxChange}

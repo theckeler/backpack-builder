@@ -2,13 +2,12 @@
 import { useState } from "react";
 
 // import ControlsAccessories from "@/components/Controls/ControlsAccessories";
-import ButtonMenu from "@/components/Buttons/Menu";
-import ControlsRotate from "@/components/Controls/ControlsRotate";
-import ControlsPosition from "@/components/Controls/ControlsPosition";
-import VanDetails from "@/components/Screens/VanDetails";
-import ImagesVan from "@/images/van";
-import { Icons } from "@/images/Icons";
 import ButtonWrapper from "@/components/Buttons";
+import ButtonMenu from "@/components/Buttons/Menu";
+import ControlsPosition from "@/components/Controls/ControlsPosition";
+import ControlsRotate from "@/components/Controls/ControlsRotate";
+import { Icons } from "@/images/Icons";
+import ImagesVan from "@/images/van";
 
 export default function ControlsIndex({
   menu,
@@ -89,12 +88,6 @@ export default function ControlsIndex({
           menu.open ? "bg-amber-500" : "bg-neutral-800"
         }`}
       />
-
-      <div
-        className={`hidden max-w-fit rounded p-3 text-white shadow-neutral-950/100 lg:block lg:bg-neutral-900 lg:shadow-base`}
-      >
-        <VanDetails currVan={currVan} />
-      </div>
     </>
   );
 }
