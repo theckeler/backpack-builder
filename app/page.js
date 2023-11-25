@@ -158,7 +158,7 @@ export default function VanBuilder() {
     >
       {vanSelect && (
         <div
-          className="fixed left-0 top-0 z-50 flex min-h-screen w-screen items-center justify-center bg-neutral-900/90 p-10 backdrop-blur-sm"
+          className="fixed left-0 top-0 z-50 flex min-h-screen w-screen items-center justify-center bg-neutral-900/90 backdrop-blur-sm"
           id="change-van"
         >
           {loading ? <Loading /> : <SelectVan vanChange={vanChange} />}

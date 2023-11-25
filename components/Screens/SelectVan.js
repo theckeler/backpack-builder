@@ -25,10 +25,9 @@ export default function SelectVan({ vanChange }) {
   return (
     <ul className="group grid justify-items-center gap-3 md:grid-cols-2">
       <li className="col-span-full">
-        <div className="fill-sky-400">
-          <Logo />
-        </div>
-        <div className="mt-4 text-4xl font-extralight text-amber-100 [text-shadow:_0_0_1em_#000]">
+        <Logo className="mx-auto h-full max-h-36 fill-sky-400" />
+
+        <div className="mt-4 text-4xl font-extralight text-amber-100">
           Select your van:
         </div>
       </li>
@@ -41,7 +40,7 @@ export default function SelectVan({ vanChange }) {
               className={buttons.className}
               onClick={buttons.onClick}
             >
-              <div className="h-12">
+              <div className="h-10">
                 <ImagesVan className="h-full w-full " />
               </div>
               {title}
