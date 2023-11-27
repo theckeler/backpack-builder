@@ -16,8 +16,6 @@ export default function ViewOutput({
     activeViewID == 0 ? vanView.length - 1 : activeViewID - 1;
   const nextView = activeViewID == vanView.length - 1 ? 0 : activeViewID + 1;
 
-  const zoomLevelAdjust = 35;
-
   if (vanBase.images[activeView]) {
     return (
       <>
@@ -41,7 +39,7 @@ export default function ViewOutput({
           // height={2155}
           priority={true}
           loading="eager"
-          style={{ transform: `scale(${zoomLevel / zoomLevelAdjust})` }}
+          style={{ transform: `scale(${zoomLevel})` }}
         />
 
         {accessories.length > 0 &&
@@ -51,7 +49,7 @@ export default function ViewOutput({
                 <NextImage
                   key={i}
                   className="h-full w-full object-contain lg:object-cover"
-                  style={{ transform: `scale(${zoomLevel / zoomLevelAdjust})` }}
+                  style={{ transform: `scale(${zoomLevel})` }}
                   src={accessory.images[activeView]}
                   alt=""
                   // fill

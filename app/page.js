@@ -6,10 +6,8 @@ import sprinterVan from "@/data/sprinterVan";
 import transitVan from "@/data/transitVan";
 
 import ControlsIndex from "@/components/Controls";
-import ControlsAccessories from "@/components/Controls/ControlsAccessories";
 import Loading from "@/components/Screens/Loading";
 import SelectVan from "@/components/Screens/SelectVan";
-import VanDetails from "@/components/Screens/VanDetails";
 import ViewOutput from "@/components/ViewOutput";
 import ImagesBackground from "@/images/Background";
 
@@ -137,7 +135,7 @@ export default function VanBuilder() {
 
   const [menu, setMenu] = useState({
     open: false,
-    zoomLevel: 50,
+    zoomLevel: 1,
     position: {
       left: false,
       top: false,
@@ -153,12 +151,10 @@ export default function VanBuilder() {
     whichViewID == vanBuild.vanView.length - 1 ? 0 : whichViewID + 1;
 
   return (
-    <main
-      className={`relative flex min-h-screen select-none flex-col items-center justify-between`}
-    >
+    <div className="relative flex max-h-screen min-h-[100dvh] select-none flex-col items-center justify-between overflow-hidden">
       {vanSelect && (
         <div
-          className="fixed left-0 top-0 z-50 flex min-h-screen w-screen items-center justify-center bg-neutral-900/90 backdrop-blur-sm"
+          className="absolute left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-neutral-900/90 backdrop-blur-sm"
           id="change-van"
         >
           {loading ? <Loading /> : <SelectVan vanChange={vanChange} />}
@@ -166,20 +162,11 @@ export default function VanBuilder() {
       )}
 
       <div
-        className={`fixed left-0 top-0 z-20 grid h-[calc(100vh-114px)] max-h-screen min-h-[100dvh] w-full auto-cols-max grid-flow-col flex-col gap-3 p-2 lg:pr-52 ${
-          menu.position.bottom && "items-end"
-        } ${menu.position.right && "justify-end"} ${
-          menu.position.top && "lg:items-start"
-        } ${menu.position.left && "lg:justify-start"}`}
+        className="absolute left-0 top-0 z-20 grid h-full w-full items-end  lg:grid-cols-[1fr_300px]"
         id="controls"
       >
-        <div
-          className={`absolute left-3 top-3 hidden max-w-fit rounded p-3 text-white shadow-neutral-950/100 lg:block lg:bg-neutral-900 lg:shadow-base`}
-        >
-          <VanDetails currVan={vanBuild[vanBuild.currVan]} />
-        </div>
-
         <ControlsIndex
+          setControlOptions={setControlOptions}
           menu={menu}
           currVan={vanBuild[vanBuild.currVan]}
           views={{
@@ -192,23 +179,12 @@ export default function VanBuilder() {
           setVanSelect={setVanSelect}
           changeZoom={changeZoom}
           zoomLevel={menu.zoomLevel}
+          accessories={vanBuild[vanBuild.currVan].Accessories}
+          checkboxChange={checkboxChange}
         />
-
-        <div
-          className={`fixed right-0 top-0 h-screen w-screen overflow-y-auto bg-neutral-200/75 shadow-inner  lg:w-max ${
-            menu.open ? "" : " hidden lg:block "
-          }`}
-        >
-          <ControlsAccessories
-            setControlOptions={setControlOptions}
-            accessories={vanBuild[vanBuild.currVan].Accessories}
-            menuChange={menuChange}
-            checkboxChange={checkboxChange}
-          />
-        </div>
       </div>
 
-      <div className="fixed z-10 flex h-[calc(100vh-114px)] max-h-screen min-h-[100dvh] w-full flex-col">
+      <div className="absolute z-10 flex h-full w-full flex-col">
         <ViewOutput
           accessories={vanBuild[vanBuild.currVan].Accessories}
           vanView={vanBuild.vanView}
@@ -218,6 +194,6 @@ export default function VanBuilder() {
       </div>
 
       <ImagesBackground className="fill-neutral-950 opacity-10" />
-    </main>
+    </div>
   );
 }

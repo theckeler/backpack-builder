@@ -6,7 +6,7 @@ import { Icons } from "@/images/Icons";
 export default function ControlsRotate({
   viewChange,
   views,
-  className = "bg-neutral-700  hover:bg-amber-500",
+  className = "bg-neutral-700  lg:hover:bg-amber-500",
   zoom,
 }) {
   const { nextView, previousView } = views;

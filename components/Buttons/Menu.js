@@ -11,7 +11,7 @@ export default function ButtonMenu({ menu, menuChange, className }) {
         menuChange({ open: !menu.open });
       }}
     >
-      <Icons icon="hamburger" />
+      <Icons icon={menu.open ? "close" : "hamburger"} />
     </ButtonWrapper>
   );
 }

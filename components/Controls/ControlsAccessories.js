@@ -4,8 +4,10 @@ import ControlInputs from "./Inputs";
 import ControlLabel from "./Label";
 
 export default function ControlsAccessories({ checkboxChange, accessories }) {
-  const accessoriesTemp = [...Array(100)].map(() => ({ ...accessories[0] }));
-  console.log(accessoriesTemp);
+  const accessoriesTemp = [...Array(40)].map(() => ({ ...accessories[0] }));
+  // console.log(accessoriesTemp);
+
+  
 
   return (
     <ul className="grid items-end gap-2 px-3 py-6">
