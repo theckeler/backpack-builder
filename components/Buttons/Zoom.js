@@ -12,9 +12,9 @@ export default function ButtonZoom({
   return (
     <>
       {zoom && (
-        <div className="fixed bottom-0 left-0 z-50 flex h-full w-full items-end  bg-neutral-200/50  pt-10 shadow-inner">
+        <div className="absolute bottom-0 left-0 z-50 flex h-full w-full items-end  bg-neutral-100/10  pt-10">
           {/* <div className="mb-1 w-full text-center text-sm font-bold">Zoom:</div> */}
-          <div className="backdrop-blur-s4 w-full bg-white/50 p-6 pb-20">
+          <div className="backdrop-blur-s4 w-full bg-white/50 p-6 pb-20 shadow-inner">
             <input
               className="w-full"
               type="range"
@@ -35,7 +35,7 @@ export default function ButtonZoom({
         className={
           zoom
             ? "relative z-50 bg-sky-500 fill-black shadow-inner"
-            : "bg-neutral-700 lg:hover:bg-amber-500"
+            : "bg-neutral-700 "
         }
         onClick={handleZoomChange}
       >

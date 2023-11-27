@@ -150,8 +150,18 @@ export default function VanBuilder() {
   const nextView =
     whichViewID == vanBuild.vanView.length - 1 ? 0 : whichViewID + 1;
 
+  const [appSettings, setAppSettings] = useState({
+    fullscreen: false,
+  });
+
   return (
-    <div className="relative flex max-h-screen min-h-[100dvh] select-none flex-col items-center justify-between overflow-hidden">
+    <div
+      className={`relative flex select-none flex-col items-center justify-between overflow-hidden ${
+        appSettings.fullscreen
+          ? "max-h-screen min-h-[100dvh]"
+          : "min-h-[500px] md:min-h-[600px] lg:min-h-[700px] xl:min-h-[900px] 2xl:min-h-[1000px]"
+      }`}
+    >
       {vanSelect && (
         <div
           className="absolute left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-neutral-900/90 backdrop-blur-sm"

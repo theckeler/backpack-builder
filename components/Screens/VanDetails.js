@@ -31,11 +31,7 @@ export default function VanDetails({ currVan, setVanSelect, showVanDetails }) {
       </li>
       <li className="">
         <ButtonWrapper
-          className={
-            showVanDetails
-              ? "bg-neutral-700 lg:hover:bg-amber-500"
-              : "bg-neutral-700 lg:hover:bg-amber-500"
-          }
+          className={showVanDetails ? "bg-neutral-700 " : "bg-neutral-700 "}
           onClick={handleVanChange}
         >
           <Icons icon="settings" />

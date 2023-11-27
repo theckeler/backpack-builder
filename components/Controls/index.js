@@ -49,8 +49,8 @@ export default function ControlsIndex({
 
         <div className="max-w-fit lg:hidden">
           <ButtonWrapper
-            className={`bg-neutral-700 lg:hover:bg-amber-500 ${
-              showVanDetails ? "bg-sky-500 shadow-none" : ""
+            className={`bg-neutral-700  ${
+              showVanDetails ? "bg-sky-500 shadow-inner" : ""
             }`}
             onClick={handleShowVanDetails}
           >
@@ -65,7 +65,7 @@ export default function ControlsIndex({
 
         {/* <div className="max-w-fit">
           <ButtonWrapper
-            className="bg-neutral-700 lg:hover:bg-amber-500"
+            className="bg-neutral-700 "
             onClick={handleVanChange}
           >
             <Icons icon="van" />
@@ -102,7 +102,7 @@ export default function ControlsIndex({
       </div>
 
       <div
-        className={`absolute right-0 top-0 h-screen w-screen overflow-y-auto bg-neutral-200/75 pb-4 shadow-inner backdrop-blur-sm lg:relative ${
+        className={`absolute right-0 top-0 h-full w-full overflow-y-auto bg-neutral-200/75 pb-4 shadow-inner backdrop-blur-sm lg:relative ${
           menu.open ? "" : " hidden lg:block "
         }`}
       >

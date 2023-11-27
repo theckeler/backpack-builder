@@ -8,12 +8,16 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="dark:bg-black">
-        {/* <header className="bg-black">asdasd</header> */}
+      <body className="">
+        <header className="flex min-h-[100px] items-center justify-center bg-sky-600 text-3xl text-white">
+          header
+        </header>
 
         {children}
 
-        {/* <footer className="bg-black">asdasd</footer> */}
+        <footer className="flex min-h-[100px] items-center justify-center bg-sky-600 text-3xl text-white">
+          footer
+        </footer>
       </body>
     </html>
   );
