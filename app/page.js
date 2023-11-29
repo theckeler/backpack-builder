@@ -109,7 +109,7 @@ export default function VanBuilder() {
     const defaultState = {
       accessories: { open: false },
       vanDetails: { open: false },
-      zoom: { open: false, level: 1 },
+      zoom: { open: false, level: menu.zoom.level },
     };
 
     setMenu((prevMenu) => {
@@ -176,7 +176,7 @@ export default function VanBuilder() {
         className="absolute left-0 top-0 z-20 grid h-full w-full items-end  xl:grid-cols-[1fr_300px]"
         id="controls"
       >
-        <div className="absolute left-0 top-0 z-20 h-full w-full  max-w-max bg-neutral-100/20 shadow-inner backdrop-blur-sm">
+        <div className="absolute left-0 top-0 z-30 h-full w-full  max-w-max bg-neutral-100/20 shadow-inner backdrop-blur-sm">
           {menu.vanDetails.open && (
             <VanDetails
               currVan={vanBuild[vanBuild.currVan]}
@@ -214,11 +214,11 @@ export default function VanBuilder() {
                   menuChange({ value: e.currentTarget.value, zoomLevel: true });
                 }}
               />
-            </div>{" "}
+            </div>
           </div>
         )}
 
-        <div className="z-20 grid auto-cols-max grid-flow-col items-end justify-end gap-3 bg-neutral-100/60 p-3 shadow-inner lg:bg-transparent lg:shadow-none">
+        <div className="z-20 grid auto-cols-max grid-flow-col items-end justify-end gap-3 bg-neutral-100/60 p-3 shadow-inner lg:bg-none lg:shadow-none">
           <ControlsIndex
             menu={menu}
             views={{
