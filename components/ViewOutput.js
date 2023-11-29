@@ -12,15 +12,15 @@ export default function ViewOutput({
   const activeView = getActiveView(vanView);
 
   const preloadImages = (imgObject) => {
-    // console.log("imgObject", imgObject);
-    const imageKeys = Object.keys(imgObject);
-    const imageUrls = imageKeys.map((key) => imgObject[key]);
+    if (typeof window !== "undefined") {
+      const imageKeys = Object.keys(imgObject);
+      const imageUrls = imageKeys.map((key) => imgObject[key]);
 
-    imageUrls.forEach((url) => {
-      // console.log("url:", url);
-      const img = new Image();
-      img.src = url;
-    });
+      imageUrls.forEach((url) => {
+        const img = new Image();
+        img.src = url;
+      });
+    }
   };
 
   useEffect(() => {
