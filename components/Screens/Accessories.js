@@ -1,17 +1,12 @@
 "use client";
 
-import ControlInputs from "./Inputs";
-import ControlLabel from "./Label";
+import ControlInputs from "../Controls/Inputs";
+import ControlLabel from "../Controls/Label";
 
 export default function ControlsAccessories({ checkboxChange, accessories }) {
-  const accessoriesTemp = [...Array(40)].map(() => ({ ...accessories[0] }));
-  // console.log(accessoriesTemp);
-
-  
-
   return (
     <ul className="grid items-end gap-2 px-3 py-6">
-      {accessoriesTemp.map(function ({ name, value, id, active }, i) {
+      {accessories.map(function ({ name, value, id, active }, i) {
         return (
           <li key={i}>
             <ControlInputs

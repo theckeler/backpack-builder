@@ -1,7 +1,4 @@
-export function Icons({
-  icon = "expandmore",
-  className = "h-12 w-12 rounded-xl fill-neutral-100 p-2",
-}) {
+export function Icons({ icon }) {
   if (!icon) return "";
   const IconMap = {
     hourglasstop: HourGlassTop,
@@ -30,7 +27,7 @@ export function Icons({
     settings: Settings,
   };
   const IconExport = IconMap[icon];
-  return <IconExport className={className} />;
+  return <IconExport className="h-12 w-12 rounded-xl p-2" />;
 }
 
 export function Swap({ className }) {

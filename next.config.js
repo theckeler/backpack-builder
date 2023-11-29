@@ -1,19 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-	images: {
-		remotePatterns: [
-			{
-				protocol: "https",
-				hostname: "picsum.photos",
-			},
-			{
-				protocol: "https",
-				hostname: "*.shopify.com",
-			},
-		],
-		//loader: "custom",
-		//loaderFile: "./components/loader.js",
-	},
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "picsum.photos",
+      },
+      {
+        protocol: "https",
+        hostname: "*.shopify.com",
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;

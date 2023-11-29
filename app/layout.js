@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
 
         {children}
 
-        <footer className="flex min-h-[100px] items-center justify-center bg-sky-600 text-3xl text-white">
+        <footer className="flex min-h-[100px] items-center justify-center bg-black text-3xl text-white">
           footer
         </footer>
       </body>

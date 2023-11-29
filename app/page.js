@@ -1,15 +1,18 @@
 "use client";
 import { useEffect, useState } from "react";
 
-import getActiveViewIndex from "@/components/Helpers/getActiveViewIndex";
-import sprinterVan from "@/data/sprinterVan";
-import transitVan from "@/data/transitVan";
-
+import ButtonWrapper from "@/components/ButtonWrapper";
 import ControlsIndex from "@/components/Controls";
+import getActiveViewIndex from "@/components/Helpers/getActiveViewIndex";
+import ControlsAccessories from "@/components/Screens/Accessories";
 import Loading from "@/components/Screens/Loading";
 import SelectVan from "@/components/Screens/SelectVan";
+import VanDetails from "@/components/Screens/VanDetails";
 import ViewOutput from "@/components/ViewOutput";
+import sprinterVan from "@/data/sprinterVan";
+import transitVan from "@/data/transitVan";
 import ImagesBackground from "@/images/Background";
+import { Icons } from "@/images/Icons";
 
 export default function VanBuilder() {
   const [vanBuild, setVanBuild] = useState({
@@ -17,22 +20,25 @@ export default function VanBuilder() {
     transitVan: { ...transitVan },
     promasterVan: { ...sprinterVan },
     vanView: [
-      { key: "rear", title: "Rear", active: false },
+      { key: "front", title: "Front", active: false },
+      { key: "frontDriver", title: "Front Driver", active: false },
       { key: "rearDriver", title: "Rear Driver", active: true },
+      { key: "rear", title: "Rear", active: false },
       { key: "rearPassenger", title: "Rear Passenger", active: false },
+      { key: "frontPassenger", title: "Front Passenger", active: false },
     ],
     windowMode: { dark: false, light: true },
     currVan: "sprinterVan",
   });
 
-  useEffect(() => {
-    console.log("vanBuild useEffect:", vanBuild);
-  }, [vanBuild]);
+  // useEffect(() => {
+  //   console.log("vanBuild useEffect:", vanBuild);
+  // }, [vanBuild]);
 
-  const [vanSelect, setVanSelect] = useState(true);
+  const [vanSelect, setVanSelect] = useState(false);
+  // const [vanSelect, setVanSelect] = useState(true);
   const vanChange = (e) => {
     const val = e.currentTarget.value;
-
     if (val) {
       setVanBuild((prevVanBuild) => ({
         ...prevVanBuild,
@@ -40,18 +46,9 @@ export default function VanBuilder() {
       }));
       setVanSelect(false);
     } else {
-      console.error("Invalid event or missing value property");
+      console.error("vanChange: Invalid event or missing value property");
     }
   };
-
-  const [controlOptions, setControlOptions] = useState({
-    position: {
-      left: false,
-      top: false,
-      right: true,
-      bottom: true,
-    },
-  });
 
   const viewChange = (e) => {
     const eName = e.currentTarget.name;
@@ -102,46 +99,50 @@ export default function VanBuilder() {
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
+    console.log(document.body.scrollWidth);
+
+    document.body.scrollWidth > 1024 && menuChange({ vanDetails: "force" });
     setLoading(false);
   }, []);
 
   const menuChange = (e) => {
-    if (e.position) {
-      setMenu((prevMenu) => ({
-        ...prevMenu,
-        position: {
-          ...e.position,
-        },
-      }));
-    } else if (e.zoom) {
-      setMenu((prevMenu) => ({
-        ...prevMenu,
-        zoom: e.zoom,
-      }));
-    } else {
-      setMenu((prevMenu) => ({
-        ...prevMenu,
-        open: !menu.open,
-      }));
-    }
-  };
+    const defaultState = {
+      accessories: { open: false },
+      vanDetails: { open: false },
+      zoom: { open: false, level: 1 },
+    };
 
-  const changeZoom = (value) => {
-    setMenu((prevMenu) => ({
-      ...prevMenu,
-      zoomLevel: value,
-    }));
+    setMenu((prevMenu) => {
+      if (e.zoom)
+        return {
+          ...defaultState,
+          zoom: { ...prevMenu.zoom, open: !prevMenu.zoom.open },
+        };
+      if (e.accessories)
+        return {
+          ...defaultState,
+          accessories: { open: !prevMenu.accessories.open },
+        };
+      if (e.vanDetails === "force")
+        return {
+          ...defaultState,
+          vanDetails: { open: true },
+        };
+      else if (e.vanDetails)
+        return {
+          ...defaultState,
+          vanDetails: { open: !prevMenu.vanDetails.open },
+        };
+      if (e.zoomLevel)
+        return { ...defaultState, zoom: { ...prevMenu.zoom, level: e.value } };
+      return defaultState;
+    });
   };
 
   const [menu, setMenu] = useState({
-    open: false,
-    zoomLevel: 1,
-    position: {
-      left: false,
-      top: false,
-      right: true,
-      bottom: true,
-    },
+    accessories: { open: false },
+    vanDetails: { open: false },
+    zoom: { level: 1, open: false },
   });
 
   const whichViewID = getActiveViewIndex(vanBuild.vanView);
@@ -159,7 +160,7 @@ export default function VanBuilder() {
       className={`relative flex select-none flex-col items-center justify-between overflow-hidden ${
         appSettings.fullscreen
           ? "max-h-screen min-h-[100dvh]"
-          : "min-h-[500px] md:min-h-[600px] lg:min-h-[700px] xl:min-h-[900px] 2xl:min-h-[1000px]"
+          : "min-h-[500px] md:min-h-[600px] lg:min-h-[700px] xl:min-h-[800px] 2xl:min-h-[900px]"
       }`}
     >
       {vanSelect && (
@@ -172,34 +173,83 @@ export default function VanBuilder() {
       )}
 
       <div
-        className="absolute left-0 top-0 z-20 grid h-full w-full items-end  lg:grid-cols-[1fr_300px]"
+        className="absolute left-0 top-0 z-20 grid h-full w-full items-end  xl:grid-cols-[1fr_300px]"
         id="controls"
       >
-        <ControlsIndex
-          setControlOptions={setControlOptions}
-          menu={menu}
-          currVan={vanBuild[vanBuild.currVan]}
-          views={{
-            whichViewID: whichViewID,
-            previousView: previousView,
-            nextView: nextView,
-          }}
-          viewChange={viewChange}
-          menuChange={menuChange}
-          setVanSelect={setVanSelect}
-          changeZoom={changeZoom}
-          zoomLevel={menu.zoomLevel}
-          accessories={vanBuild[vanBuild.currVan].Accessories}
-          checkboxChange={checkboxChange}
-        />
+        <div className="absolute left-0 top-0 z-20 h-full w-full  max-w-max bg-neutral-100/20 shadow-inner backdrop-blur-sm">
+          {menu.vanDetails.open && (
+            <VanDetails
+              currVan={vanBuild[vanBuild.currVan]}
+              setVanSelect={setVanSelect}
+              showVanDetails={menu.vanDetails.open}
+            />
+          )}
+          <ButtonWrapper
+            className="absolute bottom-3 left-full z-20 hidden h-12 w-12 min-w-[3em] rounded-l-none bg-neutral-200 shadow-inner lg:block"
+            onClick={() => {
+              console.log("menuChange");
+              menuChange({ vanDetails: true });
+            }}
+          >
+            <Icons
+              icon={menu.vanDetails.open ? "chevronleft" : "chevronright"}
+              className="fill-black"
+            />
+          </ButtonWrapper>
+        </div>
+
+        {menu.zoom.open && (
+          <div className="absolute bottom-0 left-0 z-20 flex h-full w-full items-end  bg-neutral-100/10 pt-10">
+            <div className="backdrop-blur-s4 w-full bg-white/50 p-6 pb-20 shadow-inner">
+              <input
+                className="w-full"
+                type="range"
+                id="zoom"
+                name="zoom"
+                min={0.5}
+                max={2}
+                step={0.1}
+                value={menu.zoom.level}
+                onChange={(e) => {
+                  menuChange({ value: e.currentTarget.value, zoomLevel: true });
+                }}
+              />
+            </div>{" "}
+          </div>
+        )}
+
+        <div className="z-20 grid auto-cols-max grid-flow-col items-end justify-end gap-3 bg-neutral-100/60 p-3 shadow-inner lg:bg-transparent lg:shadow-none">
+          <ControlsIndex
+            menu={menu}
+            views={{
+              whichViewID: whichViewID,
+              previousView: previousView,
+              nextView: nextView,
+            }}
+            viewChange={viewChange}
+            menuChange={menuChange}
+          />
+        </div>
+
+        <div
+          className={`absolute right-0 top-0 z-10 h-full w-full overflow-y-auto bg-neutral-200/75 pb-4 shadow-inner backdrop-blur-sm xl:relative ${
+            menu.accessories.open ? "" : " hidden xl:block "
+          }`}
+        >
+          <ControlsAccessories
+            accessories={vanBuild[vanBuild.currVan].Accessories}
+            menuChange={menuChange}
+            checkboxChange={checkboxChange}
+          />
+        </div>
       </div>
 
-      <div className="absolute z-10 flex h-full w-full flex-col">
+      <div className="absolute z-0 flex h-full w-full flex-col">
         <ViewOutput
           accessories={vanBuild[vanBuild.currVan].Accessories}
           vanView={vanBuild.vanView}
           vanBase={vanBuild[vanBuild.currVan].base}
-          zoomLevel={menu.zoomLevel}
+          zoomLevel={menu.zoom.level}
         />
       </div>
 

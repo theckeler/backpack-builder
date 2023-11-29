@@ -15,40 +15,102 @@ const sprinterVan = {
     price: 80000.0,
     className: "object-cover z-0",
     images: {
-      front: "",
-      frontDriver: "",
-      driver: "",
+      front:
+        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter.Front.webp?v=1701195174",
+      frontDriver:
+        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter.FrontL.webp?v=1701195174",
       rearDriver:
-        "https://cdn.shopify.com/s/files/1/0616/3405/2352/files/sprinter-r-d.png?v=1700163309",
-      rear: "https://cdn.shopify.com/s/files/1/0616/3405/2352/files/sprinter-r.png?v=1700163309",
+        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter.Rear_L.webp?v=1701195175",
+      rear: "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter.Rear.webp?v=1701195174",
       rearPassenger:
-        "https://cdn.shopify.com/s/files/1/0616/3405/2352/files/sprinter-r-p.png?v=1700163309",
-      Passenger: "",
+        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter.Rear_R.webp?v=1701195175",
       frontPassenger:
-        "https://cdn.shopify.com/s/files/1/0616/3405/2352/files/sprinter-r-p.png?v=1700163309",
+        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter.Front_R.webp?v=1701195174",
     },
   },
   Accessories: [
     {
-      name: "Accessory Rack",
-      value: "AccessoryRack",
-      id: "AccessoryRack",
+      name: "Rear Panel Rack",
+      value: "PanelRack",
+      id: "PanelRack",
       active: false,
-      title: "Rover Vans Tire Carrier & Ladder Combo for Sprinter",
+      title: "Rover Vans Panel Rack for Sprinter",
       href: "https://rovervans.com/products/rover-vans-tire-carrier-ladder-combo",
       price: 999.0,
       images: {
-        front: "",
-        frontDriver: "",
-        driver: "",
         rearDriver:
-          "https://cdn.shopify.com/s/files/1/0616/3405/2352/files/sprinter-r-d-AccessoryRack.png?v=1700163309",
-        rear: "https://cdn.shopify.com/s/files/1/0616/3405/2352/files/sprinter-r-AccessoryRack.png?v=1700163309",
+          "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/rack_noPanels.Rear_L.png?v=1701196356",
+        rear: "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/rack_noPanels.Rear.png?v=1701196356",
         rearPassenger:
-          "https://cdn.shopify.com/s/files/1/0616/3405/2352/files/sprinter-r-p-AccessoryRack.png?v=1700163309",
-        Passenger:
-          "https://cdn.shopify.com/s/files/1/0616/3405/2352/files/sprinter-r-p-AccessoryRack.png?v=1700163309",
-        frontPassenger: "",
+          "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/rack_noPanels.Rear_R.png?v=1701196356",
+      },
+    },
+    {
+      name: "Rear Panel A",
+      value: "PanelRackA",
+      id: "PanelRackA",
+      dependant: "PanelRack",
+      active: false,
+      title: "Rover Vans Panel Rack for Sprinter",
+      href: "https://rovervans.com/products/rover-vans-tire-carrier-ladder-combo",
+      price: 300.0,
+      images: {
+        rearDriver:
+          "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/a_panel.Rear_L.webp?v=1701198941",
+        rear: "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/a_panel.Rear.webp?v=1701198941",
+        rearPassenger:
+          "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/a_panel.Rear_R.webp?v=1701198941",
+      },
+    },
+    {
+      name: "Rear Panel B",
+      value: "PanelRackB",
+      id: "PanelRackB",
+      dependant: "PanelRack",
+      active: false,
+      title: "Rover Vans Panel Rack for Sprinter",
+      href: "https://rovervans.com/products/rover-vans-tire-carrier-ladder-combo",
+      price: 300.0,
+      images: {
+        rearDriver:
+          "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/b_panel.Rear_L.webp?v=1701198941",
+        rear: "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/b_panel.Rear.webp?v=1701198941",
+        rearPassenger:
+          "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/b_panel.Rear_R.webp?v=1701198941",
+      },
+    },
+    {
+      name: "Rear Panel C",
+      value: "PanelRackC",
+      id: "PanelRackC",
+      dependant: "PanelRack",
+      active: false,
+      title: "Rover Vans Panel Rack for Sprinter",
+      href: "https://rovervans.com/products/rover-vans-tire-carrier-ladder-combo",
+      price: 300.0,
+      images: {
+        rearDriver:
+          "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/c_panel.Rear_L.webp?v=1701198941",
+        rear: "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/c_panel.Rear.webp?v=1701198941",
+        rearPassenger:
+          "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/c_panel.Rear_R.webp?v=1701198941",
+      },
+    },
+    {
+      name: "Rear Panel D",
+      value: "PanelRackD",
+      id: "PanelRackD",
+      dependant: "PanelRack",
+      active: false,
+      title: "Rover Vans Panel Rack for Sprinter",
+      href: "https://rovervans.com/products/rover-vans-tire-carrier-ladder-combo",
+      price: 300.0,
+      images: {
+        rearDriver:
+          "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/d_panel.Rear_L.webp?v=1701198941",
+        rear: "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/d_panel.Rear.webp?v=1701198941",
+        rearPassenger:
+          "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/d_panel.Rear_R.webp?v=1701198941",
       },
     },
   ],

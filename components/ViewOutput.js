@@ -1,8 +1,7 @@
 "use client";
-import NextImage from "next/image";
+import { useEffect } from "react";
 
 import getActiveView from "@/components/Helpers/getActiveView";
-import getActiveViewIndex from "@/components/Helpers/getActiveViewIndex";
 
 export default function ViewOutput({
   vanView,
@@ -11,50 +10,47 @@ export default function ViewOutput({
   zoomLevel,
 }) {
   const activeView = getActiveView(vanView);
-  const activeViewID = getActiveViewIndex(vanView);
-  const previousView =
-    activeViewID == 0 ? vanView.length - 1 : activeViewID - 1;
-  const nextView = activeViewID == vanView.length - 1 ? 0 : activeViewID + 1;
+
+  const preloadImages = (imgObject) => {
+    // console.log("imgObject", imgObject);
+    const imageKeys = Object.keys(imgObject);
+    const imageUrls = imageKeys.map((key) => imgObject[key]);
+
+    imageUrls.forEach((url) => {
+      // console.log("url:", url);
+      const img = new Image();
+      img.src = url;
+    });
+  };
+
+  useEffect(() => {
+    preloadImages({ ...vanBase.images });
+  });
 
   if (vanBase.images[activeView]) {
     return (
       <>
-        <link
-          rel="prefetch"
-          as="image"
-          href={vanBase.images[vanView[previousView].key]}
-        />
-        <link
-          rel="prefetch"
-          as="image"
-          href={vanBase.images[vanView[nextView].key]}
-        />
-
-        <NextImage
-          className="h-full w-full object-contain lg:object-cover"
+        <img
+          className="absolute left-0 top-0 h-full w-full object-contain lg:object-cover"
           src={vanBase.images[activeView]}
           alt=""
-          fill
-          // width={3840}
-          // height={2155}
-          priority={true}
           loading="eager"
           style={{ transform: `scale(${zoomLevel})` }}
         />
 
         {accessories.length > 0 &&
           accessories.map((accessory, i) => {
+            preloadImages({ ...accessory.images });
+
             return (
-              accessory.active && (
-                <NextImage
+              accessory.active &&
+              accessory.images[activeView] && (
+                <img
                   key={i}
-                  className="h-full w-full object-contain lg:object-cover"
+                  className="absolute left-0 top-0 h-full w-full object-contain lg:object-cover"
                   style={{ transform: `scale(${zoomLevel})` }}
                   src={accessory.images[activeView]}
                   alt=""
-                  // fill
-                  width={3840}
-                  height={2155}
                 />
               )
             );
