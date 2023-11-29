@@ -27,8 +27,7 @@ input[type="range"] {
   background-size: 80%;
   background-position: center;
 
-  @apply h-12 w-12 cursor-pointer appearance-none
-    rounded bg-amber-400 shadow-base;
+  @apply shadow-button flex w-full max-w-[48px] justify-center rounded bg-sky-200 fill-sky-900  active:bg-amber-100 active:fill-amber-900;
 }
 
 .overflow-y-auto::-webkit-scrollbar-track {
@@ -37,6 +36,11 @@ input[type="range"] {
 
 .overflow-y-auto::-webkit-scrollbar-thumb {
   @apply bg-amber-400;
+}
+
+input[name="zoom"]::-webkit-slider-container,
+input[name="zoom"]::-webkit-slider-runnable-track {
+  @apply bg-neutral-100 shadow-inner;
 }
 
 @tailwind utilities;

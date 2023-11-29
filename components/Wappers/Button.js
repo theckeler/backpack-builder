@@ -1,6 +1,6 @@
 "use client";
 
-export default function ButtonWrapper({
+export default function WrapperButton({
   className = null,
   children,
   onClick,

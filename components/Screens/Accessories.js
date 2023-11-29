@@ -1,7 +1,7 @@
 "use client";
 
 import ControlInputs from "../Controls/Inputs";
-import ControlLabel from "../Controls/Label";
+import WrapperLabel from "../Wappers/Label";
 
 export default function ControlsAccessories({ checkboxChange, accessories }) {
   return (
@@ -15,7 +15,7 @@ export default function ControlsAccessories({ checkboxChange, accessories }) {
               onChange={(e) => checkboxChange(e)}
               checked={active}
             />
-            <ControlLabel htmlFor={id}>{name}</ControlLabel>
+            <WrapperLabel htmlFor={id}>{name}</WrapperLabel>
           </li>
         );
       })}

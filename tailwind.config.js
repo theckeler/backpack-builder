@@ -19,9 +19,9 @@ module.exports = {
         ],
         base: "0 0 0.5rem rgba(0, 0, 0, 1)",
       },
-      // dropShadow: {
-      //   button: "0 0 0 2rem #333",
-      // },
+      minWidth: {
+        sm: "24rem",
+      },
     },
   },
   plugins: [],

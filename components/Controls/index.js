@@ -1,6 +1,6 @@
 "use client";
 
-import ButtonWrapper from "@/components/ButtonWrapper";
+import WrapperButton from "@/components/Wappers/Button";
 import { Icons } from "@/images/Icons";
 
 export default function ControlsIndex({ menu, views, viewChange, menuChange }) {
@@ -9,51 +9,51 @@ export default function ControlsIndex({ menu, views, viewChange, menuChange }) {
   return (
     <>
       <div className="max-w-fit">
-        <ButtonWrapper
+        <WrapperButton
           open={menu.vanDetails.open}
           onClick={() => {
             menuChange({ vanDetails: true });
           }}
         >
           <Icons icon={menu.vanDetails.open ? "close" : "van"} />
-        </ButtonWrapper>
+        </WrapperButton>
       </div>
 
       <div className="max-w-fit">
-        <ButtonWrapper
+        <WrapperButton
           onClick={() => {
             menuChange({ zoom: true });
           }}
           open={menu.zoom.open}
         >
           <Icons icon={menu.zoom.open ? "close" : "zoom"} />
-        </ButtonWrapper>
+        </WrapperButton>
       </div>
 
       <div className="max-w-fit">
         <div className="grid grid-cols-2 gap-1">
-          <ButtonWrapper onClick={viewChange} name="vanView" value={nextView}>
+          <WrapperButton onClick={viewChange} name="vanView" value={nextView}>
             <Icons icon="rotateleft" />
-          </ButtonWrapper>
-          <ButtonWrapper
+          </WrapperButton>
+          <WrapperButton
             onClick={viewChange}
             name="vanView"
             value={previousView}
           >
             <Icons icon="rotateright" />
-          </ButtonWrapper>
+          </WrapperButton>
         </div>
       </div>
 
       <div className="relative max-w-fit xl:hidden">
-        <ButtonWrapper
+        <WrapperButton
           open={menu.accessories.open}
           onClick={() => {
             menuChange({ accessories: true });
           }}
         >
           <Icons icon={menu.accessories.open ? "close" : "hamburger"} />
-        </ButtonWrapper>
+        </WrapperButton>
       </div>
     </>
   );

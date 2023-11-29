@@ -61,3 +61,35 @@ export default function ViewOutput({
 
   return null;
 }
+
+// const imageUrl = "https://cdn.shopify.com/s/files/your_image_url_here.jpg";
+// const originalWidth = 4000; // Width of the original image
+// const aspectRatio = 16 / 9; // Adjust based on your image's aspect ratio
+
+// function MyComponent() {
+//   const imageWidths = [320, 640, 768, 1024, 1280, 1536]; // Tailwind breakpoints
+
+//   const srcSet = imageWidths.map((width) => {
+//     // Calculate the corresponding height based on the aspect ratio
+//     const height = Math.round(width / aspectRatio);
+
+//     const imageUrlWithDimensions = `${imageUrl}?width=${width}&height=${height}`;
+//     return `${imageUrlWithDimensions} ${width}w`;
+//   }).join(", ");
+
+//   return (
+//     <div>
+//       <img
+//         src={imageUrl}
+//         alt="Image Description"
+//         width={originalWidth} // Original width for the largest breakpoint
+//         height={Math.round(originalWidth / aspectRatio)} // Adjust height based on aspect ratio
+//         sizes="(max-width: 320px) 280px, (max-width: 640px) 640px, (max-width: 768px) 768px, (max-width: 1024px) 1024px, (max-width: 1280px) 1280px, 1536px"
+//         srcSet={srcSet}
+//         loading="eager" // Prioritize loading
+//       />
+//     </div>
+//   );
+// }
+
+// export default MyComponent;
