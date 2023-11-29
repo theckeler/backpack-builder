@@ -30,6 +30,7 @@ export default function VanBuilder() {
     ],
     windowMode: { dark: false, light: true },
     currVan: "sprinterVan",
+    fullscreen: false,
   });
 
   useEffect(() => {
@@ -67,6 +68,37 @@ export default function VanBuilder() {
     }));
   };
 
+  // const checkboxChange = (e) => {
+  //   let accessoriesTotal = 0;
+  //   const updatedVan = {
+  //     ...vanBuild,
+  //     [vanBuild.currVan]: {
+  //       ...vanBuild[vanBuild.currVan],
+  //       Accessories: vanBuild[vanBuild.currVan].Accessories.map((accessory) => {
+  //         if (accessory.value === e.currentTarget.value) {
+  //           return { ...accessory, active: e.currentTarget.checked };
+  //         } else {
+  //           return accessory;
+  //         }
+  //       }),
+  //     },
+  //   };
+
+  //   updatedVan[vanBuild.currVan].Accessories.forEach((accessory) => {
+  //     if (accessory.active) {
+  //       accessoriesTotal += accessory.price;
+  //     }
+  //   });
+
+  //   updatedVan[vanBuild.currVan].price = {
+  //     base: vanBuild[vanBuild.currVan].price.base,
+  //     accessories: accessoriesTotal,
+  //     total: vanBuild[vanBuild.currVan].price.base + accessoriesTotal,
+  //   };
+
+  //   setVanBuild(updatedVan);
+  // };
+
   const checkboxChange = (e) => {
     let accessoriesTotal = 0;
     const updatedVan = {
@@ -76,6 +108,18 @@ export default function VanBuilder() {
         Accessories: vanBuild[vanBuild.currVan].Accessories.map((accessory) => {
           if (accessory.value === e.currentTarget.value) {
             return { ...accessory, active: e.currentTarget.checked };
+          } else if (
+            accessory.dependant &&
+            accessory.dependant === e.currentTarget.value
+          ) {
+            // Set dependant accessories to true when the main accessory is toggled
+            return { ...accessory, active: e.currentTarget.checked };
+          } else if (
+            accessory.value === "PanelRack" &&
+            e.currentTarget.checked
+          ) {
+            // Set the main accessory to true when a dependent accessory is toggled
+            return { ...accessory, active: true };
           } else {
             return accessory;
           }
@@ -83,24 +127,32 @@ export default function VanBuilder() {
       },
     };
 
+    // Calculate the total price of active accessories
     updatedVan[vanBuild.currVan].Accessories.forEach((accessory) => {
       if (accessory.active) {
         accessoriesTotal += accessory.price;
       }
     });
 
+    // Update the total price in the vanBuild state
     updatedVan[vanBuild.currVan].price = {
       base: vanBuild[vanBuild.currVan].price.base,
       accessories: accessoriesTotal,
       total: vanBuild[vanBuild.currVan].price.base + accessoriesTotal,
     };
 
+    // Set the updated vanBuild state
     setVanBuild(updatedVan);
   };
 
   const [loading, setLoading] = useState(true);
 
-  const scrollWidth = useMemo(() => document.body.scrollWidth, []);
+  const scrollWidth = useMemo(() => {
+    if (typeof window !== "undefined") {
+      return document.body.scrollWidth;
+    }
+    return 0;
+  }, []);
   const scrollWidthThreshold = 1024;
   useEffect(() => {
     if (scrollWidth > scrollWidthThreshold) {
@@ -155,17 +207,10 @@ export default function VanBuilder() {
   const nextView =
     whichViewID == vanBuild.vanView.length - 1 ? 0 : whichViewID + 1;
 
-  const [appSettings, setAppSettings] = useState({
-    fullscreen: false,
-    css: { bg: { menus: "bg-neutral-900/90 backdrop-blur-sm" } },
-  });
-
-  const css = { ...appSettings.css };
-
   return (
     <div
       className={`relative flex select-none flex-col items-center justify-between overflow-hidden ${
-        appSettings.fullscreen
+        vanBuild.fullscreen
           ? "max-h-screen min-h-[100dvh]"
           : "min-h-[500px] md:min-h-[600px] lg:min-h-[700px] xl:min-h-[800px] 2xl:min-h-[900px]"
       }`}

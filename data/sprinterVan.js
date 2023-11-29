@@ -113,6 +113,23 @@ const sprinterVan = {
           "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/d_panel.Rear_R.webp?v=1701198941",
       },
     },
+    {
+      name: "Testing Selection",
+      value: "TestingSelection",
+      id: "TestingSelection",
+      dependant: null,
+      active: false,
+      title: "Rover Vans Panel Rack for Sprinter",
+      href: "https://rovervans.com/products/rover-vans-tire-carrier-ladder-combo",
+      price: 300.0,
+      images: {
+        rearDriver:
+          "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/d_panel.Rear_L.webp?v=1701198941",
+        rear: "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/d_panel.Rear.webp?v=1701198941",
+        rearPassenger:
+          "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/d_panel.Rear_R.webp?v=1701198941",
+      },
+    },
   ],
 };
 
