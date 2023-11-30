@@ -1,7 +1,7 @@
 
 import { Icons } from "@/images/Icons";
 
-export default function Loading({ vanChange }) {
+export default function ScreenLoading({ vanChange }) {
   return (
     <div className="place-content-centerrounded grid justify-items-center bg-neutral-800 p-[2vw]">
       <div className="h-[16vw]">

@@ -2,7 +2,7 @@
 import Logo from "@/images/logo";
 import ImagesVan from "@/images/van";
 
-export default function SelectVan({ vanChange }) {
+export default function ScreenSelectVan({ vanChange }) {
   const buttons = {
     className:
       "w-full text-center px-10 py-4 bg-amber-500 font-bold shadow-base rounded",

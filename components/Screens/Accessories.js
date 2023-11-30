@@ -1,14 +1,13 @@
-
-import ControlInputs from "../Controls/Input";
+import InputCheckbox from "../Inputs/Checkbox";
 import WrapperLabel from "../Wappers/Label";
 
-export default function ControlsAccessories({ checkboxChange, accessories }) {
+export default function ScreensAccessories({ checkboxChange, accessories }) {
   return (
     <ul className="grid gap-2 px-3 pb-8 pt-3">
       {accessories.map(function ({ name, value, id, active, group }, i) {
         return (
           <li key={i} className="mb-1">
-            <ControlInputs
+            <InputCheckbox
               value={value}
               id={id}
               onChange={(e) => checkboxChange(e)}
@@ -22,12 +21,11 @@ export default function ControlsAccessories({ checkboxChange, accessories }) {
                   if (groupAccessory) {
                     return (
                       <li key={j}>
-                        <ControlInputs
+                        <InputCheckbox
                           value={groupAccessory.value}
                           id={groupAccessory.id}
                           onChange={(e) => checkboxChange(e)}
                           checked={groupAccessory.active}
-                          dataType="group"
                         />
                         <WrapperLabel htmlFor={groupAccessory.id}>
                           {groupAccessory.name}

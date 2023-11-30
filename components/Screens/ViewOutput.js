@@ -2,7 +2,7 @@ import getActiveView from "@/components/Helpers/getActiveView";
 import React, { useEffect, useState } from "react";
 import VanImages from "../Image";
 
-export default function ViewOutput({
+export default function ScreenViewOutput({
   vanView,
   vanBase,
   accessories,

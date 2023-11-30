@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import ControlsIndex from "@/components/Controls";
 import InputSlider from "@/components/Inputs/Slider";
-import ControlsAccessories from "@/components/Screens/Accessories";
+import ScreensAccessories from "@/components/Screens/Accessories";
 import Loading from "@/components/Screens/Loading";
 import SelectVan from "@/components/Screens/SelectVan";
 import VanDetails from "@/components/Screens/VanDetails";
@@ -24,9 +24,11 @@ export default function VanBuilder() {
     vanView: [
       { key: "rear", title: "Rear", active: false },
       { key: "rearPassenger", title: "Rear Passenger", active: false },
+      { key: "sidePassenger", title: "Rear Passenger", active: false },
       { key: "frontPassenger", title: "Front Passenger", active: true },
       { key: "front", title: "Front", active: false },
       { key: "frontDriver", title: "Front Driver", active: false },
+      { key: "sideDriver", title: "Front Driver", active: false },
       { key: "rearDriver", title: "Rear Driver", active: false },
     ],
     currVan: "sprinterVan",
@@ -288,7 +290,7 @@ export default function VanBuilder() {
             menu.accessories.open ? "" : " hidden xl:block "
           }`}
         >
-          <ControlsAccessories
+          <ScreensAccessories
             accessories={vanBuild[vanBuild.currVan].Accessories}
             menuChange={menuChange}
             checkboxChange={checkboxChange}

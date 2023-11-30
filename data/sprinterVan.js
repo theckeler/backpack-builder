@@ -16,16 +16,20 @@ const sprinterVan = {
     className: "object-cover z-0",
     images: {
       front:
-        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter.Front.webp?v=1701195174",
+        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter-front.webp?v=1701369589",
       frontDriver:
-        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter.FrontL.webp?v=1701195174",
+        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter-frontDriver.webp?v=1701369588",
+      sideDriver:
+        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter-sideDriver.webp?v=1701369588",
       rearDriver:
-        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter.Rear_L.webp?v=1701195175",
-      rear: "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter.Rear.webp?v=1701195174",
+        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter-rearDriver.webp?v=1701369588",
+      rear: "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter-rear.webp?v=1701369588",
       rearPassenger:
-        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter.Rear_R.webp?v=1701195175",
+        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter-rearPassenger.webp?v=1701369588",
+      sidePassenger:
+        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter-sidePassenger.webp?v=1701369588",
       frontPassenger:
-        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter.Front_R.webp?v=1701195174",
+        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter-frontPassenger.webp?v=1701369588",
     },
   },
   Accessories: [
