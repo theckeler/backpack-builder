@@ -245,7 +245,7 @@ export default function VanBuilder() {
               e.currentTarget === e.target && menuChange({ default: "force" });
             }}
           >
-            <WrapperMenu className="flex justify-end p-6 pb-20">
+            <WrapperMenu className="flex justify-end bg-yellow-100/30 p-6 pb-20">
               <InputSlider
                 min={0.5}
                 max={2}
@@ -267,7 +267,7 @@ export default function VanBuilder() {
               e.currentTarget === e.target && menuChange({ default: "force" });
             }}
           >
-            <WrapperMenu className="flex justify-end p-6 pb-20">
+            <WrapperMenu className="flex justify-end bg-yellow-100/30 p-6 pb-20">
               <InputSlider
                 min={0}
                 max={vanBuild.vanView.length - 1}

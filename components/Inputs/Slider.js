@@ -1,8 +1,7 @@
-
 export default function InputSlider({ min, max, step, value, onChange }) {
   return (
     <input
-      className="w-full max-w-3xl"
+      className="w-full lg:max-w-xl"
       type="range"
       min={min}
       max={max}
