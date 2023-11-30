@@ -1,6 +1,5 @@
-"use client";
 
-import ControlInputs from "../Controls/Inputs";
+import ControlInputs from "../Controls/Input";
 import WrapperLabel from "../Wappers/Label";
 
 export default function ControlsAccessories({ checkboxChange, accessories }) {

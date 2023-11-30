@@ -1,4 +1,3 @@
-"use client";
 
 import Logo from "@/images/logo";
 import ImagesVan from "@/images/van";

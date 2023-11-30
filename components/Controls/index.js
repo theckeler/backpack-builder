@@ -1,10 +1,7 @@
-"use client";
-
 import WrapperButton from "@/components/Wappers/Button";
 import { Icons } from "@/images/Icons";
 
 export default function ControlsIndex({ menu, menuChange }) {
-
   return (
     <>
       <div className="max-w-fit">

@@ -1,6 +1,5 @@
-"use client";
 
-export default function ControlInputs({
+export default function ControlInput({
   id,
   value,
   type = "checkbox",

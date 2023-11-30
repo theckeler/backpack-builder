@@ -1,4 +1,3 @@
-"use client";
 import { priceFormatter } from "@/components/Helpers/priceFormatter";
 
 export default function ScreenVanDetails({ currVan, setVanSelect }) {

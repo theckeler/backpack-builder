@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 import ControlsIndex from "@/components/Controls";
+import InputSlider from "@/components/Inputs/Slider";
 import ControlsAccessories from "@/components/Screens/Accessories";
 import Loading from "@/components/Screens/Loading";
 import SelectVan from "@/components/Screens/SelectVan";
@@ -21,12 +22,12 @@ export default function VanBuilder() {
     transitVan: { ...transitVan },
     promasterVan: { ...sprinterVan },
     vanView: [
+      { key: "rear", title: "Rear", active: false },
+      { key: "rearPassenger", title: "Rear Passenger", active: false },
       { key: "frontPassenger", title: "Front Passenger", active: true },
       { key: "front", title: "Front", active: false },
       { key: "frontDriver", title: "Front Driver", active: false },
       { key: "rearDriver", title: "Rear Driver", active: false },
-      { key: "rear", title: "Rear", active: false },
-      { key: "rearPassenger", title: "Rear Passenger", active: false },
     ],
     currVan: "sprinterVan",
     fullscreen: false,
@@ -49,11 +50,12 @@ export default function VanBuilder() {
   }, []);
 
   const vanChange = (e) => {
-    const val = e.currentTarget.value;
-    if (val) {
+    const eValue = e.currentTarget.value;
+
+    if (eValue) {
       setVanBuild((prevVanBuild) => ({
         ...prevVanBuild,
-        currVan: val,
+        currVan: eValue,
       }));
       setVanSelect(false);
     } else {
@@ -176,7 +178,7 @@ export default function VanBuilder() {
   const [menu, setMenu] = useState({
     accessories: { open: false },
     vanDetails: { open: false },
-    rotate: { value: 0, open: false },
+    rotate: { value: 2, open: false },
     zoom: { level: 1, open: false },
   });
 
@@ -241,12 +243,8 @@ export default function VanBuilder() {
               e.currentTarget === e.target && menuChange({ default: "force" });
             }}
           >
-            <WrapperMenu className="p-6 pb-20">
-              <input
-                className="w-full"
-                type="range"
-                id="zoom"
-                name="zoom"
+            <WrapperMenu className="flex justify-end p-6 pb-20">
+              <InputSlider
                 min={0.5}
                 max={2}
                 step={0.1}
@@ -267,12 +265,8 @@ export default function VanBuilder() {
               e.currentTarget === e.target && menuChange({ default: "force" });
             }}
           >
-            <WrapperMenu className="p-6 pb-20">
-              <input
-                className="w-full"
-                type="range"
-                id="rotate"
-                name="rotate"
+            <WrapperMenu className="flex justify-end p-6 pb-20">
+              <InputSlider
                 min={0}
                 max={vanBuild.vanView.length - 1}
                 step={1}
