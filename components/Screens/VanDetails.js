@@ -1,7 +1,7 @@
 "use client";
 import { priceFormatter } from "@/components/Helpers/priceFormatter";
 
-export default function VanDetails({ currVan, setVanSelect, showVanDetails }) {
+export default function ScreenVanDetails({ currVan, setVanSelect }) {
   const handleVanChange = () => {
     setVanSelect(true);
   };
@@ -29,7 +29,7 @@ export default function VanDetails({ currVan, setVanSelect, showVanDetails }) {
       <ul className="mt-2 grid gap-2">
         <li>
           <button
-            className="shadow-button drop-shadow-button w-full cursor-pointer rounded bg-sky-200  px-4 py-3 text-center text-sm font-bold text-sky-900 active:bg-amber-100 active:fill-amber-900 peer-checked:cursor-default peer-checked:bg-yellow-400"
+            className="drop-shadow-button w-full cursor-pointer rounded bg-sky-200 px-4  py-3 text-center text-sm font-bold text-sky-900 shadow-button active:bg-amber-100 active:fill-amber-900 peer-checked:cursor-default peer-checked:bg-yellow-400"
             onClick={handleVanChange}
           >
             Change Van

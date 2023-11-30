@@ -1,95 +1,104 @@
-"use client";
-import { useEffect } from "react";
-
 import getActiveView from "@/components/Helpers/getActiveView";
+import { useEffect, useState } from "react";
+import VanImages from "../Image";
 
 export default function ViewOutput({
   vanView,
   vanBase,
   accessories,
   zoomLevel,
+  setLoading,
+  loading,
 }) {
   const activeView = getActiveView(vanView);
+  const [activeAccessories, setActiveAccessories] = useState([]);
+  // useEffect(() => {
+  //   console.log("activeAccessories useEffect:", activeAccessories);
+  // }, [activeAccessories]);
 
   const preloadImages = (imgObject) => {
     if (typeof window !== "undefined") {
       const imageKeys = Object.keys(imgObject);
       const imageUrls = imageKeys.map((key) => imgObject[key]);
 
-      imageUrls.forEach((url) => {
-        const img = new Image();
-        img.src = url;
+      const promises = imageUrls.map((url) => {
+        return new Promise((resolve) => {
+          const img = new Image();
+          img.onload = resolve;
+          img.src = url;
+        });
       });
+
+      return Promise.all(promises);
     }
   };
 
   useEffect(() => {
-    preloadImages({ ...vanBase.images });
-  });
+    const preloadAllImages = async () => {
+      await preloadImages({ ...vanBase.images });
+      const activeAccessories = accessories.filter(
+        (accessory) => accessory.active,
+      );
+      setActiveAccessories(activeAccessories);
+
+      const accessoryPromises = activeAccessories.map(async (accessory) => {
+        await preloadImages({ ...accessory.images });
+
+        if (accessory.group && accessory.group.length > 0) {
+          const activeGroupAccessories = accessory.group.filter(
+            (groupAccessory) => groupAccessory.active,
+          );
+
+          const groupAccessoryPromises = activeGroupAccessories.map(
+            async (groupAccessory) => {
+              await preloadImages({ ...groupAccessory.images });
+            },
+          );
+
+          await Promise.all(groupAccessoryPromises);
+        }
+      });
+
+      await Promise.all(accessoryPromises);
+      setLoading(false);
+    };
+
+    preloadAllImages();
+  }, [vanBase.images, accessories, setLoading]);
 
   if (vanBase.images[activeView]) {
     return (
-      <>
-        <img
-          className="absolute left-0 top-0 h-full w-full object-contain lg:object-cover"
-          src={vanBase.images[activeView]}
-          alt=""
-          loading="eager"
-          style={{ transform: `scale(${zoomLevel})` }}
-        />
-
-        {accessories.length > 0 &&
-          accessories.map((accessory, i) => {
-            preloadImages({ ...accessory.images });
-
-            return (
+      <span id="ViewOutput">
+        <VanImages src={vanBase.images[activeView]} zoomLevel={zoomLevel} />
+        {activeAccessories.length > 0 &&
+          accessories.map(
+            (accessory, i) =>
               accessory.active &&
               accessory.images[activeView] && (
-                <img
-                  key={i}
-                  className="absolute left-0 top-0 h-full w-full object-contain lg:object-cover"
-                  style={{ transform: `scale(${zoomLevel})` }}
-                  src={accessory.images[activeView]}
-                  alt=""
-                />
-              )
-            );
-          })}
-      </>
+                <>
+                  <VanImages
+                    src={accessory.images[activeView]}
+                    zoomLevel={zoomLevel}
+                    key={i}
+                  />
+                  {accessory.group?.length > 0 &&
+                    accessory.group?.map(
+                      (accessoryGroup, i) =>
+                        accessoryGroup.active &&
+                        accessoryGroup.images[activeView] && (
+                          <VanImages
+                            src={accessoryGroup.images[activeView]}
+                            zoomLevel={zoomLevel}
+                            key={i}
+                          />
+                        ),
+                    )}
+                </>
+              ),
+          )}
+      </span>
     );
   }
 
   return null;
 }
-
-// const imageUrl = "https://cdn.shopify.com/s/files/your_image_url_here.jpg";
-// const originalWidth = 4000; // Width of the original image
-// const aspectRatio = 16 / 9; // Adjust based on your image's aspect ratio
-
-// function MyComponent() {
-//   const imageWidths = [320, 640, 768, 1024, 1280, 1536]; // Tailwind breakpoints
-
-//   const srcSet = imageWidths.map((width) => {
-//     // Calculate the corresponding height based on the aspect ratio
-//     const height = Math.round(width / aspectRatio);
-
-//     const imageUrlWithDimensions = `${imageUrl}?width=${width}&height=${height}`;
-//     return `${imageUrlWithDimensions} ${width}w`;
-//   }).join(", ");
-
-//   return (
-//     <div>
-//       <img
-//         src={imageUrl}
-//         alt="Image Description"
-//         width={originalWidth} // Original width for the largest breakpoint
-//         height={Math.round(originalWidth / aspectRatio)} // Adjust height based on aspect ratio
-//         sizes="(max-width: 320px) 280px, (max-width: 640px) 640px, (max-width: 768px) 768px, (max-width: 1024px) 1024px, (max-width: 1280px) 1280px, 1536px"
-//         srcSet={srcSet}
-//         loading="eager" // Prioritize loading
-//       />
-//     </div>
-//   );
-// }
-
-// export default MyComponent;

@@ -7,7 +7,7 @@ export default function ControlInputs({
   onChange,
   name = undefined,
   checked = false,
-  dataLevel,
+  dataType,
 }) {
   return (
     <input
@@ -18,7 +18,7 @@ export default function ControlInputs({
       name={type === "radio" ? name : undefined}
       onChange={(e) => onChange(e)}
       className="peer hidden"
-      data-level={dataLevel}
+      data-type={dataType}
     />
   );
 }

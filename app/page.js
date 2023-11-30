@@ -33,12 +33,12 @@ export default function VanBuilder() {
     fullscreen: false,
   });
 
-  useEffect(() => {
-    console.log("vanBuild useEffect:", vanBuild);
-  }, [vanBuild]);
+  // useEffect(() => {
+  //   console.log("vanBuild useEffect:", vanBuild);
+  // }, [vanBuild]);
 
-  // const [vanSelect, setVanSelect] = useState(false);
-  const [vanSelect, setVanSelect] = useState(true);
+  const [vanSelect, setVanSelect] = useState(false);
+  // const [vanSelect, setVanSelect] = useState(true);
   const vanChange = (e) => {
     const val = e.currentTarget.value;
     if (val) {
@@ -101,6 +101,7 @@ export default function VanBuilder() {
 
   const checkboxChange = (e) => {
     let accessoriesTotal = 0;
+
     const updatedVan = {
       ...vanBuild,
       [vanBuild.currVan]: {
@@ -108,40 +109,46 @@ export default function VanBuilder() {
         Accessories: vanBuild[vanBuild.currVan].Accessories.map((accessory) => {
           if (accessory.value === e.currentTarget.value) {
             return { ...accessory, active: e.currentTarget.checked };
-          } else if (
-            accessory.dependant &&
-            accessory.dependant === e.currentTarget.value
-          ) {
-            // Set dependant accessories to true when the main accessory is toggled
-            return { ...accessory, active: e.currentTarget.checked };
-          } else if (
-            accessory.value === "PanelRack" &&
-            e.currentTarget.checked
-          ) {
-            // Set the main accessory to true when a dependent accessory is toggled
-            return { ...accessory, active: true };
-          } else {
-            return accessory;
+          } else if (accessory.group && accessory.group.length > 0) {
+            return {
+              ...accessory,
+              group: accessory.group.map((groupAccessory) => {
+                if (groupAccessory.value === e.currentTarget.value) {
+                  return { ...groupAccessory, active: e.currentTarget.checked };
+                } else {
+                  return { ...groupAccessory };
+                }
+              }),
+            };
           }
+          return accessory;
         }),
       },
     };
 
-    // Calculate the total price of active accessories
-    updatedVan[vanBuild.currVan].Accessories.forEach((accessory) => {
-      if (accessory.active) {
-        accessoriesTotal += accessory.price;
-      }
+    const activeMainAccessories = updatedVan[
+      vanBuild.currVan
+    ].Accessories.filter((accessory) => accessory.active);
+
+    const activeGroupAccessories = activeMainAccessories
+      .flatMap((mainAccessory) => mainAccessory.group || [])
+      .filter((groupAccessory) => groupAccessory.active);
+
+    const combinedAccessories = [
+      ...activeMainAccessories,
+      ...activeGroupAccessories,
+    ];
+
+    combinedAccessories.forEach((accessory) => {
+      accessoriesTotal += accessory.price;
     });
 
-    // Update the total price in the vanBuild state
     updatedVan[vanBuild.currVan].price = {
       base: vanBuild[vanBuild.currVan].price.base,
       accessories: accessoriesTotal,
       total: vanBuild[vanBuild.currVan].price.base + accessoriesTotal,
     };
 
-    // Set the updated vanBuild state
     setVanBuild(updatedVan);
   };
 
@@ -239,7 +246,6 @@ export default function VanBuilder() {
           <WrapperButton
             className="absolute bottom-3 left-full z-20 hidden h-12 w-12 min-w-[3em] rounded-l-none bg-neutral-200 shadow-inner lg:block"
             onClick={() => {
-              console.log("menuChange");
               menuChange({ vanDetails: true });
             }}
           >
@@ -302,6 +308,8 @@ export default function VanBuilder() {
           vanView={vanBuild.vanView}
           vanBase={vanBuild[vanBuild.currVan].base}
           zoomLevel={menu.zoom.level}
+          setLoading={setLoading}
+          loading={loading}
         />
       </div>
 
