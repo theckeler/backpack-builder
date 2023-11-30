@@ -2,7 +2,6 @@
 import { useEffect, useMemo, useState } from "react";
 
 import ControlsIndex from "@/components/Controls";
-import getActiveViewIndex from "@/components/Helpers/getActiveViewIndex";
 import ControlsAccessories from "@/components/Screens/Accessories";
 import Loading from "@/components/Screens/Loading";
 import SelectVan from "@/components/Screens/SelectVan";
@@ -32,8 +31,7 @@ export default function VanBuilder() {
     currVan: "sprinterVan",
     fullscreen: false,
   });
-  const [loading, setLoading] = useState(true);
-  // const [vanSelect, setVanSelect] = useState(false);
+
   const [vanSelect, setVanSelect] = useState(true);
 
   const scrollWidth = useMemo(() => {
@@ -182,12 +180,6 @@ export default function VanBuilder() {
     zoom: { level: 1, open: false },
   });
 
-  const whichViewID = getActiveViewIndex(vanBuild.vanView);
-  const previousView =
-    whichViewID == 0 ? vanBuild.vanView.length - 1 : whichViewID - 1;
-  const nextView =
-    whichViewID == vanBuild.vanView.length - 1 ? 0 : whichViewID + 1;
-
   // useEffect(() => {
   //   console.log("vanBuild useEffect:", vanBuild);
   // }, [vanBuild]);
@@ -195,6 +187,10 @@ export default function VanBuilder() {
   // useEffect(() => {
   //   console.log("menu useEffect:", menu);
   // }, [menu]);
+
+  const [loading, setLoading] = useState(true);
+  // const [vanSelect, setVanSelect] = useState(false);
+
   return (
     <div
       className={`relative flex select-none flex-col items-center justify-between overflow-hidden ${
@@ -290,15 +286,7 @@ export default function VanBuilder() {
         )}
 
         <div className="z-30 grid auto-cols-max grid-flow-col items-end justify-end gap-3 p-3">
-          <ControlsIndex
-            menu={menu}
-            views={{
-              whichViewID: whichViewID,
-              previousView: previousView,
-              nextView: nextView,
-            }}
-            menuChange={menuChange}
-          />
+          <ControlsIndex menu={menu} menuChange={menuChange} />
         </div>
 
         <WrapperMenu

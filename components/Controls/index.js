@@ -3,8 +3,7 @@
 import WrapperButton from "@/components/Wappers/Button";
 import { Icons } from "@/images/Icons";
 
-export default function ControlsIndex({ menu, views, menuChange }) {
-  const { nextView, previousView } = views;
+export default function ControlsIndex({ menu, menuChange }) {
 
   return (
     <>
@@ -35,28 +34,11 @@ export default function ControlsIndex({ menu, views, menuChange }) {
           onClick={() => {
             menuChange({ rotate: true });
           }}
-          name="vanView"
-          value={nextView}
           open={menu.rotate.open}
         >
           <Icons icon={menu.rotate?.open ? "close" : "rotateleft"} />
         </WrapperButton>
       </div>
-
-      {/* <div className="max-w-fit">
-        <div className="grid grid-cols-2 gap-1">
-          <WrapperButton onClick={viewChange} name="vanView" value={nextView}>
-            <Icons icon="rotateleft" />
-          </WrapperButton>
-          <WrapperButton
-            onClick={viewChange}
-            name="vanView"
-            value={previousView}
-          >
-            <Icons icon="rotateright" />
-          </WrapperButton>
-        </div>
-      </div> */}
 
       <div className="relative max-w-fit xl:hidden">
         <WrapperButton
