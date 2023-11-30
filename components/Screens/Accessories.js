@@ -5,10 +5,10 @@ import WrapperLabel from "../Wappers/Label";
 
 export default function ControlsAccessories({ checkboxChange, accessories }) {
   return (
-    <ul className="grid items-end gap-2 px-3 py-6">
+    <ul className="grid gap-2 px-3 pb-8 pt-3">
       {accessories.map(function ({ name, value, id, active, group }, i) {
         return (
-          <li key={i}>
+          <li key={i} className="mb-1">
             <ControlInputs
               value={value}
               id={id}
@@ -18,7 +18,7 @@ export default function ControlsAccessories({ checkboxChange, accessories }) {
             />
             <WrapperLabel htmlFor={id}>{name}</WrapperLabel>
             {active && group && group.length > 0 && (
-              <ul className="mt-3 grid items-end gap-2 pl-3">
+              <ul className="mt-2 grid gap-1 pl-3">
                 {group.map((groupAccessory, j) => {
                   if (groupAccessory) {
                     return (

@@ -1,5 +1,5 @@
 import getActiveView from "@/components/Helpers/getActiveView";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import VanImages from "../Image";
 
 export default function ViewOutput({
@@ -75,25 +75,24 @@ export default function ViewOutput({
             (accessory, i) =>
               accessory.active &&
               accessory.images[activeView] && (
-                <>
+                <React.Fragment key={i}>
                   <VanImages
                     src={accessory.images[activeView]}
                     zoomLevel={zoomLevel}
-                    key={i}
                   />
                   {accessory.group?.length > 0 &&
                     accessory.group?.map(
-                      (accessoryGroup, i) =>
+                      (accessoryGroup, j) =>
                         accessoryGroup.active &&
                         accessoryGroup.images[activeView] && (
                           <VanImages
                             src={accessoryGroup.images[activeView]}
                             zoomLevel={zoomLevel}
-                            key={i}
+                            key={j}
                           />
                         ),
                     )}
-                </>
+                </React.Fragment>
               ),
           )}
       </span>

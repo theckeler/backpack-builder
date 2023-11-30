@@ -17,17 +17,17 @@ input[type="range"] {
   @apply h-12 w-12 cursor-pointer appearance-none rounded bg-amber-400 shadow-base;
 }
 
-[name="zoom"]::-moz-range-thumb {
+input[type="range"]::-moz-range-thumb {
   @apply h-12 w-12 cursor-pointer appearance-none rounded bg-amber-400 shadow-base;
 }
 
-[name="zoom"]::-webkit-slider-thumb {
+input[type="range"]::-webkit-slider-thumb {
   background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M280-280 80-480l200-200 56 56-103 104h494L624-624l56-56 200 200-200 200-56-56 103-104H233l103 104-56 56Z"/></svg>');
   background-repeat: no-repeat;
   background-size: 80%;
   background-position: center;
 
-  @apply shadow-button flex w-full max-w-[48px] justify-center rounded bg-sky-200 fill-sky-900  active:bg-amber-100 active:fill-amber-900;
+  @apply flex w-full max-w-[48px] justify-center rounded bg-sky-200 fill-sky-900 shadow-button  active:bg-amber-100 active:fill-amber-900;
 }
 
 .overflow-y-auto::-webkit-scrollbar-track {
@@ -38,8 +38,8 @@ input[type="range"] {
   @apply bg-amber-400;
 }
 
-input[name="zoom"]::-webkit-slider-container,
-input[name="zoom"]::-webkit-slider-runnable-track {
+input[type="range"]::-webkit-slider-container,
+input[type="range"]::-webkit-slider-runnable-track {
   @apply bg-neutral-100 shadow-inner;
 }
 

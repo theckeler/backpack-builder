@@ -9,6 +9,7 @@ import SelectVan from "@/components/Screens/SelectVan";
 import VanDetails from "@/components/Screens/VanDetails";
 import ViewOutput from "@/components/Screens/ViewOutput";
 import WrapperButton from "@/components/Wappers/Button";
+import WrapperFullScreen from "@/components/Wappers/FullScreen";
 import WrapperMenu from "@/components/Wappers/Menu";
 import sprinterVan from "@/data/sprinterVan";
 import transitVan from "@/data/transitVan";
@@ -21,24 +22,34 @@ export default function VanBuilder() {
     transitVan: { ...transitVan },
     promasterVan: { ...sprinterVan },
     vanView: [
+      { key: "frontPassenger", title: "Front Passenger", active: true },
       { key: "front", title: "Front", active: false },
       { key: "frontDriver", title: "Front Driver", active: false },
-      { key: "rearDriver", title: "Rear Driver", active: true },
+      { key: "rearDriver", title: "Rear Driver", active: false },
       { key: "rear", title: "Rear", active: false },
       { key: "rearPassenger", title: "Rear Passenger", active: false },
-      { key: "frontPassenger", title: "Front Passenger", active: false },
     ],
-    windowMode: { dark: false, light: true },
     currVan: "sprinterVan",
     fullscreen: false,
   });
+  const [loading, setLoading] = useState(true);
+  // const [vanSelect, setVanSelect] = useState(false);
+  const [vanSelect, setVanSelect] = useState(true);
 
-  // useEffect(() => {
-  //   console.log("vanBuild useEffect:", vanBuild);
-  // }, [vanBuild]);
+  const scrollWidth = useMemo(() => {
+    if (typeof window !== "undefined") {
+      return document.body.scrollWidth;
+    }
+    return 0;
+  }, []);
+  const scrollWidthThreshold = 1024;
+  useEffect(() => {
+    if (scrollWidth > scrollWidthThreshold) {
+      menuChange({ vanDetails: "force" });
+    }
+    setLoading(false);
+  }, []);
 
-  const [vanSelect, setVanSelect] = useState(false);
-  // const [vanSelect, setVanSelect] = useState(true);
   const vanChange = (e) => {
     const val = e.currentTarget.value;
     if (val) {
@@ -52,52 +63,24 @@ export default function VanBuilder() {
     }
   };
 
-  const viewChange = (e) => {
-    const eName = e.currentTarget.name;
-    const currentRadio = e.currentTarget;
+  const viewChangeSlider = (e) => {
+    setMenu((prevMenu) => ({
+      ...prevMenu,
+      rotate: { ...prevMenu.rotate, value: e.value },
+    }));
+
     let updatedVan = [];
-    vanBuild[eName].forEach((block, i) => {
+    vanBuild.vanView.forEach((block, i) => {
       updatedVan[i] = {
         ...block,
-        active: currentRadio.value == i ? true : false,
+        active: e.value == i ? true : false,
       };
     });
     setVanBuild((prevVanBuild) => ({
       ...prevVanBuild,
-      [eName]: updatedVan,
+      vanView: updatedVan,
     }));
   };
-
-  // const checkboxChange = (e) => {
-  //   let accessoriesTotal = 0;
-  //   const updatedVan = {
-  //     ...vanBuild,
-  //     [vanBuild.currVan]: {
-  //       ...vanBuild[vanBuild.currVan],
-  //       Accessories: vanBuild[vanBuild.currVan].Accessories.map((accessory) => {
-  //         if (accessory.value === e.currentTarget.value) {
-  //           return { ...accessory, active: e.currentTarget.checked };
-  //         } else {
-  //           return accessory;
-  //         }
-  //       }),
-  //     },
-  //   };
-
-  //   updatedVan[vanBuild.currVan].Accessories.forEach((accessory) => {
-  //     if (accessory.active) {
-  //       accessoriesTotal += accessory.price;
-  //     }
-  //   });
-
-  //   updatedVan[vanBuild.currVan].price = {
-  //     base: vanBuild[vanBuild.currVan].price.base,
-  //     accessories: accessoriesTotal,
-  //     total: vanBuild[vanBuild.currVan].price.base + accessoriesTotal,
-  //   };
-
-  //   setVanBuild(updatedVan);
-  // };
 
   const checkboxChange = (e) => {
     let accessoriesTotal = 0;
@@ -152,27 +135,12 @@ export default function VanBuilder() {
     setVanBuild(updatedVan);
   };
 
-  const [loading, setLoading] = useState(true);
-
-  const scrollWidth = useMemo(() => {
-    if (typeof window !== "undefined") {
-      return document.body.scrollWidth;
-    }
-    return 0;
-  }, []);
-  const scrollWidthThreshold = 1024;
-  useEffect(() => {
-    if (scrollWidth > scrollWidthThreshold) {
-      menuChange({ vanDetails: "force" });
-    }
-    setLoading(false);
-  }, []);
-
   const menuChange = (e) => {
     const defaultState = {
-      accessories: { open: false },
-      vanDetails: { open: false },
-      zoom: { open: false, level: menu.zoom.level },
+      accessories: { ...menu.accessories, open: false },
+      vanDetails: { ...menu.vanDetails, open: false },
+      rotate: { ...menu.rotate, open: false },
+      zoom: { ...menu.zoom, open: false },
     };
 
     setMenu((prevMenu) => {
@@ -180,6 +148,11 @@ export default function VanBuilder() {
         return {
           ...defaultState,
           zoom: { ...prevMenu.zoom, open: !prevMenu.zoom.open },
+        };
+      if (e.rotate)
+        return {
+          ...defaultState,
+          rotate: { ...prevMenu.rotate, open: !prevMenu.rotate.open },
         };
       if (e.accessories)
         return {
@@ -205,6 +178,7 @@ export default function VanBuilder() {
   const [menu, setMenu] = useState({
     accessories: { open: false },
     vanDetails: { open: false },
+    rotate: { value: 0, open: false },
     zoom: { level: 1, open: false },
   });
 
@@ -214,6 +188,13 @@ export default function VanBuilder() {
   const nextView =
     whichViewID == vanBuild.vanView.length - 1 ? 0 : whichViewID + 1;
 
+  // useEffect(() => {
+  //   console.log("vanBuild useEffect:", vanBuild);
+  // }, [vanBuild]);
+
+  // useEffect(() => {
+  //   console.log("menu useEffect:", menu);
+  // }, [menu]);
   return (
     <div
       className={`relative flex select-none flex-col items-center justify-between overflow-hidden ${
@@ -257,8 +238,14 @@ export default function VanBuilder() {
         </WrapperMenu>
 
         {menu.zoom.open && (
-          <div className="absolute bottom-0 left-0 z-20 flex h-full w-full items-end bg-neutral-100/10 pt-10">
-            <WrapperMenu className="backdrop-blur-s4 w-full bg-white/50 p-6 pb-20 shadow-inner">
+          <WrapperFullScreen
+            className="flex items-end"
+            id="ZoomOpen"
+            onClick={(e) => {
+              e.currentTarget === e.target && menuChange({ default: "force" });
+            }}
+          >
+            <WrapperMenu className="p-6 pb-20">
               <input
                 className="w-full"
                 type="range"
@@ -273,7 +260,33 @@ export default function VanBuilder() {
                 }}
               />
             </WrapperMenu>
-          </div>
+          </WrapperFullScreen>
+        )}
+
+        {menu.rotate.open && (
+          <WrapperFullScreen
+            className="flex items-end"
+            id="RotateOpen"
+            onClick={(e) => {
+              e.currentTarget === e.target && menuChange({ default: "force" });
+            }}
+          >
+            <WrapperMenu className="p-6 pb-20">
+              <input
+                className="w-full"
+                type="range"
+                id="rotate"
+                name="rotate"
+                min={0}
+                max={vanBuild.vanView.length - 1}
+                step={1}
+                value={menu.rotate.value}
+                onChange={(e) => {
+                  viewChangeSlider({ value: e.currentTarget.value });
+                }}
+              />
+            </WrapperMenu>
+          </WrapperFullScreen>
         )}
 
         <div className="z-30 grid auto-cols-max grid-flow-col items-end justify-end gap-3 p-3">
@@ -284,13 +297,12 @@ export default function VanBuilder() {
               previousView: previousView,
               nextView: nextView,
             }}
-            viewChange={viewChange}
             menuChange={menuChange}
           />
         </div>
 
         <WrapperMenu
-          className={`absolute right-0 top-0 z-10 h-full w-full max-w-sm overflow-y-auto pb-4 sm:relative ${
+          className={`absolute right-0 top-0 z-10 h-full max-w-xs overflow-y-auto pb-4 sm:relative ${
             menu.accessories.open ? "" : " hidden xl:block "
           }`}
         >
