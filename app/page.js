@@ -24,11 +24,11 @@ export default function VanBuilder() {
     vanView: [
       { key: "rear", title: "Rear", active: false },
       { key: "rearPassenger", title: "Rear Passenger", active: false },
-      { key: "sidePassenger", title: "Rear Passenger", active: false },
+      { key: "sidePassenger", title: "Side Passenger", active: false },
       { key: "frontPassenger", title: "Front Passenger", active: true },
       { key: "front", title: "Front", active: false },
       { key: "frontDriver", title: "Front Driver", active: false },
-      { key: "sideDriver", title: "Front Driver", active: false },
+      { key: "sideDriver", title: "Side Driver", active: false },
       { key: "rearDriver", title: "Rear Driver", active: false },
     ],
     currVan: "sprinterVan",
@@ -180,7 +180,7 @@ export default function VanBuilder() {
   const [menu, setMenu] = useState({
     accessories: { open: false },
     vanDetails: { open: false },
-    rotate: { value: 2, open: false },
+    rotate: { value: 3, open: false },
     zoom: { level: 1, open: false },
   });
 
