@@ -1,6 +1,6 @@
 import getActiveView from "@/components/Helpers/getActiveView";
+import VanImages from "@/components/Image";
 import React, { useEffect, useState } from "react";
-import VanImages from "../Image";
 
 export default function ScreenViewOutput({
   vanView,
@@ -8,15 +8,11 @@ export default function ScreenViewOutput({
   accessories,
   zoomLevel,
   setLoading,
-  loading,
 }) {
   const activeView = getActiveView(vanView);
   const [activeAccessories, setActiveAccessories] = useState([]);
-  // useEffect(() => {
-  //   console.log("activeAccessories useEffect:", activeAccessories);
-  // }, [activeAccessories]);
 
-  const preloadImages = (imgObject) => {
+  const preloadImages = async (imgObject) => {
     if (typeof window !== "undefined") {
       const imageKeys = Object.keys(imgObject);
       const imageUrls = imageKeys.map((key) => imgObject[key]);
@@ -34,37 +30,32 @@ export default function ScreenViewOutput({
   };
 
   useEffect(() => {
-    const preloadAllImages = async () => {
-      await preloadImages({ ...vanBase.images });
-      const activeAccessories = accessories.filter(
-        (accessory) => accessory.active,
-      );
-      setActiveAccessories(activeAccessories);
+    setLoading(true);
 
-      const accessoryPromises = activeAccessories.map(async (accessory) => {
-        await preloadImages({ ...accessory.images });
+    const activeAccessories = accessories.filter((accessory) => accessory.active);
+    setActiveAccessories(activeAccessories);
 
-        if (accessory.group && accessory.group.length > 0) {
-          const activeGroupAccessories = accessory.group.filter(
-            (groupAccessory) => groupAccessory.active,
-          );
-
-          const groupAccessoryPromises = activeGroupAccessories.map(
-            async (groupAccessory) => {
-              await preloadImages({ ...groupAccessory.images });
-            },
-          );
-
-          await Promise.all(groupAccessoryPromises);
+    const imagesToPreload = {
+      ...vanBase.images,
+      ...activeAccessories.reduce((acc, accessory) => {
+        if (accessory.images) {
+          Object.keys(accessory.images).forEach((key) => {
+            acc[key] = accessory.images[key];
+          });
         }
-      });
-
-      await Promise.all(accessoryPromises);
-      setLoading(false);
+        return acc;
+      }, {}),
     };
 
-    preloadAllImages();
-  }, [vanBase.images, accessories, setLoading]);
+    preloadImages(imagesToPreload)
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error preloading images:", error);
+        setLoading(false);
+      });
+  }, [accessories, vanBase.images, setLoading]);
 
   if (vanBase.images[activeView]) {
     return (

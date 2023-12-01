@@ -281,12 +281,12 @@ export default function VanBuilder() {
           </WrapperFullScreen>
         )}
 
-        <div className="z-30 grid auto-cols-max grid-flow-col items-end justify-end gap-3 p-3">
+        <div className="z-30 grid auto-cols-min grid-flow-col items-end justify-end gap-3 p-3">
           <ControlsIndex menu={menu} menuChange={menuChange} />
         </div>
 
         <WrapperMenu
-          className={`absolute right-0 top-0 z-10 h-full max-w-xs overflow-y-auto pb-4 sm:relative ${
+          className={`absolute right-0 top-0 z-10 h-full max-w-fit overflow-y-auto pb-10 sm:relative lg:pb-0 ${
             menu.accessories.open ? "" : " hidden xl:block "
           }`}
         >

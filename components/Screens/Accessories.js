@@ -4,7 +4,7 @@ import WrapperLabel from "../Wappers/Label";
 
 export default function ScreensAccessories({ checkboxChange, accessories }) {
   const accessoriesCSS =
-    "block cursor-pointer rounded bg-neutral-200/60 p-4 text-xs font-bold text-sky-900 active:bg-amber-100/60 active:fill-amber-900/60 peer-checked:cursor-default peer-checked:bg-yellow-400/90 peer-checked:shadow-inner md:px-6 md:py-2 md:text-base flex items-center";
+    "block cursor-pointer rounded bg-neutral-200/60 p-4 text-xs font-extrabold md:font-bold text-black active:bg-amber-100/60 active:fill-amber-900/60 peer-checked:cursor-default peer-checked:bg-yellow-400/90 peer-checked:shadow-inner md:px-6 md:py-2 md:text-base flex items-center backdrop-blur-3xl w-full truncate max-h-[48px]";
 
   return (
     <ul className="grid gap-1 px-3 pb-8 pt-3">
