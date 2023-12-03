@@ -245,7 +245,7 @@ export default function VanBuilder() {
               e.currentTarget === e.target && menuChange({ default: "force" });
             }}
           >
-            <WrapperMenu className="flex justify-end bg-yellow-100/30 p-6 pb-20">
+            <WrapperMenu className="flex justify-end bg-neutral-100/90 p-6 pb-20 backdrop-blur-xl">
               <InputSlider
                 min={0.5}
                 max={2}
@@ -267,7 +267,7 @@ export default function VanBuilder() {
               e.currentTarget === e.target && menuChange({ default: "force" });
             }}
           >
-            <WrapperMenu className="flex justify-end bg-yellow-100/30 p-6 pb-20">
+            <WrapperMenu className="flex justify-end bg-neutral-100/90 p-6 pb-20 backdrop-blur-xl">
               <InputSlider
                 min={0}
                 max={vanBuild.vanView.length - 1}
@@ -286,7 +286,7 @@ export default function VanBuilder() {
         </div>
 
         <WrapperMenu
-          className={`absolute right-0 top-0 z-10 h-full max-w-fit overflow-y-auto pb-10 sm:relative lg:pb-0 ${
+          className={`absolute right-0 top-0 z-10 h-full max-w-fit overflow-y-auto pb-10 sm:relative lg:pb-0 xl:min-w-[24vw] 2xl:min-w-[30vw] ${
             menu.accessories.open ? "" : " hidden xl:block "
           }`}
         >

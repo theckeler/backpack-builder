@@ -6,7 +6,7 @@ export default function WrapperFullScreen({
 }) {
   return (
     <div
-      className={`absolute bottom-0 left-0 z-20 h-full w-full border border-amber-700 bg-gradient-to-t from-sky-200/20 from-10% pt-10 ${className}`}
+      className={`absolute bottom-0 left-0 z-20 h-full w-full bg-neutral-600/40 pt-10 backdrop-blur-sm ${className}`}
       id={id}
       onClick={onClick}
     >
