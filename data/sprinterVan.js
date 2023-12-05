@@ -16,20 +16,20 @@ const sprinterVan = {
     className: "object-cover z-0",
     images: {
       front:
-        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter-front.webp?v=1701369589",
+        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter-front.webp",
       frontDriver:
-        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter-frontDriver.webp?v=1701369588",
+        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter-frontDriver.webp",
       sideDriver:
-        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter-sideDriver.webp?v=1701369588",
+        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter-sideDriver.webp",
       rearDriver:
-        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter-rearDriver.webp?v=1701369588",
-      rear: "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter-rear.webp?v=1701369588",
+        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter-rearDriver.webp",
+      rear: "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter-rear.webp",
       rearPassenger:
-        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter-rearPassenger.webp?v=1701369588",
+        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter-rearPassenger.webp",
       sidePassenger:
-        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter-sidePassenger.webp?v=1701369588",
+        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter-sidePassenger.webp",
       frontPassenger:
-        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter-frontPassenger.webp?v=1701369588",
+        "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/sprinter-frontPassenger.webp",
     },
   },
   Accessories: [
@@ -39,14 +39,15 @@ const sprinterVan = {
       id: "PanelRack",
       active: false,
       title: "Rover Vans Panel Rack for Sprinter",
+      copy: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat malesuada eros nec dapibus. Ut et justo in sem maximus sodales nec ac erat. Phasellus vitae pulvinar dolor. Donec at sapien sit amet felis accumsan ornare. Sed commodo est nec.",
       href: "https://rovervans.com/products/",
       price: 999.0,
       images: {
         rearDriver:
-          "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/rack_noPanels.Rear_L.png?v=1701196356",
-        rear: "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/rack_noPanels.Rear.png?v=1701196356",
+          "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/rack_noPanels.Rear_L.png",
+        rear: "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/rack_noPanels.Rear.png",
         rearPassenger:
-          "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/rack_noPanels.Rear_R.png?v=1701196356",
+          "https://cdn.shopify.com/s/files/1/0806/5735/0946/files/rack_noPanels.Rear_R.png",
       },
       group: [
         {
@@ -183,7 +184,6 @@ const sprinterVan = {
       dependant: null,
       active: false,
       title: "Example Product 2",
-      href: "https://rovervans.com/products/",
       price: 200.0,
       images: {},
       group: [
@@ -194,7 +194,6 @@ const sprinterVan = {
           dependant: "ProductRack",
           active: false,
           title: "Rover Vans Product Rack for Sprinter",
-          href: "https://rovervans.com/products/",
           price: 300.0,
           images: {},
         },
@@ -205,7 +204,6 @@ const sprinterVan = {
           dependant: "ProductRack",
           active: false,
           title: "Rover Vans Product Rack for Sprinter",
-          href: "https://rovervans.com/products/",
           price: 280.0,
           images: {},
         },
@@ -216,7 +214,6 @@ const sprinterVan = {
           dependant: "ProductRack",
           active: false,
           title: "Rover Vans Product Rack for Sprinter",
-          href: "https://rovervans.com/products/",
           price: 330.0,
           images: {},
         },
@@ -227,7 +224,6 @@ const sprinterVan = {
           dependant: "ProductRack",
           active: false,
           title: "Rover Vans Product Rack for Sprinter",
-          href: "https://rovervans.com/products/",
           price: 310.0,
           images: {},
         },

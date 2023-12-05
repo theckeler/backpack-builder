@@ -1,4 +1,4 @@
-import WrapperButton from "@/components/Wappers/Button";
+import WrapperButton from "@/components/Wrappers/Button";
 import { Icons } from "@/images/Icons";
 
 export default function ControlsIndex({ menu, menuChange }) {

@@ -1,4 +1,3 @@
-
 import Logo from "@/images/logo";
 import ImagesVan from "@/images/van";
 
@@ -14,10 +13,14 @@ export default function ScreenSelectVan({ vanChange }) {
         title: "Sprinter 144",
         value: "sprinterVan",
       },
-      // {
-      //   title: "Transit 130",
-      //   value: "transitVan",
-      // },
+      {
+        title: "Transit 130",
+        value: "transitVan",
+      },
+      {
+        title: "Promaster",
+        value: "promasterVan",
+      },
     ],
   };
 

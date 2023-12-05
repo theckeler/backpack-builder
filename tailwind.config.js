@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  important: "#van-bulder",
   darkMode: "class",
   content: [
     "./components/**/*.{js,ts,jsx,tsx,mdx}",

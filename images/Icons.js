@@ -1,4 +1,4 @@
-export function Icons({ icon }) {
+export function Icons({ icon, className }) {
   if (!icon) return "";
   const IconMap = {
     hourglasstop: HourGlassTop,
@@ -28,7 +28,7 @@ export function Icons({ icon }) {
     link: Link,
   };
   const IconExport = IconMap[icon];
-  return <IconExport className="h-12 w-12 p-2" />;
+  return <IconExport className={className ? className : "h-12 w-12 p-2"} />;
 }
 
 export function Link({ className }) {

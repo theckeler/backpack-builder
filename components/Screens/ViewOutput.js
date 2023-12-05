@@ -32,7 +32,9 @@ export default function ScreenViewOutput({
   useEffect(() => {
     setLoading(true);
 
-    const activeAccessories = accessories.filter((accessory) => accessory.active);
+    const activeAccessories = accessories.filter(
+      (accessory) => accessory.active,
+    );
     setActiveAccessories(activeAccessories);
 
     const imagesToPreload = {
@@ -49,7 +51,11 @@ export default function ScreenViewOutput({
 
     preloadImages(imagesToPreload)
       .then(() => {
-        setLoading(false);
+        //setLoading(false);
+        setTimeout(() => {
+          console.log("timeout");
+          setLoading(false);
+        }, 1000);
       })
       .catch((error) => {
         console.error("Error preloading images:", error);
