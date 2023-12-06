@@ -1,20 +1,17 @@
 import Logo from "@/images/logo";
-import ImagesVan from "@/images/van";
 
 export default function ScreenSelectVan({ vanChange }) {
   const buttons = {
-    className:
-      "w-full text-center px-10 py-4 bg-amber-500 font-bold shadow-base rounded",
-    onClick: (e) => {
+    onChange: (e) => {
       vanChange(e);
     },
     blocks: [
       {
-        title: "Sprinter 144",
+        title: "Sprinter",
         value: "sprinterVan",
       },
       {
-        title: "Transit 130",
+        title: "Transit",
         value: "transitVan",
       },
       {
@@ -32,7 +29,7 @@ export default function ScreenSelectVan({ vanChange }) {
         Select your van:
       </div>
 
-      <ul className="mt-3 grid w-full max-w-xl auto-cols-max grid-flow-col items-stretch justify-center gap-3">
+      {/* <ul className="mt-3 grid w-full max-w-xl grid-cols-1 items-stretch justify-center gap-2 lg:auto-cols-max lg:grid-flow-col">
         {buttons.blocks.map(function ({ title, value }, i) {
           return (
             <li key={i}>
@@ -47,7 +44,21 @@ export default function ScreenSelectVan({ vanChange }) {
             </li>
           );
         })}
-      </ul>
+      </ul> */}
+
+      <select
+        onChange={buttons.onChange}
+        className="mt-2 w-full appearance-none rounded bg-amber-500 p-2 text-center font-bold shadow-base"
+      >
+        <option>Select</option>
+        {buttons.blocks.map(function ({ title, value }, i) {
+          return (
+            <option value={value} onClick={buttons.onClick} key={i}>
+              {title}
+            </option>
+          );
+        })}
+      </select>
     </div>
   );
 }
