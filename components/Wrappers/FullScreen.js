@@ -3,10 +3,14 @@ export default function WrapperFullScreen({
   children,
   onClick,
   id,
+  bgColor = true,
+  blur = true,
 }) {
   return (
     <div
-      className={`bg-neutral-600/40 pt-10 backdrop-blur-sm ${className}`}
+      className={`${bgColor ? "bg-neutral-600/40" : ""} pt-10 ${
+        blur ? "backdrop-blur-sm" : ""
+      } ${className}`}
       id={id}
       onClick={onClick}
     >

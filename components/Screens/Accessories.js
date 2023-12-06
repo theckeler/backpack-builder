@@ -28,6 +28,7 @@ export default function ScreensAccessories({
             </WrapperLabel>
             <div className="ml-auto rounded bg-amber-100">
               <WrapperButton
+                ariaLabel="View accessories for this van."
                 href={accessory.href}
                 className="shadow-none"
                 onClick={() => {

@@ -15,7 +15,6 @@ import WrapperMenu from "@/components/Wrappers/Menu";
 import promasterVan from "@/data/promasterVan";
 import sprinterVan from "@/data/sprinterVan";
 import transitVan from "@/data/transitVan";
-import ImagesBackground from "@/images/Background";
 import { Icons } from "@/images/Icons";
 
 export default function VanBuilder() {
@@ -187,7 +186,6 @@ export default function VanBuilder() {
   const [loading, setLoading] = useState(true);
   const [vanSelect, setVanSelect] = useState(true);
   const [accessoryDetail, setAccessoryDetail] = useState({ active: false });
-  // const [vanSelect, setVanSelect] = useState(false);
 
   const showAccessory = (accessory) => {
     setAccessoryDetail((prevAccessoryDetail) => {
@@ -199,18 +197,23 @@ export default function VanBuilder() {
         };
       else return { active: false };
     });
-
-    // accessory
-    //   ? setAccessoryDetail((prevAccessoryDetail) => ({
-    //       ...prevAccessoryDetail,
-    //       active: !accessoryDetail.active,
-    //       accessory: { ...accessory },
-    //     }))
-    //   : setAccessoryDetail({ active: false });
   };
-  useEffect(() => {
-    console.log("accessoryDetail useEffect:", accessoryDetail);
-  }, [accessoryDetail]);
+  // useEffect(() => {
+  //   console.log("accessoryDetail useEffect:", accessoryDetail);
+  // }, [accessoryDetail]);
+
+  const allBaseToPreloadObject = [
+    ...Object.values(vanBuild.sprinterVan.base.images),
+    ...Object.values(vanBuild.transitVan.base.images),
+    ...Object.values(vanBuild.promasterVan.base.images),
+  ];
+  allBaseToPreloadObject.forEach((imageUrl) => {
+    const linkElement = document.createElement("link");
+    linkElement.rel = "preload";
+    linkElement.href = imageUrl;
+    linkElement.as = "image";
+    document.head.appendChild(linkElement);
+  });
 
   return (
     <div
@@ -221,13 +224,17 @@ export default function VanBuilder() {
       }`}
     >
       {loading && (
-        <WrapperFullScreen className="absolute left-0 top-0 z-50 flex h-full w-screen items-center justify-center">
+        <WrapperFullScreen
+          className="absolute left-0 top-0 z-50 flex h-full w-screen items-center justify-center"
+          id="loading"
+        >
           <Loading />
         </WrapperFullScreen>
       )}
 
       {accessoryDetail.active && accessoryDetail.accessory && (
         <WrapperFullScreen
+          id="accessoryDetail"
           className="absolute left-0 top-0 z-50 flex h-full w-screen items-center justify-center"
           onClick={(e) => {
             e.currentTarget === e.target && showAccessory();
@@ -243,7 +250,7 @@ export default function VanBuilder() {
       {vanSelect && (
         <WrapperFullScreen
           className="absolute left-0 top-0 z-40 flex h-full w-full items-center justify-center"
-          id="change-van"
+          id="selectVan"
         >
           <SelectVan vanChange={vanChange} />
         </WrapperFullScreen>
@@ -251,7 +258,7 @@ export default function VanBuilder() {
 
       <div
         className="absolute left-0 top-0 z-20 grid h-full w-screen auto-cols-max grid-flow-col items-end justify-end"
-        id="controls"
+        id="vanControls"
       >
         <WrapperMenu className="absolute left-0 top-0 z-30 h-full w-full max-w-max">
           {menu.vanDetails.open && (
@@ -275,50 +282,37 @@ export default function VanBuilder() {
         </WrapperMenu>
 
         {menu.zoom.open && (
-          <WrapperFullScreen
-            className="absolute bottom-0 left-0 z-20 flex h-full w-full items-end"
-            id="ZoomOpen"
-            onClick={(e) => {
-              e.currentTarget === e.target && menuChange({ default: "force" });
-            }}
-          >
-            <WrapperMenu className="flex justify-end bg-neutral-100/90 p-6 pb-20 backdrop-blur-xl">
-              <InputSlider
-                min={0.5}
-                max={2}
-                step={0.1}
-                value={menu.zoom.level}
-                onChange={(e) => {
-                  menuChange({ value: e.currentTarget.value, zoomLevel: true });
-                }}
-              />
-            </WrapperMenu>
-          </WrapperFullScreen>
+          <WrapperMenu className="absolute bottom-0 left-0 z-20 flex w-full justify-end bg-neutral-100/90 p-6 pb-20 backdrop-blur-xl">
+            <InputSlider
+              min={0.5}
+              max={2}
+              step={0.1}
+              value={menu.zoom.level}
+              onChange={(e) => {
+                menuChange({ value: e.currentTarget.value, zoomLevel: true });
+              }}
+            />
+          </WrapperMenu>
         )}
 
         {menu.rotate.open && (
-          <WrapperFullScreen
-            className="absolute bottom-0 left-0 z-20 flex h-full w-full items-end"
-            id="RotateOpen"
-            onClick={(e) => {
-              e.currentTarget === e.target && menuChange({ default: "force" });
-            }}
-          >
-            <WrapperMenu className="flex justify-end bg-neutral-100/90 p-6 pb-20 backdrop-blur-xl">
-              <InputSlider
-                min={0}
-                max={vanBuild.vanView.length - 1}
-                step={1}
-                value={menu.rotate.value}
-                onChange={(e) => {
-                  viewChangeSlider({ value: e.currentTarget.value });
-                }}
-              />
-            </WrapperMenu>
-          </WrapperFullScreen>
+          <WrapperMenu className="absolute bottom-0 left-0 z-20 flex w-full justify-end bg-neutral-100/90 p-6 pb-20 backdrop-blur-xl">
+            <InputSlider
+              min={0}
+              max={vanBuild.vanView.length - 1}
+              step={1}
+              value={menu.rotate.value}
+              onChange={(e) => {
+                viewChangeSlider({ value: e.currentTarget.value });
+              }}
+            />
+          </WrapperMenu>
         )}
 
-        <div className="z-30 grid auto-cols-min grid-flow-col items-end justify-end gap-3 p-3">
+        <div
+          className="z-30 grid auto-cols-min grid-flow-col items-end justify-end gap-3 p-3"
+          id="vanControls"
+        >
           <ControlsIndex menu={menu} menuChange={menuChange} />
         </div>
 
@@ -334,8 +328,18 @@ export default function VanBuilder() {
             showAccessory={showAccessory}
           />
         </WrapperMenu>
+
+        <WrapperFullScreen
+          className="absolute bottom-0 left-0 z-0 h-full w-full"
+          bgColor={false}
+          blur={false}
+          onClick={(e) => {
+            e.currentTarget === e.target && menuChange({ default: "force" });
+          }}
+        />
       </div>
-      <div className="absolute z-0 flex h-full w-full flex-col">
+
+      <div className="absolute z-0 flex h-full w-full flex-col" id="VanOutput">
         <ViewOutput
           accessories={vanBuild[vanBuild.currVan].Accessories}
           vanView={vanBuild.vanView}
@@ -345,7 +349,11 @@ export default function VanBuilder() {
           loading={loading}
         />
       </div>
-      <ImagesBackground className="fill-sky-100 opacity-50" />
+
+      {/* <ImagesBackground
+        className="fill-sky-100 opacity-50"
+        id="logoBackground"
+      /> */}
     </div>
   );
 }

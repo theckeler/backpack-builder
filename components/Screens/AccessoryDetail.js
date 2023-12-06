@@ -7,7 +7,10 @@ export default function AccessoryDetail({ accessory, showAccessory }) {
   return (
     <ul className="grid w-full max-w-3xl grid-cols-[1fr_48px] items-center bg-white p-4 shadow-lg">
       <li className="col-span-full mb-4 ml-auto">
-        <WrapperButton onClick={showAccessory}>
+        <WrapperButton
+          onClick={showAccessory}
+          ariaLabel="Close accessories window."
+        >
           <Icons icon="close" />
         </WrapperButton>
       </li>

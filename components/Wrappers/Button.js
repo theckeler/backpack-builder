@@ -5,6 +5,7 @@ export default function WrapperButton({
   name,
   value,
   open,
+  ariaLabel,
 }) {
   return (
     <button
@@ -14,6 +15,7 @@ export default function WrapperButton({
       onClick={onClick}
       name={name}
       value={value}
+      aria-label={ariaLabel}
     >
       {children}
     </button>

@@ -6,6 +6,7 @@ export default function ControlsIndex({ menu, menuChange }) {
     <>
       <div className="max-w-fit">
         <WrapperButton
+          ariaLabel="Van Details"
           open={menu.vanDetails.open}
           onClick={() => {
             menuChange({ vanDetails: true });
@@ -17,6 +18,7 @@ export default function ControlsIndex({ menu, menuChange }) {
 
       <div className="max-w-fit">
         <WrapperButton
+          ariaLabel="Controls to zoom the van"
           onClick={() => {
             menuChange({ zoom: true });
           }}
@@ -28,6 +30,7 @@ export default function ControlsIndex({ menu, menuChange }) {
 
       <div className="max-w-fit">
         <WrapperButton
+          ariaLabel="Controls to rotate the van."
           onClick={() => {
             menuChange({ rotate: true });
           }}
@@ -39,6 +42,7 @@ export default function ControlsIndex({ menu, menuChange }) {
 
       <div className="relative max-w-fit xl:hidden">
         <WrapperButton
+          ariaLabel="View accessories for this van."
           open={menu.accessories.open}
           onClick={() => {
             menuChange({ accessories: true });

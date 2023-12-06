@@ -1,4 +1,5 @@
 import getActiveView from "@/components/Helpers/getActiveView";
+import preloadImages from "@/components/Helpers/preloadImages";
 import VanImages from "@/components/Image";
 import React, { useEffect, useState } from "react";
 
@@ -12,31 +13,7 @@ export default function ScreenViewOutput({
   const activeView = getActiveView(vanView);
   const [activeAccessories, setActiveAccessories] = useState([]);
 
-  const preloadImages = async (imgObject) => {
-    if (typeof window !== "undefined") {
-      const imageKeys = Object.keys(imgObject);
-      const imageUrls = imageKeys.map((key) => imgObject[key]);
-
-      const promises = imageUrls.map((url) => {
-        return new Promise((resolve) => {
-          const img = new Image();
-          img.onload = resolve;
-          img.src = url;
-        });
-      });
-
-      return Promise.all(promises);
-    }
-  };
-
-  useEffect(() => {
-    setLoading(true);
-
-    const activeAccessories = accessories.filter(
-      (accessory) => accessory.active,
-    );
-    setActiveAccessories(activeAccessories);
-
+  const preloadAllImages = async () => {
     const imagesToPreload = {
       ...vanBase.images,
       ...activeAccessories.reduce((acc, accessory) => {
@@ -49,13 +26,22 @@ export default function ScreenViewOutput({
       }, {}),
     };
 
-    preloadImages(imagesToPreload)
+    await preloadImages(imagesToPreload);
+  };
+
+  useEffect(() => {
+    setLoading(true);
+
+    const activeAccessories = accessories.filter(
+      (accessory) => accessory.active,
+    );
+    setActiveAccessories(activeAccessories);
+
+    preloadAllImages()
       .then(() => {
-        //setLoading(false);
         setTimeout(() => {
-          console.log("timeout");
           setLoading(false);
-        }, 1000);
+        }, 500);
       })
       .catch((error) => {
         console.error("Error preloading images:", error);
@@ -65,8 +51,12 @@ export default function ScreenViewOutput({
 
   if (vanBase.images[activeView]) {
     return (
-      <span id="ViewOutput">
-        <VanImages src={vanBase.images[activeView]} zoomLevel={zoomLevel} />
+      <span>
+        <VanImages
+          src={vanBase.images[activeView]}
+          zoomLevel={zoomLevel}
+          loading="eager"
+        />
         {activeAccessories.length > 0 &&
           accessories.map(
             (accessory, i) =>
