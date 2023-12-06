@@ -23,7 +23,9 @@ export default function ScreenSelectVan({ vanChange }) {
 
   return (
     <div className="col-span-full">
-      <Logo className="h-full max-h-36 w-full fill-sky-400" />
+      <div className="mx-auto h-36 w-36 rounded-full bg-white/70 shadow-base shadow-white backdrop-blur-xl">
+        <Logo className="h-36 w-36 fill-sky-400 p-2" />
+      </div>
 
       <div className="mt-4 text-center text-4xl font-extralight text-amber-100">
         Select your van:

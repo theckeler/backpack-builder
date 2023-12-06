@@ -4,7 +4,7 @@ export default function VanImages({
   loading,
   allImagesLoaded,
 }) {
-  // const widths = [320, 640, 960, 1280, 1600];
+  const widths = [320, 640, 960, 1280, 1600];
 
   return (
     <img
