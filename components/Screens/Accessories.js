@@ -1,6 +1,5 @@
 import { Icons } from "@/images/Icons";
 import InputCheckbox from "../Inputs/Checkbox";
-import WrapperButton from "../Wrappers/Button";
 import WrapperLabel from "../Wrappers/Label";
 
 export default function ScreensAccessories({
@@ -9,7 +8,7 @@ export default function ScreensAccessories({
   showAccessory,
 }) {
   const accessoriesCSS =
-    "block cursor-pointer rounded bg-neutral-200/60 p-4 text-xs font-extrabold md:font-bold text-black active:bg-amber-100/60 active:fill-amber-900/60 peer-checked:cursor-default peer-checked:bg-yellow-400/90 peer-checked:shadow-inner md:px-6 md:py-2 md:text-base flex items-center backdrop-blur-3xl w-full truncate max-h-[48px]";
+    "block cursor-pointer rounded bg-neutral-200/60 p-4 text-xs font-extrabold md:font-bold text-black active:bg-amber-100/60 active:fill-amber-900/60 peer-checked:cursor-default peer-checked:bg-yellow-400/90 peer-checked:shadow-inner md:px-6 md:py-2 md:text-base flex items-center backdrop-blur-3xl w-full truncate";
 
   return (
     <ul className="grid gap-1 px-3 pb-8 pt-3">
@@ -26,17 +25,17 @@ export default function ScreensAccessories({
             <WrapperLabel htmlFor={accessory.id} className={accessoriesCSS}>
               {accessory.name}
             </WrapperLabel>
-            <div className="ml-auto rounded bg-amber-100">
-              <WrapperButton
-                ariaLabel="View accessories for this van."
+            <div className="ml-auto rounded bg-neutral-100 fill-neutral-400">
+              <button
+                aria-label="View accessories for this van."
                 href={accessory.href}
                 className="shadow-none"
                 onClick={() => {
                   showAccessory(accessory);
                 }}
               >
-                <Icons icon="link" />
-              </WrapperButton>
+                <Icons icon="description" />
+              </button>
             </div>
             {accessory.active &&
               accessory.group &&

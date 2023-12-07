@@ -77,6 +77,7 @@ export default function VanBuilder() {
         active: e.value == i ? true : false,
       };
     });
+
     setVanBuild((prevVanBuild) => ({
       ...prevVanBuild,
       vanView: updatedVan,
@@ -349,7 +350,9 @@ export default function VanBuilder() {
         </div>
 
         <div
-          className="absolute z-0 flex h-full w-full flex-col"
+          className={`absolute z-0 flex h-full w-full flex-col ${
+            loading ? "blur-md" : ""
+          }`}
           id="VanOutput"
         >
           <ViewOutput
@@ -358,7 +361,6 @@ export default function VanBuilder() {
             vanBase={vanBuild[vanBuild.currVan].base}
             zoomLevel={menu.zoom.level}
             setLoading={setLoading}
-            loading={loading}
           />
         </div>
 

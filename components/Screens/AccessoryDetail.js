@@ -1,19 +1,9 @@
-import { priceFormatter } from "@/components/Helpers/priceFormatter";
-import WrapperButton from "@/components/Wrappers/Button";
 import WrapperLinkExternal from "@/components/Wrappers/LinkExternal";
 import { Icons } from "@/images/Icons";
 
 export default function AccessoryDetail({ accessory, showAccessory }) {
   return (
-    <ul className="grid w-full max-w-3xl grid-cols-[1fr_48px] items-center bg-white p-4 shadow-lg">
-      <li className="col-span-full mb-4 ml-auto">
-        <WrapperButton
-          onClick={showAccessory}
-          ariaLabel="Close accessories window."
-        >
-          <Icons icon="close" />
-        </WrapperButton>
-      </li>
+    <ul className="mx-8 grid w-full max-w-3xl grid-cols-[1fr_48px] items-center rounded-lg bg-white p-4 shadow-base shadow-black/50">
       <li className="text-xl font-bold">
         {accessory.href ? (
           <WrapperLinkExternal href={accessory.href}>
@@ -23,10 +13,17 @@ export default function AccessoryDetail({ accessory, showAccessory }) {
           accessory.title
         )}
       </li>
-      <li className="ml-auto text-xl">
-        {priceFormatter.format(accessory.price)}
+      <li className="mb-0 ml-auto">
+        <button
+          onClick={showAccessory}
+          aria-label="Close accessories window"
+          className="rounded border bg-amber-300"
+        >
+          <Icons icon="close" />
+        </button>
       </li>
-      <li className="col-span-full">{accessory.copy}</li>
+
+      <li className="col-span-full mt-2 text-sm">{accessory.copy}</li>
     </ul>
   );
 }

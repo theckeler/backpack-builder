@@ -41,7 +41,7 @@ export default function ScreenViewOutput({
       .then(() => {
         setTimeout(() => {
           setLoading(false);
-        }, 500);
+        }, 200);
       })
       .catch((error) => {
         console.error("Error preloading images:", error);
@@ -56,6 +56,7 @@ export default function ScreenViewOutput({
           src={vanBase.images[activeView]}
           zoomLevel={zoomLevel}
           loading="eager"
+          className="relative z-20"
         />
         {activeAccessories.length > 0 &&
           accessories.map(
@@ -66,6 +67,11 @@ export default function ScreenViewOutput({
                   <VanImages
                     src={accessory.images[activeView]}
                     zoomLevel={zoomLevel}
+                    className={
+                      accessory.layers[activeView]
+                        ? accessory.layers[activeView]
+                        : "z-30"
+                    }
                   />
                   {accessory.group?.length > 0 &&
                     accessory.group?.map(
@@ -76,6 +82,11 @@ export default function ScreenViewOutput({
                             src={accessoryGroup.images[activeView]}
                             zoomLevel={zoomLevel}
                             key={j}
+                            className={
+                              accessoryGroup.layers[activeView]
+                                ? accessoryGroup.layers[activeView]
+                                : "z-30"
+                            }
                           />
                         ),
                     )}

@@ -1,12 +1,11 @@
-// IMAGES:
-// front: "image",
-// frontDriver: "image",
-// driver: "image",
-// rearDriver: "image",
-// rear: "image",
-// rearPassenger: "image",
-// Passenger: "image",
-// frontPassenger: "image",
+// front: "",
+// frontDriver: "",
+// driver: "",
+// rearDriver: "",
+// rear: "",
+// rearPassenger: "",
+// Passenger: "",
+// frontPassenger: "",
 
 const transitVan = {
   price: { base: 60000.0, accessories: 0, total: 60000.0 },

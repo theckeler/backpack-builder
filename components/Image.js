@@ -5,12 +5,13 @@ export default function VanImages({
   zoomLevel,
   loading,
   allImagesLoaded,
+  className,
 }) {
   const widths = [320, 640, 960, 1280, 1600, 2000];
 
   return (
     <Image
-      className="absolute left-0 top-0 h-full w-full object-contain"
+      className={`absolute left-0 top-0 h-full w-full object-contain ${className}`}
       src={src}
       width={2000}
       height={1600}
