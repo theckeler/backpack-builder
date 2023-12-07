@@ -1,15 +1,19 @@
+import Image from "next/image";
+
 export default function VanImages({
   src,
   zoomLevel,
   loading,
   allImagesLoaded,
 }) {
-  const widths = [320, 640, 960, 1280, 1600];
+  const widths = [320, 640, 960, 1280, 1600, 2000];
 
   return (
-    <img
+    <Image
       className="absolute left-0 top-0 h-full w-full object-contain"
       src={src}
+      width={2000}
+      height={1600}
       // srcSet={widths
       //   .map((width) => `${src}?width=${width} ${width}w`)
       //   .join(", ")}
@@ -17,6 +21,7 @@ export default function VanImages({
       loading={loading}
       style={{ transform: `scale(${zoomLevel})` }}
       onLoad={allImagesLoaded}
+      priority={true}
     />
   );
 }

@@ -51,7 +51,7 @@ export default function ScreenViewOutput({
 
   if (vanBase.images[activeView]) {
     return (
-      <span>
+      <>
         <VanImages
           src={vanBase.images[activeView]}
           zoomLevel={zoomLevel}
@@ -82,7 +82,7 @@ export default function ScreenViewOutput({
                 </React.Fragment>
               ),
           )}
-      </span>
+      </>
     );
   }
 

@@ -8,7 +8,7 @@ export default function WrapperFullScreen({
 }) {
   return (
     <div
-      className={`${bgColor ? "bg-neutral-600/40" : ""} pt-10 ${
+      className={`${bgColor ? "bg-neutral-600/40" : ""} ${
         blur ? "backdrop-blur-sm" : ""
       } ${className}`}
       id={id}

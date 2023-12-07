@@ -23,8 +23,8 @@ export default function ScreenSelectVan({ vanChange }) {
 
   return (
     <div className="col-span-full">
-      <div className="mx-auto h-36 w-36 rounded-full bg-white/70 shadow-base shadow-white backdrop-blur-xl">
-        <Logo className="h-36 w-36 fill-sky-400 p-2" />
+      <div className="mx-auto w-48 rounded-full bg-white/80 shadow-base shadow-white backdrop-blur-xl">
+        <Logo className="h-48 w-48 fill-sky-700 p-2" />
       </div>
 
       <div className="mt-4 text-center text-4xl font-extralight text-amber-100">
