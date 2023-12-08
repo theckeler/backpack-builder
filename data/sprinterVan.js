@@ -10,7 +10,7 @@
 const sprinterVan = {
   price: { base: 80000.0, accessories: 0, total: 80000.0 },
   base: {
-    name: "Sprinter 144",
+    name: "Sprinter",
     price: 80000.0,
     className: "object-cover z-0",
     images: {

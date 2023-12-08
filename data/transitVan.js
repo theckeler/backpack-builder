@@ -10,7 +10,7 @@
 const transitVan = {
   price: { base: 60000.0, accessories: 0, total: 60000.0 },
   base: {
-    name: "Transit 130",
+    name: "Transit",
     price: 80000.0,
     className: "object-cover z-0",
     images: {

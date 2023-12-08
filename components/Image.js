@@ -6,12 +6,13 @@ export default function VanImages({
   loading,
   allImagesLoaded,
   className,
+  priority = false,
 }) {
-  const widths = [320, 640, 960, 1280, 1600, 2000];
+  // const widths = [320, 640, 960, 1280, 1600, 2000];
 
   return (
     <Image
-      className={`absolute left-0 top-0 h-full w-full object-contain ${className}`}
+      className={`absolute left-0 top-0 h-full w-full object-cover lg:object-contain ${className}`}
       src={src}
       width={2000}
       height={1600}
@@ -22,7 +23,7 @@ export default function VanImages({
       loading={loading}
       style={{ transform: `scale(${zoomLevel})` }}
       onLoad={allImagesLoaded}
-      priority={true}
+      priority={priority}
     />
   );
 }

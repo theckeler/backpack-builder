@@ -10,7 +10,7 @@
 const promasterVan = {
   price: { base: 60000.0, accessories: 0, total: 60000.0 },
   base: {
-    name: "Promaster 130",
+    name: "Promaster",
     price: 66000.0,
     className: "object-cover z-0",
     images: {

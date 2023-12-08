@@ -2,11 +2,10 @@
 import { useEffect, useMemo, useState } from "react";
 
 import ControlsIndex from "@/components/Controls";
+import Select from "@/components/Inputs/Select";
 import InputSlider from "@/components/Inputs/Slider";
 import ScreensAccessories from "@/components/Screens/Accessories";
 import AccessoryDetail from "@/components/Screens/AccessoryDetail";
-import Loading from "@/components/Screens/Loading";
-import SelectVan from "@/components/Screens/SelectVan";
 import VanDetails from "@/components/Screens/VanDetails";
 import ViewOutput from "@/components/Screens/ViewOutput";
 import WrapperButton from "@/components/Wrappers/Button";
@@ -15,7 +14,9 @@ import WrapperMenu from "@/components/Wrappers/Menu";
 import promasterVan from "@/data/promasterVan";
 import sprinterVan from "@/data/sprinterVan";
 import transitVan from "@/data/transitVan";
+import ImagesBackground from "@/images/Background";
 import { Icons } from "@/images/Icons";
+import Logo from "@/images/logo";
 
 export default function VanBuilder() {
   const [vanBuild, setVanBuild] = useState({
@@ -34,6 +35,25 @@ export default function VanBuilder() {
     ],
     currVan: "sprinterVan",
     fullscreen: false,
+    options: {
+      onChange: (e) => {
+        vanChange(e);
+      },
+      blocks: [
+        {
+          title: "Sprinter",
+          value: "sprinterVan",
+        },
+        {
+          title: "Transit",
+          value: "transitVan",
+        },
+        {
+          title: "Promaster",
+          value: "promasterVan",
+        },
+      ],
+    },
   });
 
   const scrollWidth = useMemo(() => {
@@ -184,10 +204,6 @@ export default function VanBuilder() {
     zoom: { level: 1, open: false },
   });
 
-  const [loading, setLoading] = useState(true);
-  const [vanSelect, setVanSelect] = useState(true);
-  const [accessoryDetail, setAccessoryDetail] = useState({ active: false });
-
   const showAccessory = (accessory) => {
     setAccessoryDetail((prevAccessoryDetail) => {
       if (accessory)
@@ -211,20 +227,34 @@ export default function VanBuilder() {
   useEffect(() => {
     allBaseToPreloadObject.forEach((imageUrl) => {
       const linkElement = document.createElement("link");
-      linkElement.rel = "preload";
+      linkElement.rel = "prefetch";
       linkElement.href = imageUrl;
       linkElement.as = "image";
       document.head.appendChild(linkElement);
     });
   }, []);
 
+  const sliderMove = () => {
+    setSliderActive(true);
+  };
+
+  const sliderStop = () => {
+    setSliderActive(false);
+  };
+
+  const [loading, setLoading] = useState(true);
+  const [sliderActive, setSliderActive] = useState(false);
+  const [vanSelect, setVanSelect] = useState(true);
+  const [accessoryDetail, setAccessoryDetail] = useState({ active: false });
+
+  // useEffect(() => {
+  //   console.log("sliderActive useEffect:", sliderActive);
+  // }, [sliderActive]);
+
   return (
     <>
-      {/* <Head>
-        {allBaseToPreloadObject.map((imageUrl, index) => (
-          <link key={index} rel="preload" href={imageUrl} as="image" />
-        ))}
-      </Head> */}
+      <link rel="preconnect" href="https://cdn.shopify.com" />
+      <link rel="dns-prefetch" href="https://cdn.shopify.com" />
 
       <div
         className={`relative flex select-none flex-col items-center justify-between overflow-hidden ${
@@ -233,12 +263,33 @@ export default function VanBuilder() {
             : "min-h-[500px] md:min-h-[600px] lg:min-h-[700px] xl:min-h-[800px] 2xl:min-h-[900px]"
         }`}
       >
-        {loading && (
+        {(loading || vanSelect) && (
           <WrapperFullScreen
             className="absolute left-0 top-0 z-50 flex h-full w-screen items-center justify-center"
             id="loading"
           >
-            <Loading />
+            <div className="grid min-w-[260px] place-content-center justify-items-center rounded bg-white/80 p-4 shadow-base shadow-white">
+              <Logo className="mx-auto h-36 w-36 fill-sky-700" />
+
+              <div className="mt-4 text-center text-4xl font-extralight text-sky-900">
+                {loading ? "Loading" : "Select your van:"}
+              </div>
+
+              {loading ? (
+                <Icons
+                  icon="progressactivity"
+                  className="mt-4 h-16 w-16 animate-spin rounded-full bg-amber-500 fill-neutral-800 p-2 "
+                />
+              ) : (
+                <Select
+                  onChange={vanBuild.options.onChange}
+                  className="mt-6 w-full appearance-none rounded bg-amber-400 p-3 font-bold shadow-inner"
+                  aria-label="Select your van."
+                  options={vanBuild.options}
+                  activeVan="Select Your Van"
+                />
+              )}
+            </div>
           </WrapperFullScreen>
         )}
 
@@ -257,15 +308,6 @@ export default function VanBuilder() {
           </WrapperFullScreen>
         )}
 
-        {vanSelect && (
-          <WrapperFullScreen
-            className="absolute left-0 top-0 z-40 flex h-full w-full items-center justify-center"
-            id="selectVan"
-          >
-            <SelectVan vanChange={vanChange} />
-          </WrapperFullScreen>
-        )}
-
         <div
           className="absolute left-0 top-0 z-20 grid h-full w-screen auto-cols-max grid-flow-col items-end justify-end"
           id="vanControls"
@@ -274,8 +316,8 @@ export default function VanBuilder() {
             {menu.vanDetails.open && (
               <VanDetails
                 currVan={vanBuild[vanBuild.currVan]}
-                setVanSelect={setVanSelect}
-                showVanDetails={menu.vanDetails.open}
+                options={vanBuild.options}
+                activeVan={vanBuild[vanBuild.currVan].base.name}
               />
             )}
             <WrapperButton
@@ -291,29 +333,22 @@ export default function VanBuilder() {
             </WrapperButton>
           </WrapperMenu>
 
-          {menu.zoom.open && (
+          {(menu.zoom.open || menu.rotate.open) && (
             <WrapperMenu className="absolute bottom-0 left-0 z-20 flex w-full justify-end bg-neutral-100/90 p-6 pb-20 backdrop-blur-xl">
               <InputSlider
-                min={0.5}
-                max={2}
-                step={0.1}
-                value={menu.zoom.level}
+                min={menu.zoom.open ? 0.5 : 0}
+                max={menu.zoom.open ? 1.5 : vanBuild.vanView.length - 1}
+                step={menu.zoom.open ? 0.2 : 1}
+                value={menu.zoom.open ? menu.zoom.level : menu.rotate.value}
+                onMouseDown={sliderMove}
+                onMouseUp={sliderStop}
                 onChange={(e) => {
-                  menuChange({ value: e.currentTarget.value, zoomLevel: true });
-                }}
-              />
-            </WrapperMenu>
-          )}
-
-          {menu.rotate.open && (
-            <WrapperMenu className="absolute bottom-0 left-0 z-20 flex w-full justify-end bg-neutral-100/90 p-6 pb-20 backdrop-blur-xl">
-              <InputSlider
-                min={0}
-                max={vanBuild.vanView.length - 1}
-                step={1}
-                value={menu.rotate.value}
-                onChange={(e) => {
-                  viewChangeSlider({ value: e.currentTarget.value });
+                  menu.zoom.open
+                    ? menuChange({
+                        value: e.currentTarget.value,
+                        zoomLevel: true,
+                      })
+                    : viewChangeSlider({ value: e.currentTarget.value });
                 }}
               />
             </WrapperMenu>
@@ -351,7 +386,7 @@ export default function VanBuilder() {
 
         <div
           className={`absolute z-0 flex h-full w-full flex-col ${
-            loading ? "blur-md" : ""
+            sliderActive ? "brightness-0" : ""
           }`}
           id="VanOutput"
         >
@@ -361,13 +396,15 @@ export default function VanBuilder() {
             vanBase={vanBuild[vanBuild.currVan].base}
             zoomLevel={menu.zoom.level}
             setLoading={setLoading}
+            hideAccessories={sliderActive}
+            sliderActive={sliderActive}
           />
         </div>
 
-        {/* <ImagesBackground
-        className="fill-sky-100 opacity-50"
-        id="logoBackground"
-      /> */}
+        <ImagesBackground
+          className="fill-sky-100 opacity-50"
+          id="logoBackground"
+        />
       </div>
     </>
   );
