@@ -6,7 +6,7 @@ export default function ScreenVanDetails({ currVan, options, activeVan }) {
     <div className="p-2 lg:p-4">
       <Select
         onChange={options.onChange}
-        className="mb-2 w-full appearance-none rounded bg-amber-400 p-3 font-bold"
+        className="mb-2 w-full appearance-none rounded bg-amber-400 p-3 font-bold shadow-inner"
         aria-label="Change your van."
         options={options}
         activeVan={activeVan}

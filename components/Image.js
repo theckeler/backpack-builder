@@ -12,7 +12,7 @@ export default function VanImages({
 
   return (
     <Image
-      className={`absolute left-0 top-0 h-full w-full object-cover lg:object-contain ${className}`}
+      className={`absolute left-0 top-0 h-full w-full object-contain ${className}`}
       src={src}
       width={2000}
       height={1600}
@@ -20,10 +20,11 @@ export default function VanImages({
       //   .map((width) => `${src}?width=${width} ${width}w`)
       //   .join(", ")}
       alt=""
+      priority={priority}
       loading={loading}
       style={{ transform: `scale(${zoomLevel})` }}
       onLoad={allImagesLoaded}
-      priority={priority}
+      // priority={true}
     />
   );
 }

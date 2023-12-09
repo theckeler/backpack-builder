@@ -85,6 +85,10 @@ export default function VanBuilder() {
   };
 
   const viewChangeSlider = (e) => {
+    // setLoading(true);
+    // setTimeout(() => {
+    //   setLoading(false);
+    // }, 200);
     setMenu((prevMenu) => ({
       ...prevMenu,
       rotate: { ...prevMenu.rotate, value: e.value },
@@ -386,7 +390,7 @@ export default function VanBuilder() {
 
         <div
           className={`absolute z-0 flex h-full w-full flex-col ${
-            sliderActive ? "brightness-0" : ""
+            sliderActive || loading ? "brightness-0" : ""
           }`}
           id="VanOutput"
         >

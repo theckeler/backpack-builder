@@ -14,8 +14,14 @@ export default function ScreenViewOutput({
 }) {
   const activeView = getActiveView(vanView);
   const [activeAccessories, setActiveAccessories] = useState([]);
+  const [preloadingOutput, setPreloadingOutput] = useState(false);
+
+  useEffect(() => {
+    console.log("preloadingOutput useEffect:", preloadingOutput);
+  }, [preloadingOutput]);
 
   const preloadAllImages = async () => {
+    setPreloadingOutput(true);
     const imagesToPreload = {
       ...vanBase.images,
       ...activeAccessories.reduce((acc, accessory) => {
@@ -29,6 +35,7 @@ export default function ScreenViewOutput({
     };
 
     await preloadImages(imagesToPreload);
+    setPreloadingOutput(false);
   };
 
   useEffect(() => {
@@ -62,45 +69,45 @@ export default function ScreenViewOutput({
         />
         {
           // activeAccessories.length > 0 &&
-          !hideAccessories &&
-            accessories.map(
-              (accessory, i) =>
-                accessory.active &&
-                accessory.images[activeView] && (
-                  <React.Fragment key={i}>
-                    <VanImages
-                      src={accessory.images[activeView]}
-                      zoomLevel={zoomLevel}
-                      className={
-                        accessory.layers[activeView]
-                          ? accessory.layers[activeView]
-                          : "z-30"
-                      }
-                      loading="eager"
-                      priority={true}
-                    />
-                    {accessory.group?.length > 0 &&
-                      accessory.group?.map(
-                        (accessoryGroup, j) =>
-                          accessoryGroup.active &&
-                          accessoryGroup.images[activeView] && (
-                            <VanImages
-                              src={accessoryGroup.images[activeView]}
-                              zoomLevel={zoomLevel}
-                              key={j}
-                              className={
-                                accessoryGroup.layers[activeView]
-                                  ? accessoryGroup.layers[activeView]
-                                  : "z-30"
-                              }
-                              loading="eager"
-                              priority={true}
-                            />
-                          ),
-                      )}
-                  </React.Fragment>
-                ),
-            )
+
+          accessories?.map(
+            (accessory, i) =>
+              accessory.active &&
+              accessory.images[activeView] && (
+                <React.Fragment key={i}>
+                  <VanImages
+                    src={accessory.images[activeView]}
+                    zoomLevel={zoomLevel}
+                    className={`${
+                      accessory.layers[activeView]
+                        ? accessory.layers[activeView]
+                        : "z-30 transition-opacity"
+                    } ${hideAccessories ? "opacity-0" : "opacity-100"}`}
+                    loading="eager"
+                    priority={true}
+                  />
+                  {accessory.group?.length > 0 &&
+                    accessory.group?.map(
+                      (accessoryGroup, j) =>
+                        accessoryGroup.active &&
+                        accessoryGroup.images[activeView] && (
+                          <VanImages
+                            src={accessoryGroup.images[activeView]}
+                            zoomLevel={zoomLevel}
+                            key={j}
+                            className={
+                              accessoryGroup.layers[activeView]
+                                ? accessoryGroup.layers[activeView]
+                                : "z-30"
+                            }
+                            loading="eager"
+                            priority={true}
+                          />
+                        ),
+                    )}
+                </React.Fragment>
+              ),
+          )
         }
       </>
     );

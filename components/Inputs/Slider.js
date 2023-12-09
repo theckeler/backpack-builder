@@ -18,6 +18,8 @@ export default function InputSlider({
       onChange={onChange}
       onMouseDown={onMouseDown}
       onMouseUp={onMouseUp}
+      onTouchStart={onMouseDown}
+      onTouchEnd={onMouseUp}
     />
   );
 }
