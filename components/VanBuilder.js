@@ -219,9 +219,6 @@ export default function VanBuilder() {
       else return { active: false };
     });
   };
-  // useEffect(() => {
-  //   console.log("accessoryDetail useEffect:", accessoryDetail);
-  // }, [accessoryDetail]);
 
   const allBaseToPreloadObject = [
     ...Object.values(vanBuild.sprinterVan.base.images),

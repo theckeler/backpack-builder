@@ -1,9 +1,0 @@
-{
-	"folders": [
-		{
-			"path": ".",
-			"name": "Van Builder"
-		}
-	],
-	"settings": { "window.title": "${folderName}", "window.commandCenter": false }
-}

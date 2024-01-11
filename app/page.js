@@ -6,9 +6,9 @@ import VanBuilder from "@/components/VanBuilder";
 export default function VanBuilderIndex() {
   const [vanPopup, setVanPopup] = useState(false);
 
-  const clickLaunch = () => {
-    setVanPopup(true);
-  };
+  // const clickLaunch = () => {
+  //   setVanPopup(true);
+  // };
 
   return <VanBuilder />;
 

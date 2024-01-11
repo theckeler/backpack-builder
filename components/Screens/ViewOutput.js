@@ -16,9 +16,9 @@ export default function ScreenViewOutput({
   const [activeAccessories, setActiveAccessories] = useState([]);
   const [preloadingOutput, setPreloadingOutput] = useState(false);
 
-  useEffect(() => {
-    console.log("preloadingOutput useEffect:", preloadingOutput);
-  }, [preloadingOutput]);
+  // useEffect(() => {
+  //   console.log("preloadingOutput useEffect:", preloadingOutput);
+  // }, [preloadingOutput]);
 
   const preloadAllImages = async () => {
     setPreloadingOutput(true);
